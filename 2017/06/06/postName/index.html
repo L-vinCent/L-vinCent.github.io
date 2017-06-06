@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-94fba7601908e7d3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-989d532512503166.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-557e7c2eee3a718f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-06T10:06:31.000Z">
+<meta property="og:updated_time" content="2017-06-06T10:14:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开发者所需要知道的 iOS 11 SDK 新特性">
 <meta name="twitter:description" content="昨晚房东那边丧心病狂的停电了，正好赶上WWDC的时间，干脆熬夜看了.早上看到喵神的总结的博客，然后直接就转过来了。以下是喵神的原文  新增框架作为 iOS 开发者，和往年一样，我整理了一下在可能需要关注的地方。新加入 SDK 的大的框架有两个，分别是负责简化和集成机器学习的 Core ML 和用来创建增强现实 (AR) 应用的 ARKit。  Core ML自从 AlphaGo 出现以来，深度学习">
@@ -336,7 +336,6 @@
 <li>Named Color<br>这是个人很喜欢的一个变化。现在你可以在 xcassets 里添加颜色，然后在代码或者 IB 中引用这个颜色了。大概是这样的：<br><img src="http://upload-images.jianshu.io/upload_images/904629-557e7c2eee3a718f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>像是使用 IB 来构建 UI 的时候，一个很头疼的事情就是设计师表示我们要不换个主题色。你很可能需要到处寻找这个颜色进行替换。但是现在你只需要在 xcassets 里改一下，就能反应到 IB 中的所有地方了。</li>
 <li>其他值得注意的变更<br>剩下的都是些小变化了，简单浏览了下，把我觉得值得一提的列举出来，并附上参考的链接。<br><a href="https://developer.apple.com/documentation/uikit/drag_and_drop" target="_blank" rel="external">拖拽</a> - 很标准的一套 iOS API，不出意外地，iOS 系统帮助我们处理了绝大部分工作，开发者几乎只需要处理结果。UITextView<br>和 UITextField<br>原生支持拖拽，UICollectionView<br>和 UITableView<br>的拖拽有一系列专用的 delegate 来表明拖拽的发生和结束。而你也可以对任意 UIView<br>子类定义拖拽行为。<br><a href="https://developer.apple.com/documentation/fileprovider" target="_blank" rel="external">FileProvider 和 FileProviderUI</a> - 提供一套类似 Files app 的界面，让你可以获取用户设备上或者云端的文件。相信会成为以后文档相关类 app 的标配。<br>不再支持 32 位 app - 虽然在 beta 1 中依然可以运行 32 位 app，但是 Apple 明确指出了将在后续的 iOS 11 beta 中取消支持。所以如果你想让自己的程序运行在 iOS 11 的设备上，进行 64 位的重新编译是必须步骤。<br><a href="https://developer.apple.com/documentation/devicecheck" target="_blank" rel="external">DeviceCheck</a> - 每天要用广告 ID 追踪用户的开发者现在有了更好地选择 (当然前提是用来做正经事儿)。DeviceCheck 允许你通过你的服务器与 Apple 服务器通讯，并为单个设备设置两个 bit 的数据。简单说，你在设备上用 DeviceCheck API 生成一个 token，然后将这个 token 发给自己的服务器，再由自己的服务器与 Apple 的 API 进行通讯，来更新或者查询该设备的值。这两个 bit 的数据用来追踪用户比如是否已经领取奖励这类信息。</li>
 </ul>
-<hr>
 
       
     </div>
@@ -524,7 +523,7 @@
 
 
 <div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+  努力工作,努力生活
 </div>
 
 <div class="theme-info">
