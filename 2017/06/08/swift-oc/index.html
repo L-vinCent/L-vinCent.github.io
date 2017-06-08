@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录   Swift中定义一个基本函数">
+<meta name="description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录">
 <meta name="keywords" content="Swift">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Swift3.0 函数闭包与 Block">
 <meta property="og:url" content="http://yoursite.com/2017/06/08/swift-oc/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录   Swift中定义一个基本函数">
+<meta property="og:description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-1e169302d2d9668f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-08T10:14:12.000Z">
+<meta property="og:updated_time" content="2017-06-08T10:16:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift3.0 函数闭包与 Block">
-<meta name="twitter:description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录   Swift中定义一个基本函数">
+<meta name="twitter:description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/904629-1e169302d2d9668f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -366,10 +366,9 @@
       
 
       
-        <p>最近新接手了一个Swift项目，花点时间做点小结，以做记录 </p>
+        <p>最近新接手了一个Swift项目，花点时间做点小结，以做记录<br><a id="more"></a></p>
 <hr>
-<h2 id="Swift中定义一个基本函数"><a href="#Swift中定义一个基本函数" class="headerlink" title="Swift中定义一个基本函数"></a>Swift中定义一个基本函数</h2><a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//定义一个函数，接收一个字符串，返回一个String类型的值</div><div class="line">func <span class="built_in">test</span>(name:String) -&gt; String &#123;</div><div class="line"></div><div class="line">        <span class="built_in">return</span> (<span class="string">"输出了\(name)"</span>)</div><div class="line">    &#125;</div><div class="line">//通用形式</div><div class="line"> func name(parameters) -&gt; <span class="built_in">return</span> <span class="built_in">type</span> &#123;</div><div class="line">        <span class="keyword">function</span> body</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="Swift中定义一个基本函数"><a href="#Swift中定义一个基本函数" class="headerlink" title="Swift中定义一个基本函数"></a>Swift中定义一个基本函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//定义一个函数，接收一个字符串，返回一个String类型的值</div><div class="line">func <span class="built_in">test</span>(name:String) -&gt; String &#123;</div><div class="line"></div><div class="line">        <span class="built_in">return</span> (<span class="string">"输出了\(name)"</span>)</div><div class="line">    &#125;</div><div class="line">//通用形式</div><div class="line"> func name(parameters) -&gt; <span class="built_in">return</span> <span class="built_in">type</span> &#123;</div><div class="line">        <span class="keyword">function</span> body</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <h2 id="Swift-中基本的闭包函数与OC中Block的相似点"><a href="#Swift-中基本的闭包函数与OC中Block的相似点" class="headerlink" title="Swift 中基本的闭包函数与OC中Block的相似点"></a>Swift 中基本的闭包函数与OC中Block的相似点</h2><p><img src="http://upload-images.jianshu.io/upload_images/904629-1e169302d2d9668f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="904629-95160b50313b3606.png"></p>
 <h2 id="带参闭包"><a href="#带参闭包" class="headerlink" title="带参闭包"></a>带参闭包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">void (^<span class="built_in">test</span>) (NSString *)=^(NSString *name)&#123;</div><div class="line"></div><div class="line">        NSLog(@<span class="string">"%@"</span>,name);</div><div class="line"></div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="built_in">test</span>(@<span class="string">"测试"</span>);</div><div class="line"></div><div class="line"></div><div class="line">//对应到swift的带参闭包</div><div class="line"></div><div class="line"><span class="built_in">let</span> <span class="built_in">test</span>=&#123;(_ name:String)-&gt;() <span class="keyword">in</span></div><div class="line"></div><div class="line">  // <span class="keyword">in</span> 后面就是回调之后处理的函数 ，相当于是Block之后的&#123; &#125;</div><div class="line">            <span class="built_in">print</span>(name)</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">test</span>(<span class="string">"测试"</span>)</div><div class="line"></div><div class="line">//通用形式</div><div class="line">&#123; </div><div class="line">(parameters) -&gt; returnType <span class="keyword">in</span></div><div class="line">   code</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里下划线 _ 的作用用来忽略外部參数名，具体可以参考<a href="http://www.cnblogs.com/bhlsheji/p/4746072.html" target="_blank" rel="external">这篇文章</a></p>
