@@ -264,6 +264,170 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/08/swift-oc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/08/swift-oc/" itemprop="url">swift_oc</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-08T17:50:15+08:00">
+                2017-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/08/swift-oc/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/08/swift-oc/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近新接手了一个Swift项目，花点时间做点小结，以做记录 </p>
+<hr>
+<h2 id="Swift中定义一个基本函数"><a href="#Swift中定义一个基本函数" class="headerlink" title="Swift中定义一个基本函数"></a>Swift中定义一个基本函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//定义一个函数，接收一个字符串，返回一个String类型的值</div><div class="line">func <span class="built_in">test</span>(name:String) -&gt; String &#123;</div><div class="line"></div><div class="line">        <span class="built_in">return</span> (<span class="string">"输出了\(name)"</span>)</div><div class="line">    &#125;</div><div class="line">//通用形式</div><div class="line"> func name(parameters) -&gt; <span class="built_in">return</span> <span class="built_in">type</span> &#123;</div><div class="line">        <span class="keyword">function</span> body</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="Swift-中基本的闭包函数与OC中Block的相似点"><a href="#Swift-中基本的闭包函数与OC中Block的相似点" class="headerlink" title="Swift 中基本的闭包函数与OC中Block的相似点"></a>Swift 中基本的闭包函数与OC中Block的相似点</h2><p><img src="http://upload-images.jianshu.io/upload_images/904629-1e169302d2d9668f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="904629-95160b50313b3606.png"></p>
+<h2 id="带参闭包"><a href="#带参闭包" class="headerlink" title="带参闭包"></a>带参闭包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">void (^<span class="built_in">test</span>) (NSString *)=^(NSString *name)&#123;</div><div class="line"></div><div class="line">        NSLog(@<span class="string">"%@"</span>,name);</div><div class="line"></div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="built_in">test</span>(@<span class="string">"测试"</span>);</div><div class="line"></div><div class="line"></div><div class="line">//对应到swift的带参闭包</div><div class="line"></div><div class="line"><span class="built_in">let</span> <span class="built_in">test</span>=&#123;(_ name:String)-&gt;() <span class="keyword">in</span></div><div class="line"></div><div class="line">  // <span class="keyword">in</span> 后面就是回调之后处理的函数 ，相当于是Block之后的&#123; &#125;</div><div class="line">            <span class="built_in">print</span>(name)</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">test</span>(<span class="string">"测试"</span>)</div><div class="line"></div><div class="line">//通用形式</div><div class="line">&#123; </div><div class="line">(parameters) -&gt; returnType <span class="keyword">in</span></div><div class="line">   code</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里下划线 _ 的作用用来忽略外部參数名，具体可以参考<a href="http://www.cnblogs.com/bhlsheji/p/4746072.html" target="_blank" rel="external">这篇文章</a></p>
+<h2 id="带参函数定义"><a href="#带参函数定义" class="headerlink" title="带参函数定义"></a>带参函数定义</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">-(void)loadData:(  void(^)(void) )completetion</div><div class="line">&#123;</div><div class="line">    completetion();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">func loadData(completetion: ()-&gt;()) -&gt; () &#123;</div><div class="line">       completetion()</div><div class="line">    &#125;</div><div class="line">//样式 func: ()-&gt;()</div></pre></td></tr></table></figure>
+<h2 id="举栗子，网络数据获取"><a href="#举栗子，网络数据获取" class="headerlink" title="举栗子，网络数据获取"></a>举栗子，网络数据获取</h2><ul>
+<li>OC</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">//OC中Block传值</div><div class="line">-(void)loadData:(  void(^)(NSArray *) )completetion</div><div class="line">&#123;</div><div class="line"></div><div class="line">//这里暂时先忽略掉线程，简单处理，重点在swift闭包</div><div class="line">    NSLog(@<span class="string">"耗时操作"</span>);</div><div class="line"></div><div class="line">    sleep(2);//模拟网络请求</div><div class="line"></div><div class="line">    NSArray *arr=@[@<span class="string">"1"</span>,@<span class="string">"2"</span>];</div><div class="line"></div><div class="line">    NSLog(@<span class="string">"主线程回调"</span>);</div><div class="line"></div><div class="line"></div><div class="line">    completetion(arr); //返回获得的数据</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">调用：</div><div class="line"> [self loadData:^(NSArray *callBack)&#123;</div><div class="line"></div><div class="line">        NSLog(@<span class="string">"%@,%@"</span>,callBack[0],callBack[1]);</div><div class="line"></div><div class="line">    &#125;];</div><div class="line"></div><div class="line">输出：</div><div class="line">2017-03-22 18:48:45.273 tessst[3642:187462] 耗时操作</div><div class="line">2017-03-22 18:48:47.345 tessst[3642:187462] 主线程更新</div><div class="line">2017-03-22 18:48:47.346 tessst[3642:187462] 1,2</div></pre></td></tr></table></figure>
+<ul>
+<li>Swift</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">//swift中闭包传值  </div><div class="line">       func loadDate(completion: @escaping (_ result : [String])-&gt;()) -&gt; () &#123;</div><div class="line"></div><div class="line">//这里有一个很重要的参数 @escaping，逃逸闭包</div><div class="line">//简单来说就是 闭包在这个函数结束前内被调用，就是非逃逸闭包，调用的地方超过了这函数的范围，叫逃逸闭包</div><div class="line">//一般网络请求都是请求后一段时间这个闭包才执行，所以都是逃逸闭包。</div><div class="line">// 在Swift3.0中所有的闭包都默认为非逃逸闭包，所以需要用@escaping来修饰</div><div class="line">        DispatchQueue.global().async &#123;</div><div class="line"></div><div class="line">            <span class="built_in">print</span>(<span class="string">"耗时操作\(Thread.current)"</span>)</div><div class="line">            Thread.sleep(forTimeInterval: 2)</div><div class="line">            <span class="built_in">let</span> json=[<span class="string">"1"</span>,<span class="string">"2"</span>]</div><div class="line"></div><div class="line">            DispatchQueue.main.async &#123;</div><div class="line">                <span class="built_in">print</span>(<span class="string">"主线程更新\(Thread.current)"</span>)</div><div class="line"></div><div class="line">                completion(json)</div><div class="line">//函数在执行完后俩秒，主线程才回调数据，超过了函数的范围，这里就是属于逃逸闭包，如果不用@escaping，编译器是编译不过的</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">主函数调用loadDate:</div><div class="line"> loadDate &#123; (callBack) <span class="keyword">in</span></div><div class="line">        <span class="built_in">print</span>(<span class="string">"\(callBack)"</span>)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">输出值</div><div class="line">耗时操作&lt;NSThread: 0x608000069140&gt;&#123;number = 1, name = main&#125;</div><div class="line">主线程更新&lt;NSThread: 0x608000069140&gt;&#123;number = 1, name = main&#125;</div><div class="line">1，2</div></pre></td></tr></table></figure>
+<h2 id="循环引用"><a href="#循环引用" class="headerlink" title="循环引用"></a>循环引用</h2><ul>
+<li>在Block中经常会有循环引用的情况，Swift闭包中也一样，常用的解决方式有俩种</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//第一种</div><div class="line">weak var weakwelf=self</div><div class="line">//套用oc的方式（__weak typedef(weakself)=self）.</div><div class="line">//这里要注意，不能用  <span class="built_in">let</span>  ，因为self可能会释放指向nil，相当于是一个可变值</div><div class="line"></div><div class="line">//调可选项发送消息的时候 用 ？ 解包 不用 ！</div><div class="line"></div><div class="line">pringt(<span class="string">"weakself ?.view"</span>) 不用<span class="string">" weakself!.view"</span></div><div class="line">//因为强制解包一旦weakself=nil时会崩溃</div><div class="line"></div><div class="line">//第二种，在调用时候</div><div class="line">//[weak self]标识在&#123;&#125;中所有的self都是弱引用</div><div class="line"> loadDate &#123; [weak self] <span class="keyword">in</span></div><div class="line">            <span class="built_in">print</span>(self?.view)</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<h2 id="尾随闭包"><a href="#尾随闭包" class="headerlink" title="尾随闭包"></a>尾随闭包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">func someFunctionThatTakesAClosure(closure: () -&gt; ()) &#123;</div><div class="line">    // 函数体部分</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 以下是不使用尾随闭包进行函数调用</div><div class="line">someFunctionThatTakesAClosure(&#123;</div><div class="line">    // 闭包主体部分</div><div class="line">&#125;)</div><div class="line"></div><div class="line">// 以下是使用尾随闭包进行函数调用</div><div class="line"><span class="function"><span class="title">someFunctionThatTakesAClosure</span></span>() &#123;</div><div class="line">    // 闭包主体部分</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/07/Create-Blog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1000,7 +1164,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1022,7 +1186,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
