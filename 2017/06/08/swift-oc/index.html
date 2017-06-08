@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录   Swift中定义一个基本函数12345678910//定义一个函数，接收一个字符串，返回一个String类型的值func test(name:String) -&amp;gt; String &amp;#123;        return (&quot;输出了\(name)&quot;)    &amp;#125;//通用形式 func name(parameters) -&amp;">
+<meta name="description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录   Swift中定义一个基本函数">
 <meta name="keywords" content="Swift">
 <meta property="og:type" content="article">
-<meta property="og:title" content="swift_oc">
+<meta property="og:title" content="Swift3.0 函数闭包与 Block">
 <meta property="og:url" content="http://yoursite.com/2017/06/08/swift-oc/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录   Swift中定义一个基本函数12345678910//定义一个函数，接收一个字符串，返回一个String类型的值func test(name:String) -&amp;gt; String &amp;#123;        return (&quot;输出了\(name)&quot;)    &amp;#125;//通用形式 func name(parameters) -&amp;">
+<meta property="og:description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录   Swift中定义一个基本函数">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-1e169302d2d9668f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-08T09:52:16.000Z">
+<meta property="og:updated_time" content="2017-06-08T10:14:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="swift_oc">
-<meta name="twitter:description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录   Swift中定义一个基本函数12345678910//定义一个函数，接收一个字符串，返回一个String类型的值func test(name:String) -&amp;gt; String &amp;#123;        return (&quot;输出了\(name)&quot;)    &amp;#125;//通用形式 func name(parameters) -&amp;">
+<meta name="twitter:title" content="Swift3.0 函数闭包与 Block">
+<meta name="twitter:description" content="最近新接手了一个Swift项目，花点时间做点小结，以做记录   Swift中定义一个基本函数">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/904629-1e169302d2d9668f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -139,7 +139,7 @@
 
 
 
-  <title>swift_oc | L-vinCent's Blog</title>
+  <title>Swift3.0 函数闭包与 Block | L-vinCent's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -286,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">swift_oc</h1>
+          <h1 class="post-title" itemprop="name headline">Swift3.0 函数闭包与 Block</h1>
         
 
         <div class="post-meta">
@@ -368,7 +368,8 @@
       
         <p>最近新接手了一个Swift项目，花点时间做点小结，以做记录 </p>
 <hr>
-<h2 id="Swift中定义一个基本函数"><a href="#Swift中定义一个基本函数" class="headerlink" title="Swift中定义一个基本函数"></a>Swift中定义一个基本函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//定义一个函数，接收一个字符串，返回一个String类型的值</div><div class="line">func <span class="built_in">test</span>(name:String) -&gt; String &#123;</div><div class="line"></div><div class="line">        <span class="built_in">return</span> (<span class="string">"输出了\(name)"</span>)</div><div class="line">    &#125;</div><div class="line">//通用形式</div><div class="line"> func name(parameters) -&gt; <span class="built_in">return</span> <span class="built_in">type</span> &#123;</div><div class="line">        <span class="keyword">function</span> body</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="Swift中定义一个基本函数"><a href="#Swift中定义一个基本函数" class="headerlink" title="Swift中定义一个基本函数"></a>Swift中定义一个基本函数</h2><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//定义一个函数，接收一个字符串，返回一个String类型的值</div><div class="line">func <span class="built_in">test</span>(name:String) -&gt; String &#123;</div><div class="line"></div><div class="line">        <span class="built_in">return</span> (<span class="string">"输出了\(name)"</span>)</div><div class="line">    &#125;</div><div class="line">//通用形式</div><div class="line"> func name(parameters) -&gt; <span class="built_in">return</span> <span class="built_in">type</span> &#123;</div><div class="line">        <span class="keyword">function</span> body</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <h2 id="Swift-中基本的闭包函数与OC中Block的相似点"><a href="#Swift-中基本的闭包函数与OC中Block的相似点" class="headerlink" title="Swift 中基本的闭包函数与OC中Block的相似点"></a>Swift 中基本的闭包函数与OC中Block的相似点</h2><p><img src="http://upload-images.jianshu.io/upload_images/904629-1e169302d2d9668f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="904629-95160b50313b3606.png"></p>
 <h2 id="带参闭包"><a href="#带参闭包" class="headerlink" title="带参闭包"></a>带参闭包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">void (^<span class="built_in">test</span>) (NSString *)=^(NSString *name)&#123;</div><div class="line"></div><div class="line">        NSLog(@<span class="string">"%@"</span>,name);</div><div class="line"></div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="built_in">test</span>(@<span class="string">"测试"</span>);</div><div class="line"></div><div class="line"></div><div class="line">//对应到swift的带参闭包</div><div class="line"></div><div class="line"><span class="built_in">let</span> <span class="built_in">test</span>=&#123;(_ name:String)-&gt;() <span class="keyword">in</span></div><div class="line"></div><div class="line">  // <span class="keyword">in</span> 后面就是回调之后处理的函数 ，相当于是Block之后的&#123; &#125;</div><div class="line">            <span class="built_in">print</span>(name)</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">test</span>(<span class="string">"测试"</span>)</div><div class="line"></div><div class="line">//通用形式</div><div class="line">&#123; </div><div class="line">(parameters) -&gt; returnType <span class="keyword">in</span></div><div class="line">   code</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里下划线 _ 的作用用来忽略外部參数名，具体可以参考<a href="http://www.cnblogs.com/bhlsheji/p/4746072.html" target="_blank" rel="external">这篇文章</a></p>
@@ -387,6 +388,7 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//第一种</div><div class="line">weak var weakwelf=self</div><div class="line">//套用oc的方式（__weak typedef(weakself)=self）.</div><div class="line">//这里要注意，不能用  <span class="built_in">let</span>  ，因为self可能会释放指向nil，相当于是一个可变值</div><div class="line"></div><div class="line">//调可选项发送消息的时候 用 ？ 解包 不用 ！</div><div class="line"></div><div class="line">pringt(<span class="string">"weakself ?.view"</span>) 不用<span class="string">" weakself!.view"</span></div><div class="line">//因为强制解包一旦weakself=nil时会崩溃</div><div class="line"></div><div class="line">//第二种，在调用时候</div><div class="line">//[weak self]标识在&#123;&#125;中所有的self都是弱引用</div><div class="line"> loadDate &#123; [weak self] <span class="keyword">in</span></div><div class="line">            <span class="built_in">print</span>(self?.view)</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
 <h2 id="尾随闭包"><a href="#尾随闭包" class="headerlink" title="尾随闭包"></a>尾随闭包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">func someFunctionThatTakesAClosure(closure: () -&gt; ()) &#123;</div><div class="line">    // 函数体部分</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 以下是不使用尾随闭包进行函数调用</div><div class="line">someFunctionThatTakesAClosure(&#123;</div><div class="line">    // 闭包主体部分</div><div class="line">&#125;)</div><div class="line"></div><div class="line">// 以下是使用尾随闭包进行函数调用</div><div class="line"><span class="function"><span class="title">someFunctionThatTakesAClosure</span></span>() &#123;</div><div class="line">    // 闭包主体部分</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -749,7 +751,7 @@
         var disqus_config = function () {
           this.page.url = 'http://yoursite.com/2017/06/08/swift-oc/';
           this.page.identifier = '2017/06/08/swift-oc/';
-          this.page.title = 'swift_oc';
+          this.page.title = 'Swift3.0 函数闭包与 Block';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://L-vinCent.disqus.com/embed.js';
