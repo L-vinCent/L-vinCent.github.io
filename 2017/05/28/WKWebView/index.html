@@ -76,7 +76,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="OC," />
+  <meta name="keywords" content="WKWebView," />
 
 
 
@@ -93,18 +93,18 @@
 
 
 <meta name="description" content="有个要提前说一下，WKWebview  cookie 与Native 的 cookie 是分开的，在接入WKWebview 的时候发现无法同步cookie，试过很多方法，还是不行。 最后还是不甘心的换回了webView, 如果有解决这个问题的麻烦指教一下，给你红包，哈哈。 不管怎么样，多知道些东西总是好的。  WKWebviewDemo在这 先来个最直观的，为什么要用WKWebview这里分别用W">
-<meta name="keywords" content="OC">
+<meta name="keywords" content="WKWebView">
 <meta property="og:type" content="article">
-<meta property="og:title" content="WKWebView">
+<meta property="og:title" content="WKWebView 和 WebViewJavascriptBridge">
 <meta property="og:url" content="http://yoursite.com/2017/05/28/WKWebView/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
 <meta property="og:description" content="有个要提前说一下，WKWebview  cookie 与Native 的 cookie 是分开的，在接入WKWebview 的时候发现无法同步cookie，试过很多方法，还是不行。 最后还是不甘心的换回了webView, 如果有解决这个问题的麻烦指教一下，给你红包，哈哈。 不管怎么样，多知道些东西总是好的。  WKWebviewDemo在这 先来个最直观的，为什么要用WKWebview这里分别用W">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-b968b494317e1173.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-5c75949775375c9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-1121b1426182150a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-09T07:33:45.000Z">
+<meta property="og:updated_time" content="2017-06-09T07:41:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WKWebView">
+<meta name="twitter:title" content="WKWebView 和 WebViewJavascriptBridge">
 <meta name="twitter:description" content="有个要提前说一下，WKWebview  cookie 与Native 的 cookie 是分开的，在接入WKWebview 的时候发现无法同步cookie，试过很多方法，还是不行。 最后还是不甘心的换回了webView, 如果有解决这个问题的麻烦指教一下，给你红包，哈哈。 不管怎么样，多知道些东西总是好的。  WKWebviewDemo在这 先来个最直观的，为什么要用WKWebview这里分别用W">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/904629-b968b494317e1173.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
@@ -140,7 +140,7 @@
 
 
 
-  <title>WKWebView | L-vinCent's Blog</title>
+  <title>WKWebView 和 WebViewJavascriptBridge | L-vinCent's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -287,7 +287,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">WKWebView</h1>
+          <h1 class="post-title" itemprop="name headline">WKWebView 和 WebViewJavascriptBridge</h1>
         
 
         <div class="post-meta">
@@ -385,7 +385,7 @@
 <hr>
 <p>相比之下，WKWebView占用20M，而UIWebView占用73M，这性能提升的不只一点点。具体的要了解和使用 WKWebview 的，给个友情链接  <a href="http://liuyanwei.jumppo.com/2015/10/17/ios-webView.html" target="_blank" rel="external">刘彦玮的技术博客</a></p>
 <hr>
-<p>这里主要讲下  WKWebViewJavascriptBridge ，一个优秀的第三方框架</p>
+<h2 id="WKWebViewJavascriptBridge"><a href="#WKWebViewJavascriptBridge" class="headerlink" title="WKWebViewJavascriptBridge"></a>WKWebViewJavascriptBridge</h2><p>这里主要讲下  WKWebViewJavascriptBridge ，一个优秀的第三方框架</p>
 <ul>
 <li><a href="https://github.com/marcuswestin/WebViewJavascriptBridge" target="_blank" rel="external">WebViewJavascriptBridge</a></li>
 </ul>
@@ -431,7 +431,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/OC/" rel="tag"># OC</a>
+            <a href="/tags/WKWebView/" rel="tag"># WKWebView</a>
           
         </div>
       
@@ -553,7 +553,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -599,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#WKWebview"><span class="nav-number">1.</span> <span class="nav-text">WKWebview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html-的代码段落"><span class="nav-number">1.1.</span> <span class="nav-text">html 的代码段落</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原生代码"><span class="nav-number">1.2.</span> <span class="nav-text">原生代码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#WKWebview"><span class="nav-number">1.</span> <span class="nav-text">WKWebview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WKWebViewJavascriptBridge"><span class="nav-number">2.</span> <span class="nav-text">WKWebViewJavascriptBridge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html-的代码段落"><span class="nav-number">2.1.</span> <span class="nav-text">html 的代码段落</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原生代码"><span class="nav-number">2.2.</span> <span class="nav-text">原生代码</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -765,7 +765,7 @@
         var disqus_config = function () {
           this.page.url = 'http://yoursite.com/2017/05/28/WKWebView/';
           this.page.identifier = '2017/05/28/WKWebView/';
-          this.page.title = 'WKWebView';
+          this.page.title = 'WKWebView 和 WebViewJavascriptBridge';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://L-vinCent.disqus.com/embed.js';
