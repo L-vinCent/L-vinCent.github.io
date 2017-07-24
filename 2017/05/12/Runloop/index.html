@@ -93,22 +93,22 @@
 
 
 
-<meta name="description" content="今天在整理笔记的时候发现的一篇以前摘下来的博客，目前看到的对RunLoop剖析最棒的一篇，吃透这篇文章，一定收获巨大。如果你还在面试，觉得RunLoop是个拦路虎，那么别犹豫了，花时间看完然后慢慢理解，面试会更有信心">
+<meta name="description" content="时间过的比较久，忘了博主和具体的出处了，有知道的请告知一下。  RunLoop 的概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：1234567function loop() &amp;#123;initialize();do &amp;#123;var message = get_next_message();">
 <meta name="keywords" content="Runloop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解RunLoop">
 <meta property="og:url" content="https://l-vincent.github.io/2017/05/12/Runloop/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:description" content="今天在整理笔记的时候发现的一篇以前摘下来的博客，目前看到的对RunLoop剖析最棒的一篇，吃透这篇文章，一定收获巨大。如果你还在面试，觉得RunLoop是个拦路虎，那么别犹豫了，花时间看完然后慢慢理解，面试会更有信心">
+<meta property="og:description" content="时间过的比较久，忘了博主和具体的出处了，有知道的请告知一下。  RunLoop 的概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：1234567function loop() &amp;#123;initialize();do &amp;#123;var message = get_next_message();">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-4872a8e485b2d08e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-d7d5146313a4e1c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-aefecc5007b9e4f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-ff633a9e5ec869b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-ce4c380a8b52460b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-12T09:56:27.000Z">
+<meta property="og:updated_time" content="2017-07-19T06:36:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解RunLoop">
-<meta name="twitter:description" content="今天在整理笔记的时候发现的一篇以前摘下来的博客，目前看到的对RunLoop剖析最棒的一篇，吃透这篇文章，一定收获巨大。如果你还在面试，觉得RunLoop是个拦路虎，那么别犹豫了，花时间看完然后慢慢理解，面试会更有信心">
+<meta name="twitter:description" content="时间过的比较久，忘了博主和具体的出处了，有知道的请告知一下。  RunLoop 的概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：1234567function loop() &amp;#123;initialize();do &amp;#123;var message = get_next_message();">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/904629-4872a8e485b2d08e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -370,7 +370,7 @@
       
 
       
-        <p>今天在整理笔记的时候发现的一篇以前摘下来的博客，目前看到的对RunLoop剖析最棒的一篇，吃透这篇文章，一定收获巨大。<br>如果你还在面试，觉得RunLoop是个拦路虎，那么别犹豫了，花时间看完然后慢慢理解，面试会更有信心<br><a id="more"></a></p>
+        <a id="more"></a>
 <hr>
 <p>时间过的比较久，忘了博主和具体的出处了，有知道的请告知一下。</p>
 <hr>
@@ -578,7 +578,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -600,7 +600,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
