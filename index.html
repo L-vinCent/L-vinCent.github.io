@@ -364,39 +364,18 @@
 
       
         
-          
-            <h2 id="几个概念点分析的比较好的文章"><a href="#几个概念点分析的比较好的文章" class="headerlink" title="几个概念点分析的比较好的文章"></a>几个概念点分析的比较好的文章</h2><ul>
+          <h2 id="几个概念点分析的比较好的文章"><a href="#几个概念点分析的比较好的文章" class="headerlink" title="几个概念点分析的比较好的文章"></a>几个概念点分析的比较好的文章</h2><ul>
 <li><a href="https://l-vincent.github.io/2017/07/12/%E9%BB%91%E5%B9%95%E8%83%8C%E5%90%8E%E7%9A%84Autorelease/">黑幕背后的Autorelease</a></li>
 <li><a href="https://l-vincent.github.io/2017/05/12/Runloop/">Runloop</a></li>
 <li><a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/" target="_blank" rel="external">runtime</a></li>
-<li><a href="http://www.jianshu.com/writer#/notebooks/9934689/notes/9262547" target="_blank" rel="external">SDWebImage实现分析</a></li>
-<li>续更中…</li>
-</ul>
-<h2 id="整理的部分iOS-面试题"><a href="#整理的部分iOS-面试题" class="headerlink" title="整理的部分iOS 面试题"></a>整理的部分iOS 面试题</h2><h3 id="什么时候在-block-中不需要使用-weakSelf"><a href="#什么时候在-block-中不需要使用-weakSelf" class="headerlink" title="什么时候在 block 中不需要使用 weakSelf?"></a>什么时候在 block 中不需要使用 weakSelf?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">问题:我们知道，在使用 block 的时候，为了避免产生循环引用，通常需要使用 weakSelf 与 strongSelf，写下面这样的代码：</div><div class="line"></div><div class="line">__weak typeof(self) weakSelf = self;</div><div class="line">[self doSomeBlockJob:^&#123;</div><div class="line">    __strong typeof(weakSelf) strongSelf = weakSelf;</div><div class="line">    <span class="keyword">if</span> (strongSelf) &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;];</div><div class="line">那么请问：什么时候在 block里面用self，不需要使用weakself?</div></pre></td></tr></table></figure>
-<p>当block本身不被self 持有，而被别的对象持有，同时不产生循环引用的时候，就不需要使用weakself了。最常见的代码就是UIView的动画代码，我们在使用UIView animateWithDuration:animations方法 做动画的时候，并不需要使用weakself，因为引用持有关系是：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">UIView 的某个负责动画的对象持有block，block 持有了self因为 self 并不持有 block，所以就没有循环引用产生，因为就不需要使用 weak self 了。</div><div class="line"></div><div class="line">[UIView animateWithDuration:0.2 animations:^&#123;</div><div class="line">    self.alpha = 1;</div><div class="line">&#125;];</div><div class="line">当动画结束时，UIView会结束持有这个 block，如果没有别的对象持有block的话，block 对象就会释放掉，从而 block会释放掉对于 self 的持有。整个内存引用关系被解除。</div></pre></td></tr></table></figure>
-<h3 id="在使用-block-的时候，为了避免产生循环引用，通常需要使用-weakSelf-与-strongSelf，为什么-block-里面还需要写一个-strong-self，如果不写会怎么样？"><a href="#在使用-block-的时候，为了避免产生循环引用，通常需要使用-weakSelf-与-strongSelf，为什么-block-里面还需要写一个-strong-self，如果不写会怎么样？" class="headerlink" title="在使用 block 的时候，为了避免产生循环引用，通常需要使用 weakSelf 与 strongSelf，为什么 block 里面还需要写一个 strong self，如果不写会怎么样？"></a>在使用 block 的时候，为了避免产生循环引用，通常需要使用 weakSelf 与 strongSelf，为什么 block 里面还需要写一个 strong self，如果不写会怎么样？</h3><p>在 block 中先写一个 strong self，其实是为了避免在 block 的执行过程中，突然出现 self 被释放的尴尬情况。通常情况下，如果不这么做的话，还是很容易出现一些奇怪的逻辑，甚至闪退。</p>
-<p>我们以AFNetworking中的AFNetworkReachabilityManager.m的一段代码举例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">__weak __typeof(self)weakSelf = self;</div><div class="line">AFNetworkReachabilityStatusBlock callback = ^(AFNetworkReachabilityStatus status) &#123;</div><div class="line">    __strong __typeof(weakSelf)strongSelf = weakSelf;</div><div class="line">    strongSelf.networkReachabilityStatus = status;</div><div class="line">    <span class="keyword">if</span> (strongSelf.networkReachabilityStatusBlock) &#123;strongSelf.networkReachabilityStatusBlock(status);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>如果没有strongSelf的那行代码，那么后面的每一行代码执行时，self都可能被释放掉了，这样很可能造成逻辑异常。</p>
-<p>特别是当我们正在执行 strongSelf.networkReachabilityStatusBlock(status); 这个 block闭包时，如果这个 block 执行到一半时 self 释放，那么多半情况下会 Crash。</p>
-<h3 id="weak-的内部实现原理"><a href="#weak-的内部实现原理" class="headerlink" title="weak 的内部实现原理"></a>weak 的内部实现原理</h3><ul>
-<li>weak 变量在引用计数为0时，会被自动设置成 nil，这个特性是如何实现的？</li>
-</ul>
-<p>《Objective-C高级编程》一书中也介绍了相关的内容。<br>简单来说，系统有一个全局的 CFMutableDictionary 实例，来保存每个对象的 weak 指针列表，因为每个对象可能有多个 weak 指针，所以这个实例的值是 CFMutableSet 类型。</p>
-<p>剩下我们要做的，就是在引用计数变成 0 的时候，去这个全局的字典里面，找到所有的 weak 指针，将其值设置成 nil。如何做到这一点呢？Friday QA 上介绍了一种类似 KVO 实现的方式。当对象存在 weak 指针时，我们可以将这个实例指向一个新创建的子类，然后修改这个子类的 release 方法，在 release 方法中，去从全局的 CFMutableDictionary 字典中找到所有的 weak 对象，并且设置成 nil。我摘抄了 Friday QA 上的实现的核心代码，如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Class subclass = objc_allocateClassPair(class, newNameC, 0);</div><div class="line">Method release = class_getInstanceMethod(class, @selector(release));</div><div class="line">Method dealloc = class_getInstanceMethod(class, @selector(dealloc));</div><div class="line">class_addMethod(subclass, @selector(release), (IMP)CustomSubclassRelease, method_getTypeEncoding(release));</div><div class="line">class_addMethod(subclass, @selector(dealloc), (IMP)CustomSubclassDealloc, method_getTypeEncoding(dealloc));</div><div class="line">objc_registerClassPair(subclass);</div></pre></td></tr></table></figure>
-<h3 id="以下代码运行结果如何"><a href="#以下代码运行结果如何" class="headerlink" title="以下代码运行结果如何"></a>以下代码运行结果如何</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad</div><div class="line">&#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    NSLog(@<span class="string">"1"</span>);</div><div class="line">    dispatch_sync(dispatch_get_main_queue(), ^&#123;</div><div class="line">        NSLog(@<span class="string">"2"</span>);</div><div class="line">    &#125;);</div><div class="line">    NSLog(@<span class="string">"3"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>只能输出1,然后线程主线程死锁<br>因为主线程阻塞。<br>dispatch_async(dispatch_get_main_queue(), ^{<br>        用async异步就不会掐死线程了<br>    });</p>
-<p>(这么没太说清楚,我的理解是,如果是异步的情况下，输出顺序应该是1-3-2，，在主线程队列后插入了一个Block，在log“3”之后执行。  所以在主线程同步的情况下变成了 要执行log“2”，  先执行log“3”， 但是log“2”的执行是主线程同步，所以在log“2”执行完之前，log“3”不会执行，所以会造成死锁)</p>
-<h3 id="这个写法会出什么问题：-property-copy-NSMutableArray-array"><a href="#这个写法会出什么问题：-property-copy-NSMutableArray-array" class="headerlink" title="这个写法会出什么问题： @property (copy) NSMutableArray *array;"></a>这个写法会出什么问题： @property (copy) NSMutableArray *array;</h3><p>两个问题：1、添加,删除,修改数组内的元素的时候,程序会因为找不到对应的方法而崩溃.因为 copy 就是复制一个不可变 NSArray 的对象；2、使用了 atomic 属性会严重影响性能 ；</p>
-<p>第1条的相关原因在下文中有论述<strong><em>《用@property声明的NSString（或NSArray，NSDictionary）经常使用 copy 关键字，为什么？如果改用strong关键字，可能造成什么问题？》</em></strong> 以及上文<strong><em>《怎么用 copy 关键字？》</em></strong>也有论述。</p>
-<p>比如下面的代码就会发生崩溃</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// .h文件</div><div class="line">// http://weibo.com/luohanchenyilong/</div><div class="line">// https://github.com/ChenYilong</div><div class="line">// 下面的代码就会发生崩溃</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSMutableArray *mutableArray;</div><div class="line">// .m文件</div><div class="line">// http://weibo.com/luohanchenyilong/</div><div class="line">// https://github.com/ChenYilong</div><div class="line">// 下面的代码就会发生崩溃</div><div class="line"></div><div class="line">NSMutableArray *array = [NSMutableArray arrayWithObjects:@1,@2,nil];</div><div class="line">self.mutableArray = array;</div><div class="line">[self.mutableArray removeObjectAtIndex:0];</div></pre></td></tr></table></figure>
-<p>接下来就会奔溃：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-[__NSArrayI removeObjectAtIndex:]: unrecognized selector sent to instance 0x7fcd1bc30460</div></pre></td></tr></table></figure>
-
-          
+<li><a href="http://www.jianshu.com/writer#/notebooks/9934689/notes/9262547" target="_blank" rel="external">SDWebImage实现分析</a>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/15/面试点记录/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
