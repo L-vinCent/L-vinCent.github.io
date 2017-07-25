@@ -93,16 +93,16 @@
 
 
 
-<meta name="description" content="Swift中定义一个基本函数123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960按钮倒计时的闪烁问题 将按钮属性 system 改成 custom获取数组中的最大值CGFloat max = [[array valueForK">
+<meta name="description" content="###一些平时bug的记录和方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS 小技巧">
+<meta property="og:title" content="iOS 记录点">
 <meta property="og:url" content="https://l-vincent.github.io/2017/06/08/ios 技巧点/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:description" content="Swift中定义一个基本函数123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960按钮倒计时的闪烁问题 将按钮属性 system 改成 custom获取数组中的最大值CGFloat max = [[array valueForK">
-<meta property="og:updated_time" content="2017-07-19T06:55:28.000Z">
+<meta property="og:description" content="###一些平时bug的记录和方法">
+<meta property="og:updated_time" content="2017-07-25T08:35:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS 小技巧">
-<meta name="twitter:description" content="Swift中定义一个基本函数123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960按钮倒计时的闪烁问题 将按钮属性 system 改成 custom获取数组中的最大值CGFloat max = [[array valueForK">
+<meta name="twitter:title" content="iOS 记录点">
+<meta name="twitter:description" content="###一些平时bug的记录和方法">
 
 
 
@@ -136,7 +136,7 @@
 
 
 
-  <title>iOS 小技巧 | L-vinCent's Blog</title>
+  <title>iOS 记录点 | L-vinCent's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -283,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">iOS 小技巧</h1>
+          <h1 class="post-title" itemprop="name headline">iOS 记录点</h1>
         
 
         <div class="post-meta">
@@ -318,8 +318,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/" itemprop="url" rel="index">
-                    <span itemprop="name">Swift</span>
+                  <a href="/categories/Objective/" itemprop="url" rel="index">
+                    <span itemprop="name">Objective</span>
                   </a>
                 </span>
 
@@ -363,9 +363,11 @@
       
 
       
-        <a id="more"></a>
-<hr>
-<h2 id="Swift中定义一个基本函数"><a href="#Swift中定义一个基本函数" class="headerlink" title="Swift中定义一个基本函数"></a>Swift中定义一个基本函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">按钮倒计时的闪烁问题 </div><div class="line">将按钮属性 system 改成 custom</div><div class="line"></div><div class="line"></div><div class="line">获取数组中的最大值</div><div class="line">CGFloat max = [[array valueForKeyPath:@<span class="string">"@max.intValue"</span>] floatValue];</div><div class="line"></div><div class="line"></div><div class="line">XLForm的一个BUG，在有用到formRowDescriptorValueHasChanged的代理方法的时候，如果不做判断直接做updateFormRow的操作，会造成重复输入的后果。 </div><div class="line"></div><div class="line">解决办法，将updateFormRow 放在需要及时更新的form里面</div><div class="line"></div><div class="line"></div><div class="line">常用的正则表达式</div><div class="line">1.验证用户名和密码：”^[a-zA-Z]\w&#123;5,15&#125;$”</div><div class="line">　　2.验证电话号码：（”^([\\d&#123;3,4&#125;-)\\d&#123;7,8&#125;$](file:///d%7B3,4%7D-)//d%7B7,8%7D$)”）</div><div class="line">　　eg：021-68686868  0511-6868686；</div><div class="line">　　3.验证手机号码：”^1[3|4|5|7|8][0-9]\\d&#123;8&#125;$”；</div><div class="line">　　4.验证身份证号（15位或18位数字）：”\\d&#123;14&#125;[[0-9],0-9xX]”；</div><div class="line">　　5.验证Email地址：(“^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\.\\w+([-.]\\w+)*$”)；</div><div class="line">　　6.只能输入由数字和26个英文字母组成的字符串：(“^[A-Za-z0-9]+$”) ;</div><div class="line">　　7.整数或者小数：^[0-9]+([.]&#123;0,1&#125;[0-9]+)&#123;0,1&#125;$</div><div class="line">　　8.只能输入数字：”^[0-9]*$”。</div><div class="line">　　9.只能输入n位的数字：”^\\d&#123;n&#125;$”。</div><div class="line">　　10.只能输入至少n位的数字：”^\\d&#123;n,&#125;$”。</div><div class="line">　　11.只能输入m~n位的数字：”^\\d&#123;m,n&#125;$”。</div><div class="line">　　12.只能输入零和非零开头的数字：”^(0|[1-9][0-9]*)$”。</div><div class="line">　　13.只能输入有两位小数的正实数：”^[0-9]+(.[0-9]&#123;2&#125;)?$”。</div><div class="line">　　14.只能输入有1~3位小数的正实数：”^[0-9]+(\.[0-9]&#123;1,3&#125;)?$”。</div><div class="line">　　15.只能输入非零的正整数：”^\+?[1-9][0-9]*$”。</div><div class="line">　　16.只能输入非零的负整数：”^\-[1-9][]0-9″*$。</div><div class="line">　　17.只能输入长度为3的字符：”^.&#123;3&#125;$”。</div><div class="line">　　18.只能输入由26个英文字母组成的字符串：”^[A-Za-z]+$”。</div><div class="line">　　19.只能输入由26个大写英文字母组成的字符串：”^[A-Z]+$”。</div><div class="line">　　20.只能输入由26个小写英文字母组成的字符串：”^[a-z]+$”。</div><div class="line">　　21.验证是否含有^%&amp;<span class="string">',;=?$\”等字符：”[^%&amp;'</span>,;=?$\x22]+”。</div><div class="line">　　22.只能输入汉字：”^[\u4e00-\u9fa5]&#123;0,&#125;$”。</div><div class="line">　　23.验证URL：<span class="string">"http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&amp;=]*)?"</span>。</div><div class="line">　　24.验证一年的12个月：”^(0?[1-9]|1[0-2])$”正确格式为：”01″～”09″和”10″～”12″。</div><div class="line">　　25.验证一个月的31天：”^((0?[1-9])|((1|2)[0-9])|30|31)$”正确格式为；”01″～”09″、”10″～”29″和“30”~“31”。</div><div class="line">　　26.获取日期正则表达式：[\\d&#123;4](file:///d%7B4)&#125;[年|\-|\.]\\d&#123;\1-\12&#125;[月|\-|\.]\\d&#123;\1-\31&#125;日?</div><div class="line">　　评注：可用来匹配大多数年月日信息。</div><div class="line">　　27.匹配双字节字符(包括汉字在内)：[^\x00-\xff]</div><div class="line">　　评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</div><div class="line">　　28.匹配空白行的正则表达式：\n\s*\r</div><div class="line">　　评注：可以用来删除空白行</div><div class="line">　　29.匹配HTML标记的正则表达式：&lt;(\S*?)[^&gt;]*&gt;.*?&lt;/&gt;|&lt;.*? /&gt;</div><div class="line">　　评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧无能为力</div><div class="line">　　30.匹配首尾空白字符的正则表达式：^\s*|\s*$</div><div class="line">　　评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</div><div class="line">　　31.匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*</div><div class="line">　　评注：网上流传的版本功能很有限，上面这个基本可以满足需求</div><div class="line">　　32.匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]&#123;4,15&#125;$</div><div class="line">　　评注：表单验证时很实用</div><div class="line">　　33.匹配腾讯QQ号：[1-9][0-9]\&#123;4,\&#125;</div><div class="line">　　评注：腾讯QQ号从10 000 开始</div><div class="line">　　34.匹配中国邮政编码：[1-9]\\d&#123;5&#125;(?!\d)</div><div class="line">　　评注：中国邮政编码为6位数字</div><div class="line">　　35.匹配ip地址：((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\.)&#123;3&#125;(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)。</div></pre></td></tr></table></figure>
+        <hr>
+<p>###一些平时bug的记录和方法<br><a id="more"></a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">按钮倒计时的闪烁问题 </div><div class="line">将按钮属性 system 改成 custom</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">获取数组中的最大值</div><div class="line">CGFloat max = [[array valueForKeyPath:@<span class="string">"@max.intValue"</span>] floatValue];</div><div class="line">111</div><div class="line"></div><div class="line">```bash</div><div class="line">XLForm的一个BUG，在有用到formRowDescriptorValueHasChanged的代理方法的时候，如果不做判断直接做updateFormRow的操作，会造成重复输入的后果。 </div><div class="line"></div><div class="line">解决办法，将updateFormRow 放在需要及时更新的form里面</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">常用的正则表达式</div><div class="line">1.验证用户名和密码：”^[a-zA-Z]\w&#123;5,15&#125;$”</div><div class="line">　　2.验证电话号码：（”^([\\d&#123;3,4&#125;-)\\d&#123;7,8&#125;$](file:///d%7B3,4%7D-)//d%7B7,8%7D$)”）</div><div class="line">　　eg：021-68686868  0511-6868686；</div><div class="line">　　3.验证手机号码：”^1[3|4|5|7|8][0-9]\\d&#123;8&#125;$”；</div><div class="line">　　4.验证身份证号（15位或18位数字）：”\\d&#123;14&#125;[[0-9],0-9xX]”；</div><div class="line">　　5.验证Email地址：(“^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\.\\w+([-.]\\w+)*$”)；</div><div class="line">　　6.只能输入由数字和26个英文字母组成的字符串：(“^[A-Za-z0-9]+$”) ;</div><div class="line">　　7.整数或者小数：^[0-9]+([.]&#123;0,1&#125;[0-9]+)&#123;0,1&#125;$</div><div class="line">　　8.只能输入数字：”^[0-9]*$”。</div><div class="line">　　9.只能输入n位的数字：”^\\d&#123;n&#125;$”。</div><div class="line">　　10.只能输入至少n位的数字：”^\\d&#123;n,&#125;$”。</div><div class="line">　　11.只能输入m~n位的数字：”^\\d&#123;m,n&#125;$”。</div><div class="line">　　12.只能输入零和非零开头的数字：”^(0|[1-9][0-9]*)$”。</div><div class="line">　　13.只能输入有两位小数的正实数：”^[0-9]+(.[0-9]&#123;2&#125;)?$”。</div><div class="line">　　14.只能输入有1~3位小数的正实数：”^[0-9]+(\.[0-9]&#123;1,3&#125;)?$”。</div><div class="line">　　15.只能输入非零的正整数：”^\+?[1-9][0-9]*$”。</div><div class="line">　　16.只能输入非零的负整数：”^\-[1-9][]0-9″*$。</div><div class="line">　　17.只能输入长度为3的字符：”^.&#123;3&#125;$”。</div><div class="line">　　18.只能输入由26个英文字母组成的字符串：”^[A-Za-z]+$”。</div><div class="line">　　19.只能输入由26个大写英文字母组成的字符串：”^[A-Z]+$”。</div><div class="line">　　20.只能输入由26个小写英文字母组成的字符串：”^[a-z]+$”。</div><div class="line">　　21.验证是否含有^%&amp;<span class="string">',;=?$\”等字符：”[^%&amp;'</span>,;=?$\x22]+”。</div><div class="line">　　22.只能输入汉字：”^[\u4e00-\u9fa5]&#123;0,&#125;$”。</div><div class="line">　　23.验证URL：<span class="string">"http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&amp;=]*)?"</span>。</div><div class="line">　　24.验证一年的12个月：”^(0?[1-9]|1[0-2])$”正确格式为：”01″～”09″和”10″～”12″。</div><div class="line">　　25.验证一个月的31天：”^((0?[1-9])|((1|2)[0-9])|30|31)$”正确格式为；”01″～”09″、”10″～”29″和“30”~“31”。</div><div class="line">　　26.获取日期正则表达式：[\\d&#123;4](file:///d%7B4)&#125;[年|\-|\.]\\d&#123;\1-\12&#125;[月|\-|\.]\\d&#123;\1-\31&#125;日?</div><div class="line">　　评注：可用来匹配大多数年月日信息。</div><div class="line">　　27.匹配双字节字符(包括汉字在内)：[^\x00-\xff]</div><div class="line">　　评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</div><div class="line">　　28.匹配空白行的正则表达式：\n\s*\r</div><div class="line">　　评注：可以用来删除空白行</div><div class="line">　　29.匹配HTML标记的正则表达式：&lt;(\S*?)[^&gt;]*&gt;.*?&lt;/&gt;|&lt;.*? /&gt;</div><div class="line">　　评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧无能为力</div><div class="line">　　30.匹配首尾空白字符的正则表达式：^\s*|\s*$</div><div class="line">　　评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</div><div class="line">　　31.匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*</div><div class="line">　　评注：网上流传的版本功能很有限，上面这个基本可以满足需求</div><div class="line">　　32.匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]&#123;4,15&#125;$</div><div class="line">　　评注：表单验证时很实用</div><div class="line">　　33.匹配腾讯QQ号：[1-9][0-9]\&#123;4,\&#125;</div><div class="line">　　评注：腾讯QQ号从10 000 开始</div><div class="line">　　34.匹配中国邮政编码：[1-9]\\d&#123;5&#125;(?!\d)</div><div class="line">　　评注：中国邮政编码为6位数字</div><div class="line">　　35.匹配ip地址：((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\.)&#123;3&#125;(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)。</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -468,17 +470,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -504,7 +497,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -560,22 +553,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift中定义一个基本函数"><span class="nav-number">1.</span> <span class="nav-text">Swift中定义一个基本函数</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -736,7 +713,7 @@
         var disqus_config = function () {
           this.page.url = 'https://l-vincent.github.io/2017/06/08/ios 技巧点/';
           this.page.identifier = '2017/06/08/ios 技巧点/';
-          this.page.title = 'iOS 小技巧';
+          this.page.title = 'iOS 记录点';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://L-vinCent.disqus.com/embed.js';
