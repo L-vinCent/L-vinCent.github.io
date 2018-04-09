@@ -1,0 +1,864 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta name="google-site-verification" content="m3UI4lcUPqpZrsd0hAa_xv7QZH4x70BTPJzUp-HHnyo" />
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Swift," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="文章旨在记录自己学习过程，顺便分享出来，毕竟好东西不能藏着掖着，有需要这本电子书的，这里是购买地址, 里面有样章内容  [Swift开发者必备Tips] [函数式Swift] 这俩本电子书资源,都是内功心法哈,有需要的也可以私我">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift开发者必备Tips--内存管理">
+<meta property="og:url" content="https://l-vincent.github.io/2018/01/02/Swift内存管理/index.html">
+<meta property="og:site_name" content="L-vinCent&#39;s Blog">
+<meta property="og:description" content="文章旨在记录自己学习过程，顺便分享出来，毕竟好东西不能藏着掖着，有需要这本电子书的，这里是购买地址, 里面有样章内容  [Swift开发者必备Tips] [函数式Swift] 这俩本电子书资源,都是内功心法哈,有需要的也可以私我">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-d7afe59ee6ed0527.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-6c88ad5657e44cc8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-fe50bb4e62078972.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-04-09T08:53:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift开发者必备Tips--内存管理">
+<meta name="twitter:description" content="文章旨在记录自己学习过程，顺便分享出来，毕竟好东西不能藏着掖着，有需要这本电子书的，这里是购买地址, 里面有样章内容  [Swift开发者必备Tips] [函数式Swift] 这俩本电子书资源,都是内功心法哈,有需要的也可以私我">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/904629-d7afe59ee6ed0527.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://l-vincent.github.io/2018/01/02/Swift内存管理/"/>
+
+
+
+
+
+  <title>Swift开发者必备Tips--内存管理 | L-vinCent's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">L-vinCent's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">“努力的学习”意味着，要常常去处理那些刚好在你能力极限上的问题</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/01/02/Swift内存管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift开发者必备Tips--内存管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-02T00:00:00+08:00">
+                2018-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/02/Swift内存管理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/01/02/Swift内存管理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>文章旨在记录自己学习过程，顺便分享出来，毕竟好东西不能藏着掖着，有需要这本电子书的，<a href="https://leanpub.com/swifter" target="_blank" rel="external">这里是购买地址</a>, 里面有样章内容</p>
+<ul>
+<li>[Swift开发者必备Tips]</li>
+<li><p>[函数式Swift]</p>
+<p>这俩本电子书资源,都是内功心法哈,有需要的也可以私我</p>
+<a id="more"></a>
+</li>
+</ul>
+<hr>
+<p>先看一下内存这几个点</p>
+<ul>
+<li>内存管理，weak 和 unowned</li>
+<li>@autoreleasepool</li>
+</ul>
+<hr>
+<p>Swift 是自动管理内存的，这也就是说，我们不再需要操心内存的申请和分配。当我们通过初始化创建一个对象时，Swift 会替我们管理和分配内存。而释放的原则遵循了自动引用计数 (ARC) 的规则：当一个对象没有引用的时候，其内存将会被自动回收。这套机制从很大程度上简化了我们的编码，我们只需要保证在合适的时候将引用置空 (比如超过作用域，或者手动设为 nil 等)，就可以确保内存使用不出现问题。</p>
+<p>但是，所有的自动引用计数机制都有一个从理论上无法绕过的限制，那就是循环引用 (retain cycle) 的情况。”</p>
+<p>###什么是循环引用<br>假设我们有两个类 A 和 B， 它们之中分别有一个存储属性持有对方：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">class A: NSObject &#123;</div><div class="line">    <span class="built_in">let</span> b: B</div><div class="line">    override <span class="function"><span class="title">init</span></span>() &#123;</div><div class="line">        b = B()</div><div class="line">        super.init()</div><div class="line">        b.a = self</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    deinit &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"A deinit"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B: NSObject &#123;</div><div class="line">    var a: A? = nil</div><div class="line">    deinit &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"B deinit"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 A 的初始化方法中，我们生成了一个 B 的实例并将其存储在属性中。然后我们又将 A 的实例赋值给了 b.a。这样 a.b 和 b.a 将在初始化的时候形成一个引用循环。现在当有第三方的调用初始化了 A，然后即使立即将其释放，A 和 B 两个类实例的 deinit 方法也不会被调用，说明它们并没有被释放。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var obj: A? = A()</div><div class="line">obj = nil</div><div class="line">// 内存没有释放</div></pre></td></tr></table></figure>
+<p>因为即使 obj 不再持有 A 的这个对象，b 中的 b.a 依然引用着这个对象，导致它无法释放。而进一步，a 中也持有着 b，导致 b 也无法释放。在将 obj 设为 nil 之后，我们在代码里再也拿不到对于这个对象的引用了，所以除非是杀掉整个进程，我们已经永远也无法将它释放了。多么悲伤的故事啊..</p>
+<p>###在 Swift 里防止循环引用</p>
+<p>为了防止这种人神共愤的悲剧的发生，我们必须给编译器一点提示，表明我们不希望它们互相持有。一般来说我们习惯希望 “被动” 的一方不要去持有 “主动” 的一方。在这里 b.a 里对 A 的实例的持有是由 A 的方法设定的，我们在之后直接使用的也是 A 的实例，因此认为 b 是被动的一方。可以将上面的 class B 的声明改为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class B: NSObject &#123;</div><div class="line">    weak var a: A? = nil</div><div class="line">    deinit &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"B deinit"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 var a 前面加上了 weak，向编译器说明我们不希望持有 a。这时，当 obj 指向 nil 时，整个环境中就没有对 A 的这个实例的持有了，于是这个实例可以得到释放。接着，这个被释放的实例上对 b 的引用 a.b 也随着这次释放结束了作用域，所以 b 的引用也将归零，得到释放。添加 weak 后的输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">A deinit</div><div class="line">B deinit</div></pre></td></tr></table></figure>
+<p>可能有心的朋友已经注意到，在 Swift 中除了 weak 以外，还有另一个冲着编译器叫喊着类似的 “不要引用我” 的标识符，那就是 unowned。它们的区别在哪里呢？如果您是一直写 Objective-C 过来的，那么从表面的行为上来说 unowned 更像以前的 unsafe_unretained，而 weak “而 weak 就是以前的 weak。用通俗的话说，就是 unowned 设置以后即使它原来引用的内容已经被释放了，它仍然会保持对被已经释放了的对象的一个 “无效的” 引用，它不能是 Optional 值，也不会被指向 nil。如果你尝试调用这个引用的方法或者访问成员属性的话，程序就会崩溃。而 weak 则友好一些，在引用的内容被释放后，标记为 weak 的成员将会自动地变成 nil (因此被标记为 @weak 的变量一定需要是 Optional 值)。关于两者使用的选择，Apple 给我们的建议是如果能够确定在访问时不会已被释放的话，尽量使用 unowned，如果存在被释放的可能，那就选择用 weak。</p>
+<p>我们结合实际编码中的使用来看看选择吧。日常工作中一般使用弱引用的最常见的场景有两个：</p>
+<p>设置 delegate 时<br>在 self 属性存储为闭包时，其中拥有对 self 引用时<br>前者是 Cocoa 框架的常见设计模式，比如我们有一个负责网络请求的类，它实现了发送请求以及接收请求结果的任务，其中这个结果是通过实现请求类的 protocol 的方式来实现的，这种时候我们一般设置 delegate 为 weak：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">// RequestManager.swift</div><div class="line">class RequestManager: RequestHandler &#123;</div><div class="line"></div><div class="line">    @objc func <span class="function"><span class="title">requestFinished</span></span>() &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"请求完成"</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    func <span class="function"><span class="title">sendRequest</span></span>() &#123;</div><div class="line">        <span class="built_in">let</span> req = Request()</div><div class="line">        req.delegate = self</div><div class="line"></div><div class="line">        req.send()</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Request.swift</div><div class="line">@objc protocol RequestHandler &#123;</div><div class="line">    @objc optional func requestFinished()</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Request &#123;</div><div class="line">    weak var delegate: RequestHandler!;</div><div class="line"></div><div class="line">    func <span class="function"><span class="title">send</span></span>() &#123;</div><div class="line">        // 发送请求</div><div class="line">        // 一般来说会将 req 的引用传递给网络框架</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    func <span class="function"><span class="title">gotResponse</span></span>() &#123;</div><div class="line">        // 请求返回</div><div class="line">        delegate?.requestFinished?()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>req 中以 weak 的方式持有了 delegate，因为网络请求是一个异步过程，很可能会遇到用户不愿意等待而选择放弃的情况。这种情况下一般都会将 RequestManager 进行清理，所以我们其实是无法保证在拿到返回时作为 delegate 的 RequestManager 对象是一定存在的。因此我们使用了 weak 而非 unowned，并在调用前进行了判断。”</p>
+<h3 id="闭包和循环引用"><a href="#闭包和循环引用" class="headerlink" title="闭包和循环引用"></a>闭包和循环引用</h3><p>另一种闭包的情况稍微复杂一些：我们首先要知道，闭包中对任何其他元素的引用都是会被闭包自动持有的。如果我们在闭包中写了 self 这样的东西的话，那我们其实也就在闭包内持有了当前的对象。这里就出现了一个在实际开发中比较隐蔽的陷阱：如果当前的实例直接或者间接地对这个闭包又有引用的话，就形成了一个 self -&gt; 闭包 -&gt; self 的循环引用。最简单的例子是，我们声明了一个闭包用来以特定的形式打印 self 中的一个字符串：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class Person &#123;</div><div class="line">    <span class="built_in">let</span> name: String</div><div class="line">    lazy var printName: ()-&gt;() = &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"The name is \(self.name)"</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    init(personName: String) &#123;</div><div class="line">        name = personName</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    deinit &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Person deinit \(self.name)"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var xiaoMing: Person? = Person(personName: <span class="string">"XiaoMing"</span>)</div><div class="line">xiaoMing!.printName()</div><div class="line">xiaoMing = nil</div><div class="line">// 输出:</div><div class="line">// The name is XiaoMing，没有被释放</div></pre></td></tr></table></figure>
+<p>printName 是 self 的属性，会被 self 持有，而它本身又在闭包内持有 self，这导致了 xiaoMing 的 deinit 在自身超过作用域后还是没有被调用，也就是没有被释放。为了解决这种闭包内的“循环引用，我们需要在闭包开始的时候添加一个标注，来表示这个闭包内的某些要素应该以何种特定的方式来使用。可以将 printName 修改为这样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">lazy var printName: ()-&gt;() = &#123;</div><div class="line">    [weak self] <span class="keyword">in</span></div><div class="line">    <span class="keyword">if</span> <span class="built_in">let</span> strongSelf = self &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"The name is \(strongSelf.name)"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在内存释放就正确了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// 输出:</div><div class="line">// The name is XiaoMing</div><div class="line">// Person deinit XiaoMing</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果我们可以确定在整个过程中 self 不会被释放的话，我们可以将上面的 weak 改为 unowned，这样就不再需要 strongSelf 的判断。但是如果在过程中 self 被释放了而 printName 这个闭包没有被释放的话 (比如 生成 Person 后，某个外部变量持有了 printName，随后这个 Persone 对象被释放了，但是 printName 已然存在并可能被调用)，使用 unowned 将造成崩溃。在这里我们需要根据实际的需求来决定是使用 weak 还是 unowned。</p>
+</blockquote>
+<p>这种在闭包参数的位置进行标注的语法结构是将要标注的内容放在原来参数的前面，并使用中括号括起来。如果有多个需要标注的元素的话，在同一个中括号内用逗号隔开，举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 标注前</div><div class="line">&#123; (number: Int) -&gt; Bool <span class="keyword">in</span></div><div class="line">    //...</div><div class="line">    <span class="built_in">return</span> <span class="literal">true</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">// 标注后</div><div class="line">&#123; [unowned self, weak someObject] (number: Int) -&gt; Bool <span class="keyword">in</span></div><div class="line">    //...</div><div class="line">    <span class="built_in">return</span> <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##@autoreleasepool</p>
+<p>Swift 在内存管理上使用的是自动引用计数 (ARC) 的一套方法，在 ARC 中虽然不需要手动地调用像是 retain，release 或者是 autorelease 这样的方法来管理引用计数，但是这些方法还是都会被调用的 – 只不过是编译器在编译时在合适的地方帮我们加入了而已。其中 retain 和 release 都很直接，就是将对象的引用计数加一或者减一。但是autorelease 就比较特殊一些，它会将接受该消息的对象放到一个预先建立的自动释放池 (auto release pool) 中，并在 自动释放池收到 drain 消息时将这些对象的引用计数减一，然后将它们从池子中移除 (这一过程形象地称为“抽干池子”)。</p>
+<p>在 app 中，整个主线程其实是跑在一个自动释放池里的，并且在每个主 Runloop 结束时进行 drain 操作。这是一种必要的延迟释放的方式，因为我们有时候需要确保在方法内部初始化的生成的对象在被返回后别人还能使用，而不是立即被释放掉。</p>
+<p>在 Objective-C 中，建立一个自动释放池的语法很简单，使用 @autoreleasepool 就行了。如果你新建一个 Objective-C 项目，可以看到 main.m 中就有我们刚才说到的整个项目的 autoreleasepool：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">int main(int argc, char * argv[]) &#123;</div><div class="line">    @autoreleasepool &#123;</div><div class="line">        int retVal = UIApplicationMain(</div><div class="line">            argc,</div><div class="line">            argv,</div><div class="line">            nil,</div><div class="line">            NSStringFromClass([AppDelegate class]));</div><div class="line">        <span class="built_in">return</span> retVal;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>更进一步，其实 @autoreleasepool 在编译时会被展开为 NSAutoreleasePool，并附带 drain 方法的调用。</p>
+<p>而在 Swift 项目中，因为有了 @UIApplicationMain，我们不再需要 main 文件和 main 函数，所以原来的整个程序的自动释放池就不存在了。即使我们使用 main.swift 来作为程序的入口时，也是不需要自己再添加自动释放池的。</p>
+<p>但是在一种情况下我们还是希望自动释放，那就是在面对在一个方法作用域中要生成大量的 autorelease 对象的时候。在 Swift 1.0 时，我们可以写这样的代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">func <span class="function"><span class="title">loadBigData</span></span>() &#123;</div><div class="line">      <span class="keyword">if</span> <span class="built_in">let</span> path = NSBundle.mainBundle()</div><div class="line">          .pathForResource(<span class="string">"big"</span>, ofType: <span class="string">"jpg"</span>) &#123;</div><div class="line"></div><div class="line">          <span class="keyword">for</span> i <span class="keyword">in</span> 1...10000 &#123;</div><div class="line">              <span class="built_in">let</span> data = NSData.dataWithContentsOfFile(</div><div class="line">                  path, options: nil, error: nil)</div><div class="line"></div><div class="line">              NSThread.sleepForTimeInterval(0.5)</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>dataWithContentsOfFile 返回的是 autorelease 的对象，因为我们一直处在循环中，因此它们将一直没有机会被释放。如果数量太多而且数据太大的时候，很容易因为内存不足而崩溃。在 Instruments 下可以看到内存 alloc 的情况：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-d7afe59ee6ed0527.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="autoreleasepool-1.png"></p>
+<p>这显然是一幅很不妙的情景。在面对这种情况的时候，正确的处理方法是在其中加入一个自动释放池，这样我们就可以在循环进行到某个特定的时候施放内存，保证不会因为内存不足而导致应用崩溃。在 Swift 中我们也是能使用 autoreleasepool 的 – 虽然语法上略有不同。相比于原来在 Objective-C 中的关键字，现在它变成了一个接受闭包的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">func autoreleasepool(code: () -&gt; ())</div></pre></td></tr></table></figure>
+<p>利用尾随闭包的写法，很容易就能在 Swift 中加入一个类似的自动释放池了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">func <span class="function"><span class="title">loadBigData</span></span>() &#123;</div><div class="line">    <span class="keyword">if</span> <span class="built_in">let</span> path = NSBundle.mainBundle()</div><div class="line">        .pathForResource(<span class="string">"big"</span>, ofType: <span class="string">"jpg"</span>) &#123;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> 1...10000 &#123;</div><div class="line">            autoreleasepool &#123;</div><div class="line">                <span class="built_in">let</span> data = NSData.dataWithContentsOfFile(</div><div class="line">                    path, options: nil, error: nil)</div><div class="line"></div><div class="line">                NSThread.sleepForTimeInterval(0.5)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样改动以后，内存分配就没有什么忧虑了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-6c88ad5657e44cc8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="autoreleasepool-2.png"></p>
+<p>这里我们每一次循环都生成了一个自动释放池，虽然可以保证内存使用达到最小，但是释放过于频繁也会带来潜在的性能忧虑。一个折衷的方法是将循环分隔开加入自动释放池，比如每 10 次循环对应一次自动释放，这样能减少带来的性能损失。</p>
+<p>其实对于这个特定的例子，我们并不一定需要加入自动释放。在 Swift 中更提倡的是用初始化方法而不是用像上面那样的类方法来生成对象，而且从 Swift 1.1 开始，因为加入了可以返回 nil 的初始化方法，像上面例子中那样的工厂方法都已经从 API 中删除了。今后我们都应该这样写：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">let</span> data = NSData(contentsOfFile: path)</div></pre></td></tr></table></figure>
+<p>使用初始化方法的话，我们就不需要面临自动释放的问题了，每次在超过作用域后，自动内存管理都将为我们处理好内存相关的事情。</p>
+<hr>
+<p>最后，这周看的一部电影让我记下来一句话</p>
+<p>死亡不是终点,遗忘才是</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-fe50bb4e62078972.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/02/从 map 函数看泛型/" rel="next" title="从 map 函数看泛型">
+                <i class="fa fa-chevron-left"></i> 从 map 函数看泛型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Pan'V" />
+          <p class="site-author-name" itemprop="name">Pan'V</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/L-vinCent" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/4a7b7da390e4" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包和循环引用"><span class="nav-number">1.</span> <span class="nav-text">闭包和循环引用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pan'V</span>
+</div>
+
+
+<div class="powered-by">
+  努力工作,努力生活
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="busuanzi-count" >
+<span class="site-uv">
+<i class="fa fa-user"></i>
+<span id="busuanzi_container_site_pv">
+访问量: <span id="busuanzi_value_site_pv"></span> 次  
+</span>
+</span>
+
+<span class="site-pv">
+<i class="fa fa-quora"></i>
+<span id="busuanzi_container_site_uv">
+访客数: <span id="busuanzi_value_site_uv"></span> 人
+</span>
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://L-vinCent.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://l-vincent.github.io/2018/01/02/Swift内存管理/';
+          this.page.identifier = '2018/01/02/Swift内存管理/';
+          this.page.title = 'Swift开发者必备Tips--内存管理';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://L-vinCent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
