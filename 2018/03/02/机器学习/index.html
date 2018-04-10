@@ -1,0 +1,878 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta name="google-site-verification" content="m3UI4lcUPqpZrsd0hAa_xv7QZH4x70BTPJzUp-HHnyo" />
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="从一个最基本的算法示例来入门机器学习第一个分类算法 — k-近邻算法（简单地说，k近邻算法采用测量不同特征值之间的距离方法进行分类。）">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习实战 -- k近邻算法">
+<meta property="og:url" content="https://l-vincent.github.io/2018/03/02/机器学习/index.html">
+<meta property="og:site_name" content="L-vinCent&#39;s Blog">
+<meta property="og:description" content="从一个最基本的算法示例来入门机器学习第一个分类算法 — k-近邻算法（简单地说，k近邻算法采用测量不同特征值之间的距离方法进行分类。）">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-4ab516080ad08f79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-a475f3f5cb758a14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-077bb6a8c7d0687f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-049d11ecde3a69e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-d2c4c260334b0cfe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-9e763807ddd8e1db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/904629-25598d84463a1d4d.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-04-10T01:54:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战 -- k近邻算法">
+<meta name="twitter:description" content="从一个最基本的算法示例来入门机器学习第一个分类算法 — k-近邻算法（简单地说，k近邻算法采用测量不同特征值之间的距离方法进行分类。）">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/904629-4ab516080ad08f79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://l-vincent.github.io/2018/03/02/机器学习/"/>
+
+
+
+
+
+  <title>机器学习实战 -- k近邻算法 | L-vinCent's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">L-vinCent's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">“努力的学习”意味着，要常常去处理那些刚好在你能力极限上的问题</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/03/02/机器学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习实战 -- k近邻算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-02T00:00:00+08:00">
+                2018-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/02/机器学习/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/03/02/机器学习/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h2 id="从一个最基本的算法示例来入门机器学习"><a href="#从一个最基本的算法示例来入门机器学习" class="headerlink" title="从一个最基本的算法示例来入门机器学习"></a>从一个最基本的算法示例来入门机器学习</h2><p>第一个分类算法 — <a href="https://baike.baidu.com/item/k近邻算法/9512781?fr=aladdin" target="_blank" rel="external">k-近邻算法</a>（简单地说，k近邻算法采用测量不同特征值之间的距离方法进行分类。）<br><a id="more"></a></p>
+<hr>
+<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><ul>
+<li>工具, 我用的 Pycharm ，Python V3.X和V2.x 随意切换，建议初学者还是下个编辑工具方便些.  <a href="http://www.jianshu.com/p/6e6205bef56a" target="_blank" rel="external">Pycharm环境配置</a></li>
+<li>本篇基于 Python 2.X 环境,Mac OS 系统</li>
+<li>模块导入 numpy,operator,matplotlib，<a href="https://www.u3v3.com/ar/1320" target="_blank" rel="external">不知道从哪导入?</a></li>
+<li>这里用的比较的多的NumPy数组，建议先简单了解下，<a href="http://usyiyi.cn/translate/NumPy_v111/reference/arrays.ndarray.html" target="_blank" rel="external">NumPy使用手册</a></li>
+<li>建议第一遍先过一下算法大概的思想，之后再细看代码</li>
+<li><a href="https://github.com/L-vinCent/kNearDemo" target="_blank" rel="external">源码在这里</a></li>
+</ul>
+<hr>
+<h3 id="需求分析-使用k-近邻算法改进约会网站的配对效果"><a href="#需求分析-使用k-近邻算法改进约会网站的配对效果" class="headerlink" title="需求分析,使用k-近邻算法改进约会网站的配对效果"></a>需求分析,使用k-近邻算法改进约会网站的配对效果</h3><p>海伦一直使用在线约会网站寻找适合自己的约会对象。尽管约会网站会推荐不同的 人选，但她没有从中找到喜欢的人。经过一番总结，她发现曾交往过三种类型的人:</p>
+<ul>
+<li>不喜欢的人</li>
+<li>魅力一般的人 </li>
+<li>极具魅力的人</li>
+</ul>
+<p>这次的分类软件可以更好地帮助她将匹配对象划分到确切的分类中</p>
+<hr>
+<h3 id="k-近邻算法流程"><a href="#k-近邻算法流程" class="headerlink" title="k-近邻算法流程"></a>k-近邻算法流程</h3><ol>
+<li>收集数据:提供文本文件</li>
+<li>准备数据: 使用 Python 解析文本文件</li>
+<li>分析数据:使用 Matplotlib 画二维扩散图</li>
+<li>训练算法:此步驟不适用于卜近邻算法</li>
+<li>使用海伦提供的部分数据作为测试样本,测试样本和非测试样本的区别在于:测试样本是已经完成分类的数据，如果预测分类与实际类别不同，则标记为一个错误</li>
+<li>使用算法:产生简单的命令行程序，然后海伦可以输入一些特征数据以判断对方是否<br>为自己喜欢的类型</li>
+</ol>
+<h3 id="准备数据-从文本文件中解析数据"><a href="#准备数据-从文本文件中解析数据" class="headerlink" title="准备数据:从文本文件中解析数据"></a>准备数据:从文本文件中解析数据</h3><p>本次数据来源海伦的约会数据，放在文本文件 <a href="https://github.com/L-vinCent/kNearDemo" target="_blank" rel="external">datingTestSet2.txt</a> 中，每 个样本数据占据一行，总共有1000行。样本主要包含以下3种特征：</p>
+<ul>
+<li>每年获得的飞行常客里程数</li>
+<li>玩视频游戏所耗时间百分比  </li>
+<li>每周消费的冰淇淋公升数</li>
+</ul>
+<p>在将上述特征数据输人到分类器之前，必须将待处理数据的格式改变为分类器可以接受的格式 。在kNN.py中创建名为file2matrix的函数，以此来处理输人格式问题。该函数的输人为文件名字符串，输出为训练样本矩阵和类标签向量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">def file2matrix(filename):</div><div class="line">    love_dictionary = &#123;<span class="string">'非常喜欢'</span>: 3, <span class="string">'一般喜欢'</span>: 2, <span class="string">'讨厌'</span>: 1&#125;</div><div class="line">    fr = open(filename)</div><div class="line">    arrayOLines = fr.readlines()</div><div class="line">    numberOfLines = len(arrayOLines)  <span class="comment"># get the number of lines in the file</span></div><div class="line">    returnMat = zeros((numberOfLines, 3))  <span class="comment"># prepare matrix to return</span></div><div class="line">    classLabelVector = []  <span class="comment"># prepare labels return</span></div><div class="line">    index = 0</div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> arrayOLines:</div><div class="line">        line = line.strip()</div><div class="line">        listFromLine = line.split(<span class="string">'\t'</span>)</div><div class="line">        returnMat[index, :] = listFromLine[0:3]</div><div class="line">        <span class="keyword">if</span> (listFromLine[-1].isdigit()):</div><div class="line">            classLabelVector.append(int(listFromLine[-1]))</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            classLabelVector.append(love_dictionary.get(listFromLine[-1]))</div><div class="line">        index += 1</div><div class="line">    <span class="built_in">return</span> returnMat, classLabelVector</div></pre></td></tr></table></figure>
+<p>首先我们需要知道文本文件包含多 少行。打开文件，得到文件的行数。然后创建以零填充的矩阵NumPy(实际上，NumPy是一 个二维数组，这里暂时不用考虑其用途)。为了简化处理，我们将该矩阵的另一维度设置为固定 值3 , 你可以按照自己的实际需求增加相应的代码以适应变化的输人值。循环处理文件中的每行 数据 , 首先使用函数line.strip()截取掉所有的回车字符，然后使用tab字符\t将上一步得 到的整行数据分割成一个元素列表。接着，我们选取前3个元素，将它们存储到特征矩阵中。Python 语言可以使用索引值-1表示列表中的最后一列元素，利用这种负索引，我们可以很方便地将列表 的最后一列存储到向量classLabelVector中。需要注意的是，我们必须明确地通知解释器，告 诉它列表中存储的元素值为整型，否则Python语言会将这些元素当作字符串处理。以前我们必须自己处理这些变量值类型问题. </p>
+<p>测试一下，读出来的数据是这样</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-4ab516080ad08f79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-10-09 下午3.46.43.png"></p>
+<h3 id="散点图，观察数据的样本分布"><a href="#散点图，观察数据的样本分布" class="headerlink" title="散点图，观察数据的样本分布"></a>散点图，观察数据的样本分布</h3><p>只是为了能比较直观的看到样本之间的模式，不在算法内</p>
+<p>一般来说，图形化的方式能更直观地展示数据。接下来下面用 Matplotlib 来图形化展示数据内容，看一下数据之间的模式,测试代码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def matplotTest():</div><div class="line">    datingDataMat, datingLabels = file2matrix(<span class="string">'datingTestSet2.txt'</span>)</div><div class="line">    fig = plt.figure()</div><div class="line">    ax = fig.add_subplot(111)</div><div class="line">    ax.scatter(datingDataMat[:,1],datingDataMat[:,2],15.0*array(datingLabels),15.0*array(datingLabels))</div><div class="line">    plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-a475f3f5cb758a14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图二.png"> 这是玩视频游戏所耗时间百分比(X)与每周消费的冰激凌公升数的散点图(Y),可以看到三个样本的分布情况，不过区分度不是很清晰</p>
+<p>接下来取矩阵列的0和1列 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">datingDataMat[:,0],datingDataMat[:,1]</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-077bb6a8c7d0687f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图三.png">这是每年飞行常客里程数(X)与玩视频游戏所占百分比的约会数据散点图(Y)</p>
+<p>清晰地标识了三个不同的样本分类区域，具有不同爱好的人其类别区域也不同。</p>
+<h3 id="准备数据-归一化数值"><a href="#准备数据-归一化数值" class="headerlink" title="准备数据:归一化数值"></a>准备数据:归一化数值</h3><p>计算俩点间的距离公式</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-049d11ecde3a69e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图四.png"></p>
+<p>很容易发现，上面方程中数字差值最大的属性对计算结果的影响最大，也就是说，每年 获取的飞行常客里程数对于计算结果的影响将远远大于表2-3中其他两个特征— 玩视频游戏的 和每周消费冰洪淋公升数— 的影响。而产生这种现象的唯一原因，仅仅是因为飞行常客里程数 远大于其他特征值。但海伦认为这三种特征是同等重要的，因此作为三个等权重的特征之一，飞 行常客里程数并不应该如此严重地影响到计算结果。</p>
+<p>在处理这种不同取值范围的特征值时，我们通常采用的方法是将数值归一化，如将取值范围 处理为0到1或者-1到1之间。下面的公式可以将任意取值范围的特征值转化为0到1区间内的值:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">newValue = &#123;oldValue-min)/(max-min)</div></pre></td></tr></table></figure>
+<p>其中min和max分别是数据集中的最小特征值和最大特征值。虽然改变数值取值范围增加了 分类器的复杂度，但为了得到准确结果，必须这样做。定义一个函数，将数字特征值转化为0到1的区间。</p>
+<p>为了归一化特征值，我们必须使用当前值减去最小值，然后除以取值范围. 需要注意的是，特征 值矩阵有1000 <em> 3个值，而minVals和range的值都为1 </em> 3。为了解决这个冋题，我们使用NumPY函数将变量内容复制成输入矩阵同样大小的矩阵，注意这是具体特征值相除 ，而 对于某些数值处理软件包，/可能意味着矩阵除法，但在NumPy库中，矩阵除法需要使用函数 linalg .solve (matA,matB) 。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">def autoNorm(dataSet):</div><div class="line">    minVals = dataSet.min(0)</div><div class="line">    maxVals = dataSet.max(0)</div><div class="line">    ranges = maxVals - minVals</div><div class="line">    normDataSet = zeros(shape(dataSet))</div><div class="line">    m = dataSet.shape[0]</div><div class="line">    normDataSet = dataSet - tile(minVals, (m, 1))</div><div class="line">    normDataSet = normDataSet / tile(ranges, (m, 1))  <span class="comment"># element wise divide</span></div><div class="line">    <span class="built_in">return</span> normDataSet, ranges, minVals</div><div class="line">    </div><div class="line"><span class="comment">#将每列的最小值放在变量minVals中，将最大值放在变量 maxVals中,其中dataSet.min(0)中的参数0使得函数可以从列中选取最小值，而不是选取当前行的最小值。然后，函数计算可能的取值范围，并创建新的返回矩阵</span></div></pre></td></tr></table></figure>
+<p>这里可以打印出归一之后的结果,测试代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def solveTest():</div><div class="line">    datingDataMat,datingLabels = file2matrix(<span class="string">'datingTestSet2.txt'</span>)</div><div class="line">    <span class="built_in">print</span> autoNorm(datingDataMat)</div></pre></td></tr></table></figure>
+<p>输出</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-d2c4c260334b0cfe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图五.png"></p>
+<h3 id="测试算法-作为完整程序验证分类器"><a href="#测试算法-作为完整程序验证分类器" class="headerlink" title="测试算法:作为完整程序验证分类器"></a>测试算法:作为完整程序验证分类器</h3><p>机器学习算法一个很重要的工作就是评估算法的正确率，通常我们只提供已有数据的90%作为训练样本来训练分类 器 ，而使用其余的10%数据去测试分类器，检测分类器的正确率,这里随意选择10%数据而不影响其随机性。</p>
+<p>使用错误率来检测分类器的性能。对于分类器来说，错误率就是分类 器给出错误结果的次数除以测试数据的总数，完美分类器的错误率为0，而错误率为1.0的分类器 不会给出任何正确的分类结果。代码里我们定义一个计数器变量，每次分类器错误地分类数据， 计数器就加1, 程序执行完成之后计数器的结果除以数据点总数即是错误率</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">def classify0(inX, dataSet, labels, k):</div><div class="line">    dataSetSize = dataSet.shape[0]</div><div class="line">    diffMat = tile(inX, (dataSetSize, 1)) - dataSet</div><div class="line"></div><div class="line">    sqDiffMat = diffMat ** 2</div><div class="line">    sqDistances = sqDiffMat.sum(axis=1)</div><div class="line">    distances = sqDistances ** 0.5</div><div class="line">    sortedDistIndicies = distances.argsort() <span class="comment">#是按照距离从高到底排序</span></div><div class="line">    classCount = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k): <span class="comment">#表示提取前k个值</span></div><div class="line">        voteIlabel = labels[sortedDistIndicies[i]] <span class="comment">#排在第i位置的类别</span></div><div class="line">        classCount[voteIlabel] = classCount.get(voteIlabel, 0) + 1 <span class="comment">#对 classCount[voteIlabel] 的值进行加一，如果不存在则初始化为1</span></div><div class="line">    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True) <span class="comment">#出现频次列表classCount 进行倒序排序</span></div><div class="line">    <span class="built_in">return</span> sortedClassCount[0][0]</div><div class="line"><span class="comment">#分类器</span></div></pre></td></tr></table></figure>
+<p>classify0分类算法流程,对未知类别属性的数据集中的每个点依次执行以下操作:<br>(1)计算已知类别数据集中的点与当前点之间的距离;<br> (2)按照距离递增次序排序;<br>(3)选取与当前点距离最小k几个点;<br>(4)确定前k个点所在类别的出现频率;<br> (5)返回前k个点出现频率最高的类别作为当前点的预测分类。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">def datingClassTest():</div><div class="line">    hoRatio = 0.50  <span class="comment"># hold out 10%</span></div><div class="line">    datingDataMat, datingLabels = file2matrix(<span class="string">'datingTestSet2.txt'</span>)  <span class="comment"># load data setfrom file</span></div><div class="line">    normMat, ranges, minVals = autoNorm(datingDataMat)</div><div class="line">    m = normMat.shape[0]</div><div class="line">    numTestVecs = int(m * hoRatio)</div><div class="line">    errorCount = 0.0</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numTestVecs):</div><div class="line">        classifierResult = classify0(normMat[i, :], normMat[numTestVecs:m, :], datingLabels[numTestVecs:m], 3)</div><div class="line">        <span class="built_in">print</span> <span class="string">"the classifier came back with: %d, the real answer is: %d"</span> % (classifierResult, datingLabels[i])</div><div class="line">        <span class="keyword">if</span> (classifierResult != datingLabels[i]): errorCount += 1.0</div><div class="line">    <span class="built_in">print</span> <span class="string">"the total error rate is: %f"</span> % (errorCount / <span class="built_in">float</span>(numTestVecs))</div><div class="line">    <span class="built_in">print</span> errorCount</div></pre></td></tr></table></figure>
+<p>从文件中读取数据并将其转换为归一化特征值。接着计算测试向量的数量，此步决定了 normMat向量中哪些数据用于测试，哪些数据用于分类器的训练样本;然后将这两部分数据输人到原始kNN分类器函数classifyO。最后，函数计算错误率并输出结果</p>
+<p>调用测试函数 datingClassTest(),输出</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-9e763807ddd8e1db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图六.png"></p>
+<p>可以看到，约会数据集的错误率5%，还算是一个可以接受的结果,可以改变函数 datingClassTest内变量 hoRatio 和变量 k 的值，检测错误率是否随着变量值的变化而增加。依 赖于分类算法、数据集和程序设置，分类器的输出结果可能有很大的不同</p>
+<p>这个例子表明我们可以正确地预测分类，错误率是5%。海伦完全可以输人未知对象的 属性信息’由分类软件来帮助她判定某一对象的可交往程度:讨厌、一般喜欢、非常喜欢。</p>
+<h3 id="使用算法-构建完整可用系统"><a href="#使用算法-构建完整可用系统" class="headerlink" title="使用算法:构建完整可用系统"></a>使用算法:构建完整可用系统</h3><p>现在可以做出一个小程序,通过该程序海伦会在约会网站上找到某个人并输入他的信息。 程序会给出她对对方喜欢程度的预测值</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">def classifyPerson():</div><div class="line">    resultList = [<span class="string">'讨厌'</span>, <span class="string">'一般喜欢'</span>, <span class="string">'非常喜欢'</span>]</div><div class="line">    percentTats = <span class="built_in">float</span>(raw_input( \</div><div class="line">        <span class="string">"percentage of time spent playing video games?"</span>))</div><div class="line">    ffMiles = <span class="built_in">float</span>(raw_input(<span class="string">"frequent flier miles earned per year?"</span>))</div><div class="line">    iceCream = <span class="built_in">float</span>(raw_input(<span class="string">"liters of ice cream consumed per year?"</span>))</div><div class="line">    datingDataMat, datingLabels = file2matrix(<span class="string">'datingTestSet2.txt'</span>)</div><div class="line">    normMat, ranges, minVals = autoNorm(datingDataMat)</div><div class="line">    inArr = array([ffMiles, percentTats, iceCream, ])</div><div class="line">    classifierResult = classify0((inArr - \</div><div class="line">                                  minVals) / ranges, normMat, datingLabels, 3)</div><div class="line">    <span class="built_in">print</span> <span class="string">"You will probably like this person: %s"</span> % resultList[classifierResult - 1]</div></pre></td></tr></table></figure>
+<p>测试下，运行函数,依次输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">玩视频游戏的百分比?  12</div><div class="line">每年的飞行公里数  30354</div><div class="line">每周消费的冰淇淋公升数  2</div></pre></td></tr></table></figure>
+<p>然后可以得到  你对他的喜欢程度 非常喜欢   的结论</p>
+<hr>
+<p>到此为止，算是初步摸到了机器学习的门槛,后续会有包括决策树，朴素贝叶斯等进阶算法的学习总结篇,共同进步.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/904629-25598d84463a1d4d.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="WechatIMG1.jpeg"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/21/willSet和didSet/" rel="next" title="Swift开发者必备Tips -- 属性观察 willSet 和 didSet">
+                <i class="fa fa-chevron-left"></i> Swift开发者必备Tips -- 属性观察 willSet 和 didSet
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Pan'V" />
+          <p class="site-author-name" itemprop="name">Pan'V</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/L-vinCent" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/4a7b7da390e4" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从一个最基本的算法示例来入门机器学习"><span class="nav-number">1.</span> <span class="nav-text">从一个最基本的算法示例来入门机器学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需求分析-使用k-近邻算法改进约会网站的配对效果"><span class="nav-number">1.2.</span> <span class="nav-text">需求分析,使用k-近邻算法改进约会网站的配对效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-近邻算法流程"><span class="nav-number">1.3.</span> <span class="nav-text">k-近邻算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备数据-从文本文件中解析数据"><span class="nav-number">1.4.</span> <span class="nav-text">准备数据:从文本文件中解析数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#散点图，观察数据的样本分布"><span class="nav-number">1.5.</span> <span class="nav-text">散点图，观察数据的样本分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备数据-归一化数值"><span class="nav-number">1.6.</span> <span class="nav-text">准备数据:归一化数值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试算法-作为完整程序验证分类器"><span class="nav-number">1.7.</span> <span class="nav-text">测试算法:作为完整程序验证分类器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用算法-构建完整可用系统"><span class="nav-number">1.8.</span> <span class="nav-text">使用算法:构建完整可用系统</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pan'V</span>
+</div>
+
+
+<div class="powered-by">
+  努力工作,努力生活
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="busuanzi-count" >
+<span class="site-uv">
+<i class="fa fa-user"></i>
+<span id="busuanzi_container_site_pv">
+访问量: <span id="busuanzi_value_site_pv"></span> 次  
+</span>
+</span>
+
+<span class="site-pv">
+<i class="fa fa-quora"></i>
+<span id="busuanzi_container_site_uv">
+访客数: <span id="busuanzi_value_site_uv"></span> 人
+</span>
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://L-vinCent.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://l-vincent.github.io/2018/03/02/机器学习/';
+          this.page.identifier = '2018/03/02/机器学习/';
+          this.page.title = '机器学习实战 -- k近邻算法';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://L-vinCent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

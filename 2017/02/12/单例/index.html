@@ -1,0 +1,866 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta name="google-site-verification" content="m3UI4lcUPqpZrsd0hAa_xv7QZH4x70BTPJzUp-HHnyo" />
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Swift," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="单例 Log 输出 lazy 修饰符和 lazy 方法">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单例  |  log输出|lazy 修饰符和 lazy 方法">
+<meta property="og:url" content="https://l-vincent.github.io/2017/02/12/单例/index.html">
+<meta property="og:site_name" content="L-vinCent&#39;s Blog">
+<meta property="og:description" content="单例 Log 输出 lazy 修饰符和 lazy 方法">
+<meta property="og:updated_time" content="2018-04-10T01:52:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单例  |  log输出|lazy 修饰符和 lazy 方法">
+<meta name="twitter:description" content="单例 Log 输出 lazy 修饰符和 lazy 方法">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://l-vincent.github.io/2017/02/12/单例/"/>
+
+
+
+
+
+  <title>单例  |  log输出|lazy 修饰符和 lazy 方法 | L-vinCent's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">L-vinCent's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">“努力的学习”意味着，要常常去处理那些刚好在你能力极限上的问题</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2017/02/12/单例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">单例  |  log输出|lazy 修饰符和 lazy 方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-12T00:00:00+08:00">
+                2017-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/12/单例/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/02/12/单例/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<ul>
+<li>单例</li>
+<li>Log 输出</li>
+<li>lazy 修饰符和 lazy 方法<a id="more"></a>
+</li>
+</ul>
+<h2 id="单例"><a href="#单例" class="headerlink" title="单例"></a>单例</h2><p>单例是一个在 Cocoa 中很常用的模式了。对于一些希望能在全局方便访问的实例，或者在 app 的生命周期中只应该存在一个的对象，我们一般都会使用单例来存储和访问。在 Objective-C 中单例的公认的写法类似下面这样：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@implementation MyManager</div><div class="line">+ (id)sharedManager &#123;</div><div class="line">    static MyManager * staticInstance = nil;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line"></div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        staticInstance = [[self alloc] init];</div><div class="line">    &#125;);</div><div class="line">    <span class="built_in">return</span> staticInstance;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>使用 GCD 中的 dispatch_once_t 可以保证里面的代码只被调用一次，以此保证单例在线程上的安全。</p>
+<p>在 Swift 1.2 以及之后，如果没有特别的需求，我们推荐使用下面这样的方式来写一个单例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">class MyManager  &#123;</div><div class="line">    static <span class="built_in">let</span> shared = MyManager()</div><div class="line">    private <span class="function"><span class="title">init</span></span>() &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种写法不仅简洁，而且保证了单例的独一无二。在初始化类变量的时候，Apple 将会把这个初始化包装在一次 swift_once_block_invoke 中，以保证它的唯一性。不仅如此，对于所有的全局变量，Apple 都会在底层使用这个类似 dispatch_once 的方式来确保只以 lazy 的方式初始化一次。</p>
+<p>另外，我们在这个类型中加入了一个私有的初始化方法，来覆盖默认的公开初始化方法，这让项目中的其他地方不能够通过 init 来生成自己的 MyManager 实例，也保证了类型单例的唯一性。如果你需要的是类似 default 的形式的单例 (也就是说这个类的使用者可以创建自己的实例) 的话，可以去掉这个私有的 init 方法。</p>
+<h2 id="log输出"><a href="#log输出" class="headerlink" title="log输出"></a>log输出</h2><p>Log 输出是程序开发中很重要的组成部分，虽然它并不是直接的业务代码，但是却可以忠实地反映我们的程序是如何工作的，以及记录程序运行的过程中发生了什么。</p>
+<p>在 Swift 中，最简单的输出方法就是使用 print，在我们关心的地方输出字符串和值。但是这并不够，试想一下当程序变得非常复杂的时候，我们可能会输出很多内容，而想在其中寻找到我们希望的输出其实并不容易。我们往往需要更好更精确的输出，这包括输出这个 log 的文件，调用的行号以及所处的方法名字等等。</p>
+<p>我们当然可以在 print 的时候将当前的文件名字和那些必要的信息作为参数同我们的消息一起进行打印：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// Test.swift</div><div class="line">func <span class="function"><span class="title">method</span></span>() &#123;</div><div class="line">    //...</div><div class="line">    <span class="built_in">print</span>(<span class="string">"文件名:Test.swift, 方法名:method，这是一条输出"</span>)</div><div class="line">    //...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是这显然非常麻烦，每次输入文件名和方法名不说，随着代码的改变，这些 Log 的位置也可能发生改变，这时我们可能还需要不断地去维护这些输出，代价实在太大。”<br>在 Swift 中，编译器为我们准备了几个很有用的编译符号，用来处理类似这样的需求，它们分别是：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:right">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#file</td>
+<td style="text-align:center">String</td>
+<td style="text-align:right">包含这个符号的文件的路径</td>
+</tr>
+<tr>
+<td>#line</td>
+<td style="text-align:center">Int</td>
+<td style="text-align:right">符号出现处的行号</td>
+</tr>
+<tr>
+<td>#column</td>
+<td style="text-align:center">Int</td>
+<td style="text-align:right">符号出现处的列</td>
+</tr>
+<tr>
+<td>#function</td>
+<td style="text-align:center">String</td>
+<td style="text-align:right">包含这个符号的方法名字</td>
+</tr>
+</tbody>
+</table>
+<p>因此，我们可以通过使用这些符号来写一个好一些的 Log 输出方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">func printLog&lt;T&gt;(_ message: T,</div><div class="line">                    file: String = <span class="comment">#file,</span></div><div class="line">                  method: String = <span class="comment">#function,</span></div><div class="line">                    line: Int = <span class="comment">#line)</span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"\((file as NSString).lastPathComponent)[\(line)], \(method): \(message)"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，在进行 log 的时候我们只需要使用这个方法就能完成文件名，行号以及方法名的输出了。最棒的是，我们不再需要对这样的输出进行维护，无论在哪里它都能正确地输出各个参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// Test.swift</div><div class="line">func <span class="function"><span class="title">method</span></span>() &#123;</div><div class="line">    //...</div><div class="line">    printLog(<span class="string">"这是一条输出"</span>)</div><div class="line">    //...</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 输出：</div><div class="line">// Test.swift[62], method(): 这是一条输出</div></pre></td></tr></table></figure>
+<p>另外，对于 log 输出更多地其实是用在程序开发和调试的过程中的，过多的输出有可能对运行的性能造成影响。在 Release 版本中关闭掉向控制台的输出也是软件开发中一种常见的做法。如果我们在开发中就注意使用了统一的 log 输出的话，这就变得非常简单了。使用条件编译的方法，我们可以添加条件，并设置合适的编译配置，使 printLog 的内容在 Release 时被去掉，从而成为一个空方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">func printLog&lt;T&gt;(_ message: T,</div><div class="line">                    file: String = <span class="comment">#file,</span></div><div class="line">                  method: String = <span class="comment">#function,</span></div><div class="line">                    line: Int = <span class="comment">#line)</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">#if DEBUG</span></div><div class="line">    <span class="built_in">print</span>(<span class="string">"\((file as NSString).lastPathComponent)[\(line)], \(method): \(message)"</span>)</div><div class="line">    <span class="comment">#endif</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>新版本的 LLVM 编译器在遇到这个空方法时，甚至会直接将这个方法整个去掉，完全不去调用它，从而实现零成本。</p>
+<h2 id="lazy-修饰符和-lazy-方法"><a href="#lazy-修饰符和-lazy-方法" class="headerlink" title="lazy 修饰符和 lazy 方法"></a>lazy 修饰符和 lazy 方法</h2><p>延时加载或者说延时初始化是很常用的优化方法，在构建和生成新的对象的时候，内存分配会在运行时耗费不少时间，如果有一些对象的属性和内容非常复杂的话，这个时间更是不可忽略。另外，有些情况下我们并不会立即用到一个对象的所有属性，而默认情况下初始化时，那些在特定环境下不被使用的存储属性，也一样要被初始化和赋值，也是一种浪费。</p>
+<p>在其他语言 (包括 Objective-C) 中延时加载的情况是很常见的。我们在第一次访问某个属性时，判断这个属性背后的存储是否已经存在，如果存在则直接返回，如果不存在则说明是首次访问，那么就进行初始化并存储后再返回。这样我们可以把这个属性的初始化时刻推迟，与包含它的对象的初始化时刻分开，以达到提升性能的目的。以 Objective-C 举个例子 (虽然这里既没有费时操作，也不会因为使用延时加载而造成什么性能影响，但是作为一个最简单的例子，可以很好地说明问题)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// ClassA.h</div><div class="line">@property (nonatomic, copy) NSString *testString;</div><div class="line"></div><div class="line">// ClassA.m</div><div class="line">- (NSString *)testString &#123;</div><div class="line">     <span class="keyword">if</span> (!_testString) &#123;</div><div class="line">         _testString = @<span class="string">"Hello"</span>;</div><div class="line">        NSLog(@<span class="string">"只在首次访问输出"</span>);</div><div class="line">     &#125;</div><div class="line">     <span class="built_in">return</span> _testString;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在初始化 ClassA 对象后，_testString 是 nil。只有当首次访问 testString 属性时 getter 方法会被调用，并检查如果还没有初始化的话，就进行赋值。为了方便确认，我们还在赋值时打印了一句 log。我们之后再多次访问这个属性的话，因为 _testString 已经有值，因此将直接返回。</p>
+<p>在 Swift 中我们使用在变量属性前加 lazy 关键字的方式来简单地指定延时加载。比如上面的的代码我们在 Swift 中重写的话，会是这样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class ClassA &#123;</div><div class="line">    lazy var str: String = &#123;</div><div class="line">        <span class="built_in">let</span> str = <span class="string">"Hello"</span></div><div class="line">        <span class="built_in">print</span>(<span class="string">"只在首次访问输出"</span>)</div><div class="line">        <span class="built_in">return</span> str</div><div class="line">    &#125;()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们在使用 lazy 作为属性修饰符时，只能声明属性是变量。另外我们需要显式地指定属性类型，并使用一个可以对这个属性进行赋值的语句来在首次访问属性时运行。如果我们多次访问这个实例的 str 属性的话，可以看到只有一次输出。</p>
+<p>为了简化，我们如果不需要做什么额外工作的话，也可以对这个 lazy 的属性直接写赋值语句：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lazy var str: String = <span class="string">"Hello"</span></div></pre></td></tr></table></figure>
+<p>相比起在 Objective-C 中的实现方法，现在的 lazy 使用起来要方便得多。</p>
+<p>另外一个不太引起注意的是，在 Swift 的标准库中，我们还有一组 lazy 方法，它们的定义是这样的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">func lazy&lt;S : SequenceType&gt;(s: S) -&gt; LazySequence&lt;S&gt;</div><div class="line"></div><div class="line">func lazy&lt;S : CollectionType <span class="built_in">where</span> S.Index : RandomAccessIndexType&gt;(s: S)</div><div class="line">                -&gt; LazyRandomAccessCollection&lt;S&gt;</div><div class="line"></div><div class="line">func lazy&lt;S : CollectionType <span class="built_in">where</span> S.Index : BidirectionalIndexType&gt;(s: S)</div><div class="line">                -&gt; LazyBidirectionalCollection&lt;S&gt;</div><div class="line"></div><div class="line">func lazy&lt;S : CollectionType <span class="built_in">where</span> S.Index : ForwardIndexType&gt;(s: S)</div><div class="line">                -&gt; LazyForwardCollection&lt;S&gt;</div></pre></td></tr></table></figure>
+<p>这些方法可以配合像 map 或是 filter 这类接受闭包并进行运行的方法一起，让整个行为变成延时进行的。在某些情况下这么做也对性能会有不小的帮助。例如，直接使用 map 时：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">let</span> data = 1...3</div><div class="line"><span class="built_in">let</span> result = data.map &#123;</div><div class="line">    (i: Int) -&gt; Int <span class="keyword">in</span></div><div class="line">    <span class="built_in">print</span>(<span class="string">"正在处理 \(i)"</span>)</div><div class="line">    <span class="built_in">return</span> i * 2</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">print</span>(<span class="string">"准备访问结果"</span>)</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> result &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"操作后结果为 \(i)"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">print</span>(<span class="string">"操作完毕"</span>)</div><div class="line"></div><div class="line">这么做的输出为：</div><div class="line">// 正在处理 1</div><div class="line">// 正在处理 2</div><div class="line">// 正在处理 3</div><div class="line">// 准备访问结果</div><div class="line">// 操作后结果为 2</div><div class="line">// 操作后结果为 4</div><div class="line">// 操作后结果为 6</div><div class="line">// 操作完毕</div></pre></td></tr></table></figure>
+<p>而如果我们先进行一次 lazy 操作的话，我们就能得到延时运行版本的容器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">let</span> data = 1...3</div><div class="line"><span class="built_in">let</span> result = data.lazy.map &#123;</div><div class="line">    (i: Int) -&gt; Int <span class="keyword">in</span></div><div class="line">    <span class="built_in">print</span>(<span class="string">"正在处理 \(i)"</span>)</div><div class="line">    <span class="built_in">return</span> i * 2</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">print</span>(<span class="string">"准备访问结果"</span>)</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> result &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"操作后结果为 \(i)"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">print</span>(<span class="string">"操作完毕"</span>)</div><div class="line"></div><div class="line">此时的运行结果：</div><div class="line">// 准备访问结果</div><div class="line">// 正在处理 1</div><div class="line">// 操作后结果为 2</div><div class="line">// 正在处理 2</div><div class="line">// 操作后结果为 4</div><div class="line">// 正在处理 3</div><div class="line">// 操作后结果为 6</div><div class="line">// 操作完毕</div></pre></td></tr></table></figure>
+<p>对于那些不需要完全运行，可能提前退出的情况，使用 lazy 来进行性能优化效果会非常有效。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/12/Runloop/" rel="prev" title="深入理解RunLoop">
+                深入理解RunLoop <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Pan'V" />
+          <p class="site-author-name" itemprop="name">Pan'V</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/L-vinCent" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/4a7b7da390e4" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单例"><span class="nav-number">1.</span> <span class="nav-text">单例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#log输出"><span class="nav-number">2.</span> <span class="nav-text">log输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lazy-修饰符和-lazy-方法"><span class="nav-number">3.</span> <span class="nav-text">lazy 修饰符和 lazy 方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pan'V</span>
+</div>
+
+
+<div class="powered-by">
+  努力工作,努力生活
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="busuanzi-count" >
+<span class="site-uv">
+<i class="fa fa-user"></i>
+<span id="busuanzi_container_site_pv">
+访问量: <span id="busuanzi_value_site_pv"></span> 次  
+</span>
+</span>
+
+<span class="site-pv">
+<i class="fa fa-quora"></i>
+<span id="busuanzi_container_site_uv">
+访客数: <span id="busuanzi_value_site_uv"></span> 人
+</span>
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://L-vinCent.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://l-vincent.github.io/2017/02/12/单例/';
+          this.page.identifier = '2017/02/12/单例/';
+          this.page.title = '单例  |  log输出|lazy 修饰符和 lazy 方法';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://L-vinCent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

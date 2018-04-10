@@ -1,0 +1,849 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta name="google-site-verification" content="m3UI4lcUPqpZrsd0hAa_xv7QZH4x70BTPJzUp-HHnyo" />
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Objective-C," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="尝试用STAR法则写一篇小白Demo，关于自定义图片切割功能 固定裁切框大小，图片可拖动缩放，精准裁切. 源码在最后">
+<meta name="keywords" content="Objective-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STAR -- 简洁的图片裁切">
+<meta property="og:url" content="https://l-vincent.github.io/2017/12/06/图片裁切Demo/index.html">
+<meta property="og:site_name" content="L-vinCent&#39;s Blog">
+<meta property="og:description" content="尝试用STAR法则写一篇小白Demo，关于自定义图片切割功能 固定裁切框大小，图片可拖动缩放，精准裁切. 源码在最后">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-d5338e03ba8ed85f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:updated_time" content="2018-04-10T01:54:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STAR -- 简洁的图片裁切">
+<meta name="twitter:description" content="尝试用STAR法则写一篇小白Demo，关于自定义图片切割功能 固定裁切框大小，图片可拖动缩放，精准裁切. 源码在最后">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-d5338e03ba8ed85f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://l-vincent.github.io/2017/12/06/图片裁切Demo/"/>
+
+
+
+
+
+  <title>STAR -- 简洁的图片裁切 | L-vinCent's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">L-vinCent's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">“努力的学习”意味着，要常常去处理那些刚好在你能力极限上的问题</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2017/12/06/图片裁切Demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">STAR -- 简洁的图片裁切</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-06T00:00:00+08:00">
+                2017-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Objective-C/" itemprop="url" rel="index">
+                    <span itemprop="name">Objective-C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/06/图片裁切Demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/06/图片裁切Demo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>尝试用STAR法则写一篇小白Demo，关于自定义图片切割功能</p>
+<p>固定裁切框大小，图片可拖动缩放，精准裁切.</p>
+<p>源码在最后<br><a id="more"></a></p>
+<hr>
+<blockquote>
+<p>STAR法则是情境(situation)、任务(task)、行动(action)、结果(result)</p>
+</blockquote>
+<h3 id="情境-situation"><a href="#情境-situation" class="headerlink" title="情境(situation)"></a>情境(situation)</h3><p>需要一个裁切固定尺寸图片的功能，类似这样</p>
+<h3 id="任务-task"><a href="#任务-task" class="headerlink" title="任务(task)"></a>任务(task)</h3><p>封装一个View，需要以下功能</p>
+<ul>
+<li><p>可以接受选择的图片显示</p>
+</li>
+<li><p>图片编辑完成后给出图片的裁切范围</p>
+</li>
+<li><p>图片可以放大，缩小，拖动，且活动范围在给定的裁切框范围内</p>
+</li>
+</ul>
+<h3 id="行动-action"><a href="#行动-action" class="headerlink" title="行动(action)"></a>行动(action)</h3><p>从任务预期来看<br>首先需要给出一个参数 image 用来接收外界传过来的参数</p>
+<p>在image做完交互后传出对应到原始image 的Frame，切割用</p>
+<p>因为图片需要有放大缩小拖动的交互，所以自然想到可以把图片放到 UIScrollView 容器内,为了方便说明，整个裁切的结构层级如下</p>
+<ul>
+<li>1  是用UIScrollView做容器</li>
+<li>2 是添加一个UIImageView用来展示图片</li>
+<li>3 是一个UIView，作为一个遮罩</li>
+<li>4 是一个自定义的UIView，裁切框，这个Frame很关键</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-d5338e03ba8ed85f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt=""></p>
+<hr>
+<ul>
+<li>比较关键的一些点</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView</div><div class="line">&#123;</div><div class="line">    <span class="built_in">return</span> self.backgroundContainerView;</div><div class="line">//这里 backgroundContainerView 是imageView的容器，实现这个代理保证图片的放大拖动交互</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> self.scrollView.contentInset = (UIEdgeInsets)&#123;CGRectGetMinY(contentRect),</div><div class="line">        CGRectGetMinX(contentRect),</div><div class="line">        CGRectGetMaxY(self.bounds) - CGRectGetMaxY(contentRect),</div><div class="line">        CGRectGetMaxX(self.bounds) - CGRectGetMaxX(contentRect)&#125;;</div><div class="line"></div><div class="line">contentRect 是裁切框Frame</div><div class="line">这里的偏移量 scrollView.contentInset 用来保证图片不滑出 裁切框外</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  self.scrollView.minimumZoomScale = scale;</div><div class="line">  self.scrollView.maximumZoomScale = 15.0f;</div><div class="line">self.scrollView.zoomScale = self.scrollView.minimumZoomScale;</div><div class="line"></div><div class="line">这里设置  scrollView 最大和最小缩放范围，这里的scale获取以屏幕宽为主</div><div class="line">比如.    一个原始大小为  750*1330 的图片，scale 为 375/750</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">-(CAShapeLayer *)shaperLayer</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (!_shaperLayer) &#123;</div><div class="line">        </div><div class="line">        UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];</div><div class="line">        [path appendPath:[[UIBezierPath bezierPathWithRoundedRect:self.cropBoxFrame cornerRadius:1] bezierPathByReversingPath]];</div><div class="line">        _shaperLayer = [CAShapeLayer layer];</div><div class="line">        _shaperLayer.path = path.CGPath;</div><div class="line">        </div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="built_in">return</span> _shaperLayer;</div><div class="line">&#125;</div><div class="line"></div><div class="line">cropBoxFrame 是裁切框的Frame，这里返回的是遮罩的镂空层,添加到遮罩层上</div></pre></td></tr></table></figure>
+<ul>
+<li>获取到交互后的图片 对应到 原始图片坐标点和大小</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">- (CGRect)croppedImageFrame</div><div class="line">&#123;</div><div class="line">    CGSize imageSize = self.imageSize;</div><div class="line">    CGSize contentSize = self.scrollView.contentSize;</div><div class="line">    CGRect cropBoxFrame = self.cropBoxFrame;</div><div class="line">    CGPoint contentOffset = self.scrollView.contentOffset;</div><div class="line">    UIEdgeInsets edgeInsets = self.scrollView.contentInset;</div><div class="line">    </div><div class="line">    CGRect frame = CGRectZero;</div><div class="line">    frame.origin.x = floorf((contentOffset.x + edgeInsets.left) * (imageSize.width / contentSize.width));</div><div class="line">    frame.origin.x = MAX(0, frame.origin.x);</div><div class="line">    </div><div class="line">    frame.origin.y = floorf((contentOffset.y + edgeInsets.top) * (imageSize.height / contentSize.height));</div><div class="line">    frame.origin.y = MAX(0, frame.origin.y);</div><div class="line">    </div><div class="line">    frame.size.width = ceilf(cropBoxFrame.size.width * (imageSize.width / contentSize.width));</div><div class="line">    frame.size.width = MIN(imageSize.width, frame.size.width);</div><div class="line">    </div><div class="line">    frame.size.height = ceilf(cropBoxFrame.size.height * (imageSize.height / contentSize.height));</div><div class="line">    frame.size.height = MIN(imageSize.height, frame.size.height);</div><div class="line">    </div><div class="line">    <span class="built_in">return</span> frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line"> 要知道图片的原始尺寸 与 scrollView.contentSize 的比例，</div><div class="line">然后通过 contentOffset 算出 在对应比例下图片的移动位置，得到要切割的起始坐标</div></pre></td></tr></table></figure>
+<h3 id="结果-result"><a href="#结果-result" class="headerlink" title="结果(result)"></a>结果(result)</h3><ul>
+<li>使用</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">PPMainCropVC *vc = [[PPMainCropVC alloc]initWithImage:[UIImage imageNamed:@<span class="string">"1.png"</span>]];</div><div class="line">    </div><div class="line">    vc.cropBlock = ^(UIImage *image) &#123;</div><div class="line">    </div><div class="line">        [self.mainImageView setImage:image];</div><div class="line">        </div><div class="line">    &#125;;</div><div class="line">    [self.navigationController pushViewController:vc animated:YES];</div></pre></td></tr></table></figure>
+<ul>
+<li><p><a href="https://github.com/L-vinCent/PPCropDemo" target="_blank" rel="external">源码在这,具体效果请运行Demo</a></p>
+</li>
+<li><p>在裁切页面隐藏了导航栏和状态栏，如果图片拖动与裁切框有偏移，看看Info.plist 中 ， 设置 View controller-based status bar appearance 为NO，该参数决定我们项目状态栏的显隐藏是否以各控制器的设置为准。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/02/从 map 函数看泛型/" rel="next" title="从 map 函数看泛型">
+                <i class="fa fa-chevron-left"></i> 从 map 函数看泛型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/02/Swift内存管理/" rel="prev" title="Swift开发者必备Tips--内存管理">
+                Swift开发者必备Tips--内存管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Pan'V" />
+          <p class="site-author-name" itemprop="name">Pan'V</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/L-vinCent" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/4a7b7da390e4" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#情境-situation"><span class="nav-number">1.</span> <span class="nav-text">情境(situation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任务-task"><span class="nav-number">2.</span> <span class="nav-text">任务(task)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行动-action"><span class="nav-number">3.</span> <span class="nav-text">行动(action)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果-result"><span class="nav-number">4.</span> <span class="nav-text">结果(result)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pan'V</span>
+</div>
+
+
+<div class="powered-by">
+  努力工作,努力生活
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="busuanzi-count" >
+<span class="site-uv">
+<i class="fa fa-user"></i>
+<span id="busuanzi_container_site_pv">
+访问量: <span id="busuanzi_value_site_pv"></span> 次  
+</span>
+</span>
+
+<span class="site-pv">
+<i class="fa fa-quora"></i>
+<span id="busuanzi_container_site_uv">
+访客数: <span id="busuanzi_value_site_uv"></span> 人
+</span>
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://L-vinCent.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://l-vincent.github.io/2017/12/06/图片裁切Demo/';
+          this.page.identifier = '2017/12/06/图片裁切Demo/';
+          this.page.title = 'STAR -- 简洁的图片裁切';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://L-vinCent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
