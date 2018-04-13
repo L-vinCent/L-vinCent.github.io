@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5726964-ad682be0a90b76e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5726964-ff37ae4a669383eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5726964-5722c941ab8b7c24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-04-13T03:24:10.000Z">
+<meta property="og:updated_time" content="2018-04-13T03:28:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="( 每日一篇 )UIKit性能调优实战讲解">
 <meta name="twitter:description" content="在使用UIKit的过程中，性能优化是永恒的话题。很多人都看过分析优化滑动性能的文章，但其中不少文章只介绍了优化方法却对背后的原理避而不谈，或者是晦涩难懂而且读者缺乏实践体验的机会。不妨思考一下下面的问题自己是否有一个清晰的认识：  为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？  为什么cell中的图片，尽可能要使用正确的大小、格式，如果错误会有什么影响，如何检测">
@@ -384,6 +384,7 @@
 <li>为什么设置阴影和圆角有可能影响滑动时流畅度？ </li>
 <li><code>shouldRasterize</code>和离屏渲染的关系是什么，何时应该使用？</li>
 </ol>
+<a id="more"></a>
 <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>打开项目后，只要CustomTableCell.swift文件即可，它实现了自定义的<code>UITableViewCell</code>以及内部的UI布局，因为重点在于性能优化，代码实现的就比较随意。</p>
 <p>首先按下<code>Command + I</code>打开Instrument，本文主要用到的是Core Animation工具：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/5726964-2ae9c3f47291a9a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="打开Core Animation调试"></p>
