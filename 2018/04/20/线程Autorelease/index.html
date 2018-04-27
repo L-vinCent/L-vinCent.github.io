@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Swift," />
+  <meta name="keywords" content="Runloop," />
 
 
 
@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="属性观察 (Property Observers) 是 Swift 中一个很特殊的特性，利用属性观察我们可以在当前类型内监视对于属性的设定，并作出一些响应。Swift 中为我们提供了两个属性观察的方法，它们分别是 willSet 和 didSet。">
-<meta name="keywords" content="Swift">
+<meta name="description" content="Autoreleasepool 与 Runloop 的关系 ARC 下什么样的对象由 Autoreleasepool 管理 子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？">
+<meta name="keywords" content="Runloop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift开发者必备Tips -- 属性观察 willSet 和 didSet">
-<meta property="og:url" content="https://l-vincent.github.io/2018/02/21/willSet和didSet/index.html">
+<meta property="og:title" content="( 每日一篇 ) 各个线程 Autorelease 对象的内存管理">
+<meta property="og:url" content="https://l-vincent.github.io/2018/04/20/线程Autorelease/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:description" content="属性观察 (Property Observers) 是 Swift 中一个很特殊的特性，利用属性观察我们可以在当前类型内监视对于属性的设定，并作出一些响应。Swift 中为我们提供了两个属性观察的方法，它们分别是 willSet 和 didSet。">
-<meta property="og:updated_time" content="2018-04-10T01:53:56.000Z">
+<meta property="og:description" content="Autoreleasepool 与 Runloop 的关系 ARC 下什么样的对象由 Autoreleasepool 管理 子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？">
+<meta property="og:updated_time" content="2018-04-27T08:57:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift开发者必备Tips -- 属性观察 willSet 和 didSet">
-<meta name="twitter:description" content="属性观察 (Property Observers) 是 Swift 中一个很特殊的特性，利用属性观察我们可以在当前类型内监视对于属性的设定，并作出一些响应。Swift 中为我们提供了两个属性观察的方法，它们分别是 willSet 和 didSet。">
+<meta name="twitter:title" content="( 每日一篇 ) 各个线程 Autorelease 对象的内存管理">
+<meta name="twitter:description" content="Autoreleasepool 与 Runloop 的关系 ARC 下什么样的对象由 Autoreleasepool 管理 子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？">
 
 
 
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="https://l-vincent.github.io/2018/02/21/willSet和didSet/"/>
+  <link rel="canonical" href="https://l-vincent.github.io/2018/04/20/线程Autorelease/"/>
 
 
 
 
 
-  <title>Swift开发者必备Tips -- 属性观察 willSet 和 didSet | L-vinCent's Blog</title>
+  <title>( 每日一篇 ) 各个线程 Autorelease 对象的内存管理 | L-vinCent's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +267,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/02/21/willSet和didSet/">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/04/20/线程Autorelease/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Pan'V">
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Swift开发者必备Tips -- 属性观察 willSet 和 didSet</h1>
+          <h1 class="post-title" itemprop="name headline">( 每日一篇 ) 各个线程 Autorelease 对象的内存管理</h1>
         
 
         <div class="post-meta">
@@ -296,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T17:37:45+08:00">
-                2018-02-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-20T00:00:00+08:00">
+                2018-04-20
               </time>
             
 
@@ -319,8 +319,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/" itemprop="url" rel="index">
-                    <span itemprop="name">Swift</span>
+                  <a href="/categories/每日一篇/" itemprop="url" rel="index">
+                    <span itemprop="name">每日一篇</span>
                   </a>
                 </span>
 
@@ -337,9 +337,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/21/willSet和didSet/#comments" itemprop="discussionUrl">
+                <a href="/2018/04/20/线程Autorelease/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/02/21/willSet和didSet/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/04/20/线程Autorelease/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -364,20 +364,20 @@
       
 
       
-        <p>属性观察 (Property Observers) 是 Swift 中一个很特殊的特性，利用属性观察我们可以在当前类型内监视对于属性的设定，并作出一些响应。Swift 中为我们提供了两个属性观察的方法，它们分别是 willSet 和 didSet。<br><a id="more"></a></p>
-<p>使用这两个方法十分简单，我们只要在属性声明的时候添加相应的代码块，就可以对将要设定的值和已经设置的值进行监听了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class MyClass &#123;</div><div class="line">    var date: NSDate &#123;</div><div class="line">        willSet &#123;</div><div class="line">            <span class="built_in">let</span> d = date</div><div class="line">            <span class="built_in">print</span>(<span class="string">"即将将日期从 \(d) 设定至 \(newValue)"</span>)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        didSet &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"已经将日期从 \(oldValue) 设定至 \(date)"</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="title">init</span></span>() &#123;</div><div class="line">        date = NSDate()</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">let</span> foo = MyClass()</div><div class="line">foo.date = foo.date.addingTimeInterval(10086)</div><div class="line"></div><div class="line">// 输出</div><div class="line">// 即将将日期从 2014-08-23 12:47:36 +0000 设定至 2014-08-23 15:35:42 +0000</div><div class="line">// 已经将日期从 2014-08-23 12:47:36 +0000 设定至 2014-08-23 15:35:42 +0000</div></pre></td></tr></table></figure></p>
-<p>在 willSet 和 didSet 中我们分别可以使用 newValue 和 oldValue 来获取将要设定的和已经设定的值。属性观察的一个重要用处是作为设置值的验证，比如上面的例子中我们不希望 date 超过当前时间的一年以上的话，我们可以将 didSet 修改一下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">class MyClass &#123;</div><div class="line">    <span class="built_in">let</span> oneYearInSecond: TimeInterval = 365 * 24 * 60 * 60</div><div class="line">    var date: NSDate &#123;</div><div class="line"></div><div class="line">        //...</div><div class="line"></div><div class="line">        didSet &#123;</div><div class="line">            <span class="keyword">if</span> (date.timeIntervalSinceNow &gt; oneYearInSecond) &#123;</div><div class="line">                <span class="built_in">print</span>(<span class="string">"设定的时间太晚了！"</span>)</div><div class="line">                date = NSDate().addingTimeInterval(oneYearInSecond)</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"已经将日期从 \(oldValue) 设定至 \(date)"</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>更改一下调用，我们就能看到效果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 365 * 24 * 60 * 60 = 31_536_000</div><div class="line">foo.date = foo.date.addingTimeInterval(100_000_000)</div><div class="line"></div><div class="line">// 输出</div><div class="line">// 即将将日期从 2014-08-23 13:24:14 +0000 设定至 2017-10-23 23:10:54 +0000</div><div class="line">// 设定的时间太晚了！</div><div class="line">// 已经将日期从 2014-08-23 13:24:14 +0000 设定至 2015-08-23 13:24:14 +0000</div></pre></td></tr></table></figure>
-<blockquote>
-<p>初始化方法对属性的设定，以及在 willSet 和 didSet 中对属性的再次设定都不会再次触发属性观察的调用，一般来说这会是你所需要的行为，可以放心使用能够。</p>
-</blockquote>
-<p>我们知道，在 Swift 中所声明的属性包括存储属性和计算属性两种。其中存储属性将会在内存中实际分配地址对属性进行存储，而计算属性则不包括背后的存储，只是提供 set 和 get 两种方法。在同一个类型中，属性观察和计算属性是不能同时共存的。也就是说，想在一个属性定义中同时出现 set 和 willSet 或 didSet 是一件办不到的事情。计算属性中我们可以通过改写 set 中的内容来达到和 willSet 及 didSet 同样的属性观察的目的。如果我们无法改动这个类，又想要通过属性观察做一些事情的话，可能就需要子类化这个类，并且重写它的属性了。重写的属性并不知道父类属性的具体实现情况，而只从父类属性中继承名字和类型，因此在子类的重载属性中我们是可以对父类的属性任意地添加属性观察的，而不用在意父类中到底是存储属性还是计算属性：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">class A &#123;</div><div class="line">    var number :Int &#123;</div><div class="line">        get &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"get"</span>)</div><div class="line">            <span class="built_in">return</span> 1</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">set</span> &#123;<span class="built_in">print</span>(<span class="string">"set"</span>)&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B: A &#123;</div><div class="line">    override var number: Int &#123;</div><div class="line">        willSet &#123;<span class="built_in">print</span>(<span class="string">"willSet"</span>)&#125;</div><div class="line">        didSet &#123;<span class="built_in">print</span>(<span class="string">"didSet"</span>)&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>调用 number 的 set 方法可以看到工作的顺序</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">let</span> b = B()</div><div class="line">b.number = 0</div><div class="line"></div><div class="line">// 输出</div><div class="line">// get</div><div class="line">// willSet</div><div class="line">// <span class="built_in">set</span></div><div class="line">// didSet</div></pre></td></tr></table></figure>
-<p>set 和对应的属性观察的调用都在我们的预想之中。这里要注意的是 get 首先被调用了一次。这是因为我们实现了 didSet，didSet 中会用到 oldValue，而这个值需要在整个 set 动作之前进行获取并存储待用，否则将无法确保正确性。如果我们不实现 didSet 的话，这次 get 操作也将不存在。</p>
+        <hr>
+<ul>
+<li>Autoreleasepool 与 Runloop 的关系</li>
+<li>ARC 下什么样的对象由 Autoreleasepool 管理</li>
+<li>子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？</li>
+</ul>
+<a id="more"></a>
+<p>针对第一个问题，比较容易理解，可以看一下：<a href="https://link.jianshu.com?t=http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">ibireme</a> 的 <a href="https://link.jianshu.com?t=http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">深入理解RunLoop</a>，主线程默认为我们开启 Runloop，Runloop 会自动帮我们创建Autoreleasepool，并进行Push、Pop 等操作来进行内存管理</p>
+<p>第二个问题，ARC 下什么样的对象由 Autoreleasepool 管理呢？大多数人的回答是：“都会由 pool 进行管理”。其实并不是这样的，对于普通的对象是由编译器在合适的地方为我们 Realease 了。针对这个问题，我已经总结过：<a href="https://www.jianshu.com/p/e3690f3e4675" target="_blank" rel="external">引用计数带来的一次讨论</a>，是参考了经典的《iOS与OS X多线程和内存管理 》这本书。</p>
+<p>针对第三个问题，感觉比较难以回答，需要很细致的读过 Runtime 、Autoreleasepool 的源码才可以。我也是参考了 StackOverFlow 的回答：<a href="https://link.jianshu.com?t=http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now" target="_blank" rel="external"></a><a href="https://link.jianshu.com?t=http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now" target="_blank" rel="external">does NSThread create autoreleasepool automaticly now?</a>。我再来简单阐述下，在子线程你创建了 Pool 的话，产生的 Autorelease 对象就会交给 pool 去管理。如果你没有创建 Pool ，但是产生了 Autorelease 对象，就会调用 autoreleaseNoPage 方法。在这个方法中，会自动帮你创建一个 hotpage（hotPage 可以理解为当前正在使用的 AutoreleasePoolPage，如果你还是不理解，可以先看看 Autoreleasepool 的源代码，再来看这个问题 ），并调用 <code>page-&gt;add(obj)</code>将对象添加到 AutoreleasePoolPage 的栈中，也就是说你不进行手动的内存管理，也不会内存泄漏啦！StackOverFlow 的作者也说道，这个是 OS X 10.9+和 iOS 7+ 才加入的特性。并且苹果没有对应的官方文档阐述此事，但是你可以通过源码了解。这里张贴部分源代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">static __attribute__((noinline))</div><div class="line">id *autoreleaseNoPage(id obj)</div><div class="line">&#123;</div><div class="line">    // No pool in place.</div><div class="line">    // hotPage 可以理解为当前正在使用的 AutoreleasePoolPage。</div><div class="line">    assert(!hotPage());</div><div class="line"></div><div class="line">    // POOL_SENTINEL 只是 nil 的别名</div><div class="line">    if (obj != POOL_SENTINEL  &amp;&amp;  DebugMissingPools) &#123;</div><div class="line">        // We are pushing an object with no pool in place, </div><div class="line">        // and no-pool debugging was requested by environment.</div><div class="line">        _objc_inform(&quot;MISSING POOLS: Object %p of class %s &quot;</div><div class="line">                     &quot;autoreleased with no pool in place - &quot;</div><div class="line">                     &quot;just leaking - break on &quot;</div><div class="line">                     &quot;objc_autoreleaseNoPool() to debug&quot;, </div><div class="line">                     (void*)obj, object_getClassName(obj));</div><div class="line">        objc_autoreleaseNoPool(obj);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Install the first page.</div><div class="line">    // 帮你创建一个 hotpage（hotPage 可以理解为当前正在使用的 AutoreleasePoolPage</div><div class="line">    AutoreleasePoolPage *page = new AutoreleasePoolPage(nil);</div><div class="line">    setHotPage(page);</div><div class="line"></div><div class="line">    // Push an autorelease pool boundary if it wasn&apos;t already requested.</div><div class="line">    // POOL_SENTINEL 只是 nil 的别名，哨兵对象</div><div class="line">    if (obj != POOL_SENTINEL) &#123;</div><div class="line">        page-&gt;add(POOL_SENTINEL);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Push the requested object.</div><div class="line">    // 把对象添加到 自动释放池 进行管理</div><div class="line">    return page-&gt;add(obj);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://www.jianshu.com/p/f87f40592023" target="_blank" rel="external">来自 Joy___</a></p>
+<hr>
+<p>关键词:</p>
 
       
     </div>
@@ -407,7 +407,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Swift/" rel="tag"># Swift</a>
+            <a href="/tags/Runloop/" rel="tag"># Runloop</a>
           
         </div>
       
@@ -420,8 +420,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/02/Swift内存管理/" rel="next" title="Swift开发者必备Tips--内存管理">
-                <i class="fa fa-chevron-left"></i> Swift开发者必备Tips--内存管理
+              <a href="/2018/04/15/block修饰符/" rel="next" title="( 每日一篇 ) block修饰符的原理">
+                <i class="fa fa-chevron-left"></i> ( 每日一篇 ) block修饰符的原理
               </a>
             
           </div>
@@ -429,10 +429,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/02/机器学习/" rel="prev" title="机器学习实战 -- k近邻算法">
-                机器学习实战 -- k近邻算法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -727,9 +723,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://l-vincent.github.io/2018/02/21/willSet和didSet/';
-          this.page.identifier = '2018/02/21/willSet和didSet/';
-          this.page.title = 'Swift开发者必备Tips -- 属性观察 willSet 和 didSet';
+          this.page.url = 'https://l-vincent.github.io/2018/04/20/线程Autorelease/';
+          this.page.identifier = '2018/04/20/线程Autorelease/';
+          this.page.title = '( 每日一篇 ) 各个线程 Autorelease 对象的内存管理';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://L-vinCent.disqus.com/embed.js';

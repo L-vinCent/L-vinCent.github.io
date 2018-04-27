@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5726964-ad682be0a90b76e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5726964-ff37ae4a669383eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5726964-5722c941ab8b7c24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-04-13T03:28:19.000Z">
+<meta property="og:updated_time" content="2018-04-23T02:44:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="( 每日一篇 )UIKit性能调优实战讲解">
 <meta name="twitter:description" content="在使用UIKit的过程中，性能优化是永恒的话题。很多人都看过分析优化滑动性能的文章，但其中不少文章只介绍了优化方法却对背后的原理避而不谈，或者是晦涩难懂而且读者缺乏实践体验的机会。不妨思考一下下面的问题自己是否有一个清晰的认识：  为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？  为什么cell中的图片，尽可能要使用正确的大小、格式，如果错误会有什么影响，如何检测">
@@ -481,16 +481,14 @@
 <ul>
 <li>关键词 – 图层混合 ，光栅化 ，离屏渲染 ，</li>
 </ul>
-<p>####为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？</p>
-<p>控件透明的时候容易发生图层混合，需要消耗一定的GPU资源。<br>通过调试选项”Color Blended Layers”可以看到红色区域的就是有图层混合的部分</p>
-<p>####为什么设置阴影和圆角有可能影响滑动时流畅度？</p>
-<ul>
+<h3 id="为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？"><a href="#为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？" class="headerlink" title="为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？"></a>为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？</h3><p>控件透明的时候容易发生图层混合，需要消耗一定的GPU资源。<br>通过调试选项”Color Blended Layers”可以看到红色区域的就是有图层混合的部分</p>
+<h3 id="为什么设置阴影和圆角有可能影响滑动时流畅度？"><a href="#为什么设置阴影和圆角有可能影响滑动时流畅度？" class="headerlink" title="为什么设置阴影和圆角有可能影响滑动时流畅度？"></a>为什么设置阴影和圆角有可能影响滑动时流畅度？</h3><ul>
 <li><p>正常渲染流程 OpenGL -&gt; Command Buffer -&gt; GPU渲染放到Render Buffer</p>
 </li>
 <li><p>离屏渲染 指的是GPU在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作<br>一些复杂的效果需要分步渲染最后再组合起来，在放入 Render Buffer 之前，需要把之前的渲染结果临时保存，相对来说更占用资源消耗<br>阴影和圆角都会触发离屏渲染,  这里iOS 9.0 之后 UIImageView 里 png 图片设置圆角不会触发离屏渲染了</p>
 </li>
 </ul>
-<p>####shouldRasterize和离屏渲染的关系是什么，何时应该使用？<br>光栅化是把GPU的操作转到CPU上，生成位图缓存，直接读取复用。</p>
+<h3 id="shouldRasterize和离屏渲染的关系是什么，何时应该使用？"><a href="#shouldRasterize和离屏渲染的关系是什么，何时应该使用？" class="headerlink" title="shouldRasterize和离屏渲染的关系是什么，何时应该使用？"></a>shouldRasterize和离屏渲染的关系是什么，何时应该使用？</h3><p>光栅化是把GPU的操作转到CPU上，生成位图缓存，直接读取复用。</p>
 <p>使用光栅化时，可以开启“Color Hits Green and Misses Red”来检查该场景下光栅化操作是否是一个好的选择。绿色表示缓存被复用，红色表示缓存在被重复创建。</p>
 <p>对于经常变动的内容,这个时候不要开启,否则会造成性能的浪费</p>
 <p>我们日程经常打交道的TableViewCell,因为TableViewCell的重绘是很频繁的（因为Cell的复用）,如果Cell的内容不断变化,则Cell需要不断重绘,如果此时设置了cell.layer可光栅化。则会造成大量的离屏渲染,降低图形性能。</p>
@@ -627,7 +625,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -649,7 +647,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -704,7 +702,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调试、优化"><span class="nav-number">2.</span> <span class="nav-text">调试、优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图层混合"><span class="nav-number">2.0.1.</span> <span class="nav-text">图层混合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#光栅化"><span class="nav-number">2.0.2.</span> <span class="nav-text">光栅化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色格式"><span class="nav-number">2.0.3.</span> <span class="nav-text">颜色格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片大小"><span class="nav-number">2.0.4.</span> <span class="nav-text">图片大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离屏渲染"><span class="nav-number">2.0.5.</span> <span class="nav-text">离屏渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速路径"><span class="nav-number">2.0.6.</span> <span class="nav-text">快速路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变化区域"><span class="nav-number">2.0.7.</span> <span class="nav-text">变化区域</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#避免图层混合"><span class="nav-number">3.0.1.</span> <span class="nav-text">避免图层混合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免临时转换"><span class="nav-number">3.0.2.</span> <span class="nav-text">避免临时转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#慎用离屏渲染"><span class="nav-number">3.0.3.</span> <span class="nav-text">慎用离屏渲染</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调试、优化"><span class="nav-number">2.</span> <span class="nav-text">调试、优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图层混合"><span class="nav-number">2.0.1.</span> <span class="nav-text">图层混合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#光栅化"><span class="nav-number">2.0.2.</span> <span class="nav-text">光栅化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色格式"><span class="nav-number">2.0.3.</span> <span class="nav-text">颜色格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片大小"><span class="nav-number">2.0.4.</span> <span class="nav-text">图片大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#离屏渲染"><span class="nav-number">2.0.5.</span> <span class="nav-text">离屏渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速路径"><span class="nav-number">2.0.6.</span> <span class="nav-text">快速路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变化区域"><span class="nav-number">2.0.7.</span> <span class="nav-text">变化区域</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#避免图层混合"><span class="nav-number">3.0.1.</span> <span class="nav-text">避免图层混合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免临时转换"><span class="nav-number">3.0.2.</span> <span class="nav-text">避免临时转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#慎用离屏渲染"><span class="nav-number">3.0.3.</span> <span class="nav-text">慎用离屏渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？"><span class="nav-number">3.0.4.</span> <span class="nav-text">为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么设置阴影和圆角有可能影响滑动时流畅度？"><span class="nav-number">3.0.5.</span> <span class="nav-text">为什么设置阴影和圆角有可能影响滑动时流畅度？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shouldRasterize和离屏渲染的关系是什么，何时应该使用？"><span class="nav-number">3.0.6.</span> <span class="nav-text">shouldRasterize和离屏渲染的关系是什么，何时应该使用？</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
