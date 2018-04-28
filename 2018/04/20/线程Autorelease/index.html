@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="Autoreleasepool 与 Runloop 的关系 ARC 下什么样的对象由 Autoreleasepool 管理 子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？">
+<meta name="description" content="Autoreleasepool 与 Runloop 的关系 Autorelease对象什么时候释放？ 子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？">
 <meta name="keywords" content="Runloop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="( 每日一篇 ) 各个线程 Autorelease 对象的内存管理">
 <meta property="og:url" content="https://l-vincent.github.io/2018/04/20/线程Autorelease/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:description" content="Autoreleasepool 与 Runloop 的关系 ARC 下什么样的对象由 Autoreleasepool 管理 子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？">
-<meta property="og:updated_time" content="2018-04-28T02:44:54.000Z">
+<meta property="og:description" content="Autoreleasepool 与 Runloop 的关系 Autorelease对象什么时候释放？ 子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？">
+<meta property="og:updated_time" content="2018-04-28T03:27:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="( 每日一篇 ) 各个线程 Autorelease 对象的内存管理">
-<meta name="twitter:description" content="Autoreleasepool 与 Runloop 的关系 ARC 下什么样的对象由 Autoreleasepool 管理 子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？">
+<meta name="twitter:description" content="Autoreleasepool 与 Runloop 的关系 Autorelease对象什么时候释放？ 子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？">
 
 
 
@@ -367,17 +367,21 @@
         <hr>
 <ul>
 <li>Autoreleasepool 与 Runloop 的关系</li>
-<li>ARC 下什么样的对象由 Autoreleasepool 管理</li>
+<li>Autorelease对象什么时候释放？</li>
 <li>子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？</li>
 </ul>
 <a id="more"></a>
-<p>针对第一个问题，比较容易理解，可以看一下：<a href="https://link.jianshu.com?t=http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">ibireme</a> 的 <a href="https://link.jianshu.com?t=http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">深入理解RunLoop</a>，主线程默认为我们开启 Runloop，Runloop 会自动帮我们创建Autoreleasepool，并进行Push、Pop 等操作来进行内存管理</p>
-<p>第二个问题，ARC 下什么样的对象由 Autoreleasepool 管理呢？大多数人的回答是：“都会由 pool 进行管理”。其实并不是这样的，对于普通的对象是由编译器在合适的地方为我们 Realease 了。针对这个问题，我已经总结过：<a href="https://www.jianshu.com/p/e3690f3e4675" target="_blank" rel="external">引用计数带来的一次讨论</a>，是参考了经典的《iOS与OS X多线程和内存管理 》这本书。</p>
-<p>针对第三个问题，感觉比较难以回答，需要很细致的读过 Runtime 、Autoreleasepool 的源码才可以。我也是参考了 StackOverFlow 的回答：<a href="https://link.jianshu.com?t=http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now" target="_blank" rel="external"></a><a href="https://link.jianshu.com?t=http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now" target="_blank" rel="external">does NSThread create autoreleasepool automaticly now?</a>。我再来简单阐述下，在子线程你创建了 Pool 的话，产生的 Autorelease 对象就会交给 pool 去管理。如果你没有创建 Pool ，但是产生了 Autorelease 对象，就会调用 autoreleaseNoPage 方法。在这个方法中，会自动帮你创建一个 hotpage（hotPage 可以理解为当前正在使用的 AutoreleasePoolPage，如果你还是不理解，可以先看看 Autoreleasepool 的源代码，再来看这个问题 ），并调用 <code>page-&gt;add(obj)</code>将对象添加到 AutoreleasePoolPage 的栈中，也就是说你不进行手动的内存管理，也不会内存泄漏啦！StackOverFlow 的作者也说道，这个是 OS X 10.9+和 iOS 7+ 才加入的特性。并且苹果没有对应的官方文档阐述此事，但是你可以通过源码了解。这里张贴部分源代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">static __attribute__((noinline))</div><div class="line">id *autoreleaseNoPage(id obj)</div><div class="line">&#123;</div><div class="line">    // No pool in place.</div><div class="line">    // hotPage 可以理解为当前正在使用的 AutoreleasePoolPage。</div><div class="line">    assert(!hotPage());</div><div class="line"></div><div class="line">    // POOL_SENTINEL 只是 nil 的别名</div><div class="line">    if (obj != POOL_SENTINEL  &amp;&amp;  DebugMissingPools) &#123;</div><div class="line">        // We are pushing an object with no pool in place, </div><div class="line">        // and no-pool debugging was requested by environment.</div><div class="line">        _objc_inform(&quot;MISSING POOLS: Object %p of class %s &quot;</div><div class="line">                     &quot;autoreleased with no pool in place - &quot;</div><div class="line">                     &quot;just leaking - break on &quot;</div><div class="line">                     &quot;objc_autoreleaseNoPool() to debug&quot;, </div><div class="line">                     (void*)obj, object_getClassName(obj));</div><div class="line">        objc_autoreleaseNoPool(obj);</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Install the first page.</div><div class="line">    // 帮你创建一个 hotpage（hotPage 可以理解为当前正在使用的 AutoreleasePoolPage</div><div class="line">    AutoreleasePoolPage *page = new AutoreleasePoolPage(nil);</div><div class="line">    setHotPage(page);</div><div class="line"></div><div class="line">    // Push an autorelease pool boundary if it wasn&apos;t already requested.</div><div class="line">    // POOL_SENTINEL 只是 nil 的别名，哨兵对象</div><div class="line">    if (obj != POOL_SENTINEL) &#123;</div><div class="line">        page-&gt;add(POOL_SENTINEL);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // Push the requested object.</div><div class="line">    // 把对象添加到 自动释放池 进行管理</div><div class="line">    return page-&gt;add(obj);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><a href="https://www.jianshu.com/p/f87f40592023" target="_blank" rel="external">来自 Joy___</a></p>
+<p>第一个问题，，可以看一下： <a href="https://link.jianshu.com?t=http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">深入理解RunLoop</a>，主线程默认为我们开启 Runloop，Runloop 会自动帮我们创建Autoreleasepool，并进行Push、Pop 等操作来进行内存管理</p>
+<p>第二个问题，ARC 下什么样的对象由 Autoreleasepool 管理呢？对于普通的对象是由编译器在合适的地方为我们 Realease 了.  可以看一下<a href="https://l-vincent.github.io/2017/07/12/%E9%BB%91%E5%B9%95%E8%83%8C%E5%90%8E%E7%9A%84Autorelease/">Autoreleasepool对象什么时候释放</a></p>
+<p>第三个问题，参考<a href="https://link.jianshu.com?t=http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now" target="_blank" rel="external"></a><a href="https://link.jianshu.com?t=http://stackoverflow.com/questions/24952549/does-nsthread-create-autoreleasepool-automaticly-now" target="_blank" rel="external">does NSThread create autoreleasepool automaticly now?</a>。在子线程你创建了 Pool 的话，产生的 Autorelease 对象就会交给 pool 去管理。如果你没有创建 Pool ，但是产生了 Autorelease 对象，就会调用 autoreleaseNoPage 方法。在这个方法中，会自动帮你创建一个 hotpage（hotPage 可以理解为当前正在使用的 AutoreleasePoolPage，如果你还是不理解，可以先看看 Autoreleasepool 的源代码，再来看这个问题 ），并调用 <code>page-&gt;add(obj)</code>将对象添加到 AutoreleasePoolPage 的栈中，也就是说你不进行手动的内存管理，也不会内存泄漏！</p>
 <hr>
-<p>(<a href="https://link.jianshu.com?t=http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">深入理解RunLoop</a>) 关键词:</p>
+<p>(<a href="https://link.jianshu.com?t=http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">深入理解RunLoop</a>) </p>
+<ul>
+<li><p>RunLoop 实际上就是一个对象,管理事件/消息，让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</p>
+</li>
+<li><p>线程和 RunLoop 之间一一对应,保存在一个全局的 Dictionary 里.线程刚创建时并没有 RunLoop，如果你不主动获取，那它一直都不会有。RunLoop 的创建是发生在第一次获取时，RunLoop 的销毁是发生在线程结束时。你只能在一个线程的内部获取其 RunLoop（主线程除外</p>
+</li>
+</ul>
 
       
     </div>
