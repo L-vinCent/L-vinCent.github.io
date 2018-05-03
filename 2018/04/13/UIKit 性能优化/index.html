@@ -96,7 +96,7 @@
 <meta name="description" content="在使用UIKit的过程中，性能优化是永恒的话题。很多人都看过分析优化滑动性能的文章，但其中不少文章只介绍了优化方法却对背后的原理避而不谈，或者是晦涩难懂而且读者缺乏实践体验的机会。不妨思考一下下面的问题自己是否有一个清晰的认识：  为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？  为什么cell中的图片，尽可能要使用正确的大小、格式，如果错误会有什么影响，如何检测">
 <meta name="keywords" content="每日一篇">
 <meta property="og:type" content="article">
-<meta property="og:title" content="( 每日一篇 )UIKit性能调优实战讲解">
+<meta property="og:title" content="UIKit性能调优实战讲解">
 <meta property="og:url" content="https://l-vincent.github.io/2018/04/13/UIKit 性能优化/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
 <meta property="og:description" content="在使用UIKit的过程中，性能优化是永恒的话题。很多人都看过分析优化滑动性能的文章，但其中不少文章只介绍了优化方法却对背后的原理避而不谈，或者是晦涩难懂而且读者缺乏实践体验的机会。不妨思考一下下面的问题自己是否有一个清晰的认识：  为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？  为什么cell中的图片，尽可能要使用正确的大小、格式，如果错误会有什么影响，如何检测">
@@ -111,9 +111,9 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5726964-ad682be0a90b76e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5726964-ff37ae4a669383eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/5726964-5722c941ab8b7c24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-04-23T02:44:36.000Z">
+<meta property="og:updated_time" content="2018-05-03T06:50:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="( 每日一篇 )UIKit性能调优实战讲解">
+<meta name="twitter:title" content="UIKit性能调优实战讲解">
 <meta name="twitter:description" content="在使用UIKit的过程中，性能优化是永恒的话题。很多人都看过分析优化滑动性能的文章，但其中不少文章只介绍了优化方法却对背后的原理避而不谈，或者是晦涩难懂而且读者缺乏实践体验的机会。不妨思考一下下面的问题自己是否有一个清晰的认识：  为什么要把控件尽量设置成不透明的，如果是透明的会有什么影响，如何检测这种影响？  为什么cell中的图片，尽可能要使用正确的大小、格式，如果错误会有什么影响，如何检测">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/5726964-2ae9c3f47291a9a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
@@ -149,7 +149,7 @@
 
 
 
-  <title>( 每日一篇 )UIKit性能调优实战讲解 | L-vinCent's Blog</title>
+  <title>UIKit性能调优实战讲解 | L-vinCent's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -296,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">( 每日一篇 )UIKit性能调优实战讲解</h1>
+          <h1 class="post-title" itemprop="name headline">UIKit性能调优实战讲解</h1>
         
 
         <div class="post-meta">
@@ -534,8 +534,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/12/比特币解读/" rel="next" title="( 每日一篇 )比特币入门教程">
-                <i class="fa fa-chevron-left"></i> ( 每日一篇 )比特币入门教程
+              <a href="/2018/04/12/比特币解读/" rel="next" title="比特币入门教程">
+                <i class="fa fa-chevron-left"></i> 比特币入门教程
               </a>
             
           </div>
@@ -544,8 +544,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/15/block修饰符/" rel="prev" title="( 每日一篇 ) block修饰符的原理">
-                ( 每日一篇 ) block修饰符的原理 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/15/block修饰符/" rel="prev" title="block修饰符的原理">
+                block修饰符的原理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -868,7 +868,7 @@
         var disqus_config = function () {
           this.page.url = 'https://l-vincent.github.io/2018/04/13/UIKit 性能优化/';
           this.page.identifier = '2018/04/13/UIKit 性能优化/';
-          this.page.title = '( 每日一篇 )UIKit性能调优实战讲解';
+          this.page.title = 'UIKit性能调优实战讲解';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://L-vinCent.disqus.com/embed.js';
