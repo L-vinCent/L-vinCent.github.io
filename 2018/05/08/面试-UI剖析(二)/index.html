@@ -97,21 +97,23 @@
 <meta name="keywords" content="Objective-C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 面试全方位剖析 -- UI视图篇">
-<meta property="og:url" content="https://l-vincent.github.io/2018/05/08/面试-UI剖析/index.html">
+<meta property="og:url" content="https://l-vincent.github.io/2018/05/08/面试-UI剖析(二)/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
 <meta property="og:description" content="UITableView相关 事件传递&amp;amp;视图响应 图像显示原理 卡顿&amp;amp;掉帧 绘制原理&amp;amp;一步绘制 离屏渲染">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-9f20c2caf9ddaca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-14ad3dc448c9ec1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-5f3d17abda67c175.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-df50b61232b6d8dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-0a1f0742409426a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-a08dab22a59a5415.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-3c42dc48b7a51850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-10T02:12:35.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-43b92665ba5210e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-b31c3b430f61acdf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-b199ad34aed68b88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-b688c0c8d9d16e35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-5235355555296421.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-a3cc0a17bfa265b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-d1f702959ef86f2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-1b201093b6bd076c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-e88a13256bc9c759.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-10T08:04:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 面试全方位剖析 -- UI视图篇">
 <meta name="twitter:description" content="UITableView相关 事件传递&amp;amp;视图响应 图像显示原理 卡顿&amp;amp;掉帧 绘制原理&amp;amp;一步绘制 离屏渲染">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-9f20c2caf9ddaca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-43b92665ba5210e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -139,7 +141,7 @@
 
 
 
-  <link rel="canonical" href="https://l-vincent.github.io/2018/05/08/面试-UI剖析/"/>
+  <link rel="canonical" href="https://l-vincent.github.io/2018/05/08/面试-UI剖析(二)/"/>
 
 
 
@@ -275,7 +277,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/05/08/面试-UI剖析/">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/05/08/面试-UI剖析(二)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Pan'V">
@@ -345,9 +347,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/05/08/面试-UI剖析/#comments" itemprop="discussionUrl">
+                <a href="/2018/05/08/面试-UI剖析(二)/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/05/08/面试-UI剖析/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/05/08/面试-UI剖析(二)/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -383,46 +385,68 @@
 </li>
 </ul>
 <hr>
-<h2 id="UITableView相关"><a href="#UITableView相关" class="headerlink" title="UITableView相关"></a>UITableView相关</h2><ul>
-<li>重用机制</li>
-<li>数据源同步</li>
+<h2 id="图像显示原理"><a href="#图像显示原理" class="headerlink" title="图像显示原理"></a>图像显示原理</h2><p><img src="https://upload-images.jianshu.io/upload_images/904629-43b92665ba5210e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>具体的看一下CPU和GPU做了哪些事,看下图<br><img src="https://upload-images.jianshu.io/upload_images/904629-b31c3b430f61acdf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="CPU工作"><a href="#CPU工作" class="headerlink" title="CPU工作"></a>CPU工作</h4><ul>
+<li>UI布局</li>
+<li>文本计算</li>
+<li>绘制，比如 drawRect 方法</li>
+<li>图片编解码</li>
+<li>提交位图</li>
 </ul>
-<h3 id="重用机制"><a href="#重用机制" class="headerlink" title="重用机制"></a>重用机制</h3><p><img src="https://upload-images.jianshu.io/upload_images/904629-9f20c2caf9ddaca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>这里A1到A7视为同一个标识符，虚线是可视区域，当A1滑出可视区域的时候会放入重用池A，A7根据标识符从备用池取出一个可重用的cell，这样就达到了重用的一个目的</p>
-<h3 id="数据源同步"><a href="#数据源同步" class="headerlink" title="数据源同步"></a>数据源同步</h3><p>如何解决tableView在多线程的情况下修改或者访问数据源的一个同步问题?<br>– 俩个解决方案</p>
-<ul>
-<li>并发访问  &amp;  数据拷贝</li>
-<li>串行访问</li>
+<h4 id="GPU-渲染管线"><a href="#GPU-渲染管线" class="headerlink" title="GPU 渲染管线"></a>GPU 渲染管线</h4><ul>
+<li>纹理渲染</li>
+<li>视图混合</li>
 </ul>
-<h4 id="并发访问-amp-数据拷贝"><a href="#并发访问-amp-数据拷贝" class="headerlink" title="并发访问  &amp;  数据拷贝"></a>并发访问  &amp;  数据拷贝</h4><p><img src="https://upload-images.jianshu.io/upload_images/904629-14ad3dc448c9ec1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>上图中,一般做数据拷贝在主线程当中，拷贝之后会把拷贝的结果给子线程使用,同时在子线程中做新数据的网络请求，数据解析。<br> 主线程在子线程请求数据的时候删除了一条数据，然后reloadUI<br>子线程在完成一系列操作之后，返回请求的结果，然后reloadUI。<br>这个时候问题就出现了，子线程的拷贝发生在主线程删除一条数据之前，所以子线程在返回给主线程的数据源列表中还包括了主线程删除的那条数据，导致数据异常.  </p>
-<p>怎么解决这种数据源的同步问题呢?  往下看</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/904629-5f3d17abda67c175.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>我们可以在主线程进行删除操作的时候把它记录下来，在子线程中将要返回数据更新主线程UI的时候同步删除操作。这就是并发访问的解决方案</p>
-<h4 id="串行队列"><a href="#串行队列" class="headerlink" title="串行队列"></a>串行队列</h4><p>串行访问,这个时候要用到GCD中的串行队列</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/904629-df50b61232b6d8dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>子线程做网络请求,数据解析后数据放到串行队列中做预排版(都是在子线程当中完成).  在这个过程中如果在主线程中删除了一条数据,需要以同步的方式在串行队列中处理, 在上个任务数据排版完成之后再同步数据删除，然后再回到主线程更新UI，这样可以保证无论在主线程或者子线程都是在串行队列上进行操作的，避免数据源的错乱问题。<br>俩种方案各有利弊，具体视项目实际业务而定。</p>
-<p>这里多提一下,队列和线程的关系,在iOS 开发中除了一个特殊情况（主队列和主线程的关系），它二者之间是相互独立的，其实只要记住一个要点就可以了，主队列是一个特殊的队列，首先，它是一个串行队列，其次，它自始至终占用一个特殊的线程–主线程，而主线程，自始至终仅被主队列占用，其他任何队列，不管并行还是串行，都不能占用主线程，除去这个奇葩之外，任意队列不管是系统的还是自建的，不管是串行还是并行的，所有跑在这些队列上的线程都是子线程，都不能用来刷新UI</p>
 <hr>
-<h2 id="事件传递-amp-视图响应"><a href="#事件传递-amp-视图响应" class="headerlink" title="事件传递&amp;视图响应"></a>事件传递&amp;视图响应</h2><h3 id="CALayer-与-UIView-关系"><a href="#CALayer-与-UIView-关系" class="headerlink" title="CALayer 与 UIView  关系"></a>CALayer 与 UIView  关系</h3><p>UIView 为其提供内容，以及负责吃力触摸等时间，参与响应链<br>CALayer 负责显示内容 contents</p>
-<h3 id="事件传递机制"><a href="#事件传递机制" class="headerlink" title="事件传递机制"></a>事件传递机制</h3><p>基本上是一个必考点，事件传递与俩个方法有关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event</div><div class="line">//返回最终响应的事件</div><div class="line">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event</div><div class="line">//判断点击位置是否在当前范围内</div></pre></td></tr></table></figure></p>
-<p>在看事件传递机制之前，先看一下 hitTest 的内部方法实现，看下图<br><img src="https://upload-images.jianshu.io/upload_images/904629-0a1f0742409426a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<ol>
-<li><p>首先判断当前视图 !hidden &amp;$ userInteractionEnable &amp;&amp; alpha &gt; 0.01 条件通过的时候，到下一步.   否则返回nil，找不到当前视图</p>
+<h2 id="卡顿-amp-掉帧"><a href="#卡顿-amp-掉帧" class="headerlink" title="卡顿&amp;掉帧"></a>卡顿&amp;掉帧</h2><h4 id="UI卡顿，掉帧的原因"><a href="#UI卡顿，掉帧的原因" class="headerlink" title="UI卡顿，掉帧的原因"></a>UI卡顿，掉帧的原因</h4><p><img src="https://upload-images.jianshu.io/upload_images/904629-b199ad34aed68b88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>一般页面滑动的流畅性是60fps，每秒会有60帧的画面更新，也就是每16.7ms需要产生一帧画面，这过程需要GPU，CPU协同产生一帧数据。</p>
+<p>如下，比如 CPU 花费时间绘图解码之后将位图交给 GPU 合成渲染，准备下一个VSync信号的到来。<br>第二段，当 CPU 解码，计算时间过长的时候，留给GPU渲染的时间就很少，所以 GPU 需要合成渲染全部准备完毕需要的时间可能就要超过 16.7ms，在下一帧VSync信号到来的时候没有准备这一帧画面，所以就会产生掉帧.<br><img src="https://upload-images.jianshu.io/upload_images/904629-b688c0c8d9d16e35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="UITableView-的滑动优化方案"><a href="#UITableView-的滑动优化方案" class="headerlink" title="UITableView 的滑动优化方案"></a>UITableView 的滑动优化方案</h4><p>了解以上内容之后，问题来了，对于  UITableView 有哪些优化方案？<br>我们就可以基于 GPU 和 CPU 这俩方面来进行解答</p>
+<h5 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h5><ul>
+<li>对象创建，调整，销毁</li>
+<li>预排版(布局计算，文本计算)</li>
+<li>预渲染(文本异步绘制(下面会提到)，图片编解码等)<br>像对象创建，布局计算等都可以放到子线程去做，主线程可以有更多的时间去响应用户的交互</li>
+</ul>
+<h5 id="GPU"><a href="#GPU" class="headerlink" title="GPU"></a>GPU</h5><ul>
+<li><p>纹理渲染<br>比如一些圆角和阴影的设置，容易触发离屏渲染,导致GPU工作量非常大, 这是一个优化点.尽量避免离屏渲染，减轻GPU的压力。详细在后一个点专门讲一下</p>
 </li>
-<li><p>通过 pointInside 判断点击的点是否在当前范围内，为YES直接下一步.  不在则直接返回nil。</p>
-<ol>
-<li>倒序遍历所有子视图，同时调用 hitTest 方法，如果某一个子视图返回了对应的响应视图，这个子视图会直接作为最终的响应视图给响应方，如果为 nil 则继续遍历下一个子视图。如果全部遍历结束都返回nil，那会返回当前点击位置在当前的视图范围内的视图作为最终响应视图…….</li>
-</ol>
+<li><p>视图混合<br>当有多个视图层层叠加，视图合成，每一个像素的合成对应的像素值，需要进行大量的计算。可以在一定程度上减轻图层的复杂度, 通过CPU层面的异步绘制机制，达到提交的位图本身是一个层级少的视图.<br><a href="https://blog.csdn.net/mo_xiao_mo/article/details/52622172" target="_blank" rel="external">具体事例可以看一下这里</a></p>
 </li>
-</ol>
-<p>当我们点击屏幕时候的事件传递<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIApplication -&gt; UIWindow -&gt; hitTest:withEvent:</div></pre></td></tr></table></figure></p>
-<p>深入了解，做一个Demo，一个方形按钮,控制只在点击圆内的时候才响应点击事件,源码看这里(<a href="https://github.com/L-vinCent/PPInterviewDemos" target="_blank" rel="external">PPEventDemo</a>)</p>
-<h3 id="视图响应链"><a href="#视图响应链" class="headerlink" title="视图响应链"></a>视图响应链</h3><p>看一下官方的一张图，一目了然<img src="https://upload-images.jianshu.io/upload_images/904629-a08dab22a59a5415.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>UIResponder 主要有三个方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-(void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div><div class="line">-(void)touchesMoved:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div><div class="line">-(void)touchesEnded:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div></pre></td></tr></table></figure></p>
-<p>提问,下图中点击空白圆点，视图响应顺序是什么？如果最后传递到UIApplicationDelegate 依然没有响应，会发生什么?</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/904629-3c42dc48b7a51850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>正确顺序是 C2 -&gt; B2 -&gt; A<br>到 UIApplicationDelegate 依然没有任何视图处理该事件的时候，直接忽略此事件， 并不会崩溃。</p>
+</ul>
+<p>进一步，了解一下UI的绘制原理</p>
+<hr>
+<h2 id="绘制原理-amp-异步绘制"><a href="#绘制原理-amp-异步绘制" class="headerlink" title="绘制原理&amp;异步绘制"></a>绘制原理&amp;异步绘制</h2><p>####绘制原理<br>通过一幅图看一下UIView的视图绘制原理</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-5235355555296421.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>在调用UIView setNeesDisplay 并不会立刻发生对应视图的对应工作，实际上是到当前 Runloop 快要结束的时候([CALayer display])才会开始介入到UI视图的绘制当中, 如果不响应 displayLayer 代理方法的时候就会走系统绘制流程，如果响应这个方法，就会走异步绘制的入口,这样就给我们异步绘制留有了一个余地.</p>
+<p>我们看一下系统绘制的流程图<br><img src="https://upload-images.jianshu.io/upload_images/904629-a3cc0a17bfa265b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>在 drawRect之前会调用 drawLayer, 举个例子，可以更方便看到系统的调用过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)drawRect:(CGRect)rect &#123;</div><div class="line">CGContextRef con = UIGraphicsGetCurrentContext();</div><div class="line">CGContextAddEllipseInRect(con, CGRectMake(0,0,100,200));</div><div class="line">CGContextSetRGBFillColor(con, 0, 0, 1, 1);</div><div class="line">CGContextFillPath(con);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此时的堆栈<br><img src="https://upload-images.jianshu.io/upload_images/904629-d1f702959ef86f2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>一目了然了吧</p>
+<p>那么怎么实现异步绘制呢？</p>
+<h4 id="异步绘制"><a href="#异步绘制" class="headerlink" title="异步绘制"></a>异步绘制</h4><p>看图说话<br><img src="https://upload-images.jianshu.io/upload_images/904629-1b201093b6bd076c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>这里看看在全局队列子线程里做的工作, 首先通过CGBitmapContextCreate()创建一个位图的上下文，然后通过CoreGraphic API 做一些UI控件的绘制工作，之后再通过CGBitmapContextCreateImage()生成CGImage图片，再回到主队列<br>提交位图。到这里就完成了一个UI控件的异步绘制。</p>
+<p>到这里，应该能够了解了UI视图绘制的机制和原理,具体的示例和使用还需要自己查找和多了解下第三方的内部实现.</p>
+<hr>
+<h2 id="离屏渲染"><a href="#离屏渲染" class="headerlink" title="离屏渲染"></a>离屏渲染</h2><p>什么是离屏渲染？你有什么理解? 何时会触发?</p>
+<p>有离屏，自然也有在屏渲染,看一下概念<br><img src="https://upload-images.jianshu.io/upload_images/904629-e88a13256bc9c759.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="何时会触发"><a href="#何时会触发" class="headerlink" title="何时会触发?"></a>何时会触发?</h4><ul>
+<li>圆角(和 maskToBounds一起使用)</li>
+<li>图层蒙版</li>
+<li>阴影</li>
+<li>光栅化</li>
+</ul>
+<p>为什么要避免离屏渲染?<br>第一个问题，在触发离屏渲染的时候，会增加GPU的工作量，导致掉帧卡顿的情况，具体回顾上文。 <a href="https://l-vincent.github.io/2018/04/13/UIKit%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">UIKit性能调优实战讲解</a></p>
+<hr>
+<h2 id="面试问题总结"><a href="#面试问题总结" class="headerlink" title="面试问题总结"></a>面试问题总结</h2><ul>
+<li>系统的UI事件传递机制是怎么样的 ?</li>
+<li>使UITableView滚动更流畅的方案或思路都有哪些 ?</li>
+<li>什么是离屏渲染 ? (位于GPU层面) ?</li>
+<li>UIView和CALayer之间的关系是怎样的 ?</li>
+</ul>
+<p>如果看着题还是一脸迷茫，建议回过头再看看理解一下.</p>
+<p>视图篇的到此为止了，接下来是 Objective-C语言特性相关面试问题</p>
+<hr>
+<p>转载请标明出处</p>
 
       
     </div>
@@ -465,8 +489,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/03/sdImage内存溢出/" rel="next" title="记录 -- SDWebImageDownloader 内存溢出">
-                <i class="fa fa-chevron-left"></i> 记录 -- SDWebImageDownloader 内存溢出
+              <a href="/2018/05/08/面试-UI剖析/" rel="next" title="iOS 面试全方位剖析 -- UI视图篇">
+                <i class="fa fa-chevron-left"></i> iOS 面试全方位剖析 -- UI视图篇
               </a>
             
           </div>
@@ -474,10 +498,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/08/面试-UI剖析(二)/" rel="prev" title="iOS 面试全方位剖析 -- UI视图篇">
-                iOS 面试全方位剖析 -- UI视图篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -633,7 +653,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#UITableView相关"><span class="nav-number">1.</span> <span class="nav-text">UITableView相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重用机制"><span class="nav-number">1.1.</span> <span class="nav-text">重用机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据源同步"><span class="nav-number">1.2.</span> <span class="nav-text">数据源同步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#并发访问-amp-数据拷贝"><span class="nav-number">1.2.1.</span> <span class="nav-text">并发访问  &  数据拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#串行队列"><span class="nav-number">1.2.2.</span> <span class="nav-text">串行队列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件传递-amp-视图响应"><span class="nav-number">2.</span> <span class="nav-text">事件传递&视图响应</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CALayer-与-UIView-关系"><span class="nav-number">2.1.</span> <span class="nav-text">CALayer 与 UIView  关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件传递机制"><span class="nav-number">2.2.</span> <span class="nav-text">事件传递机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图响应链"><span class="nav-number">2.3.</span> <span class="nav-text">视图响应链</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图像显示原理"><span class="nav-number">1.</span> <span class="nav-text">图像显示原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CPU工作"><span class="nav-number">1.0.1.</span> <span class="nav-text">CPU工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GPU-渲染管线"><span class="nav-number">1.0.2.</span> <span class="nav-text">GPU 渲染管线</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卡顿-amp-掉帧"><span class="nav-number">2.</span> <span class="nav-text">卡顿&掉帧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UI卡顿，掉帧的原因"><span class="nav-number">2.0.1.</span> <span class="nav-text">UI卡顿，掉帧的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UITableView-的滑动优化方案"><span class="nav-number">2.0.2.</span> <span class="nav-text">UITableView 的滑动优化方案</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GPU"><span class="nav-number">2.0.2.2.</span> <span class="nav-text">GPU</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制原理-amp-异步绘制"><span class="nav-number">3.</span> <span class="nav-text">绘制原理&异步绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#异步绘制"><span class="nav-number">3.0.1.</span> <span class="nav-text">异步绘制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染"><span class="nav-number">4.</span> <span class="nav-text">离屏渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#何时会触发"><span class="nav-number">4.0.1.</span> <span class="nav-text">何时会触发?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面试问题总结"><span class="nav-number">5.</span> <span class="nav-text">面试问题总结</span></a></li></ol></div>
             
 
           </div>
@@ -797,8 +817,8 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://l-vincent.github.io/2018/05/08/面试-UI剖析/';
-          this.page.identifier = '2018/05/08/面试-UI剖析/';
+          this.page.url = 'https://l-vincent.github.io/2018/05/08/面试-UI剖析(二)/';
+          this.page.identifier = '2018/05/08/面试-UI剖析(二)/';
           this.page.title = 'iOS 面试全方位剖析 -- UI视图篇';
         };
         var d = document, s = d.createElement('script');
