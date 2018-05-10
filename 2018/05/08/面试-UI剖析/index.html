@@ -104,7 +104,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-14ad3dc448c9ec1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-5f3d17abda67c175.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-df50b61232b6d8dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-09T08:35:16.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-0a1f0742409426a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-a08dab22a59a5415.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-3c42dc48b7a51850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-10T02:12:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 面试全方位剖析 -- UI视图篇">
 <meta name="twitter:description" content="UITableView相关 事件传递&amp;amp;视图响应 图像显示原理 卡顿&amp;amp;掉帧 绘制原理&amp;amp;一步绘制 离屏渲染">
@@ -380,28 +383,47 @@
 </li>
 </ul>
 <hr>
-<h3 id="UITableView相关"><a href="#UITableView相关" class="headerlink" title="UITableView相关"></a>UITableView相关</h3><ul>
+<h2 id="UITableView相关"><a href="#UITableView相关" class="headerlink" title="UITableView相关"></a>UITableView相关</h2><ul>
 <li>重用机制</li>
 <li>数据源同步</li>
 </ul>
-<h4 id="重用机制"><a href="#重用机制" class="headerlink" title="重用机制"></a>重用机制</h4><p><img src="https://upload-images.jianshu.io/upload_images/904629-9f20c2caf9ddaca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="重用机制"><a href="#重用机制" class="headerlink" title="重用机制"></a>重用机制</h3><p><img src="https://upload-images.jianshu.io/upload_images/904629-9f20c2caf9ddaca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>这里A1到A7视为同一个标识符，虚线是可视区域，当A1滑出可视区域的时候会放入重用池A，A7根据标识符从备用池取出一个可重用的cell，这样就达到了重用的一个目的</p>
-<h4 id="数据源同步"><a href="#数据源同步" class="headerlink" title="数据源同步"></a>数据源同步</h4><p>如何解决tableView在多线程的情况下修改或者访问数据源的一个同步问题?<br>– 俩个解决方案</p>
+<h3 id="数据源同步"><a href="#数据源同步" class="headerlink" title="数据源同步"></a>数据源同步</h3><p>如何解决tableView在多线程的情况下修改或者访问数据源的一个同步问题?<br>– 俩个解决方案</p>
 <ul>
 <li>并发访问  &amp;  数据拷贝</li>
 <li>串行访问</li>
 </ul>
-<h5 id="并发访问-amp-数据拷贝"><a href="#并发访问-amp-数据拷贝" class="headerlink" title="并发访问  &amp;  数据拷贝"></a>并发访问  &amp;  数据拷贝</h5><p><img src="https://upload-images.jianshu.io/upload_images/904629-14ad3dc448c9ec1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>上图中,一般做数据拷贝在主线程当中，拷贝之后会把拷贝的结果给子线程使用,同时在子线程中做新数据的网络请求，数据解析。<br>主线程在子线程请求数据的时候删除了一条数据，然后reloadUI<br>子线程在完成一系列操作之后，返回请求的结果，然后reloadUI。<br>这个时候问题就出现了，子线程的拷贝发生在主线程删除一条数据之前，所以子线程在返回给主线程的数据源列表中还包括了主线程删除的那条数据，导致数据异常.</p>
+<h4 id="并发访问-amp-数据拷贝"><a href="#并发访问-amp-数据拷贝" class="headerlink" title="并发访问  &amp;  数据拷贝"></a>并发访问  &amp;  数据拷贝</h4><p><img src="https://upload-images.jianshu.io/upload_images/904629-14ad3dc448c9ec1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>上图中,一般做数据拷贝在主线程当中，拷贝之后会把拷贝的结果给子线程使用,同时在子线程中做新数据的网络请求，数据解析。<br> 主线程在子线程请求数据的时候删除了一条数据，然后reloadUI<br>子线程在完成一系列操作之后，返回请求的结果，然后reloadUI。<br>这个时候问题就出现了，子线程的拷贝发生在主线程删除一条数据之前，所以子线程在返回给主线程的数据源列表中还包括了主线程删除的那条数据，导致数据异常.  </p>
 <p>怎么解决这种数据源的同步问题呢?  往下看</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/904629-5f3d17abda67c175.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>我们可以在主线程进行删除操作的时候把它记录下来，在子线程中将要返回数据更新主线程UI的时候同步删除操作。这就是并发访问的解决方案</p>
-<h5 id="串行队列"><a href="#串行队列" class="headerlink" title="串行队列"></a>串行队列</h5><p>串行访问,这个时候要用到GCD中的串行队列</p>
+<h4 id="串行队列"><a href="#串行队列" class="headerlink" title="串行队列"></a>串行队列</h4><p>串行访问,这个时候要用到GCD中的串行队列</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/904629-df50b61232b6d8dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>子线程做网络请求,数据解析后数据放到串行队列中做预排版(都是在子线程当中完成).  在这个过程中如果在主线程中删除了一条数据,需要以同步的方式在串行队列中处理, 在上个任务数据排版完成之后再同步数据删除，然后再回到主线程更新UI，这样可以保证无论在主线程或者子线程都是在串行队列上进行操作的，避免数据源的错乱问题。<br>俩种方案各有利弊，具体视项目实际业务而定。</p>
-<p>这里多提一下,队列和线程的关系,在ios 开发中除了一个特殊情况（主队列和主线程的关系），它二者之间是相互独立的，其实只要记住一个要点就可以了，主队列是一个特殊的队列，首先，它是一个串行队列，其次，它自始至终占用一个特殊的线程–主线程，而主线程，自始至终仅被主队列占用，其他任何队列，不管并行还是串行，都不能占用主线程，除去这个奇葩之外，任意队列不管是系统的还是自建的，不管是串行还是并行的，所有跑在这些队列上的线程都是子线程，都不能用来刷新UI</p>
+<p>这里多提一下,队列和线程的关系,在iOS 开发中除了一个特殊情况（主队列和主线程的关系），它二者之间是相互独立的，其实只要记住一个要点就可以了，主队列是一个特殊的队列，首先，它是一个串行队列，其次，它自始至终占用一个特殊的线程–主线程，而主线程，自始至终仅被主队列占用，其他任何队列，不管并行还是串行，都不能占用主线程，除去这个奇葩之外，任意队列不管是系统的还是自建的，不管是串行还是并行的，所有跑在这些队列上的线程都是子线程，都不能用来刷新UI</p>
 <hr>
-<h3 id="事件传递-amp-视图响应"><a href="#事件传递-amp-视图响应" class="headerlink" title="事件传递&amp;视图响应"></a>事件传递&amp;视图响应</h3>
+<h2 id="事件传递-amp-视图响应"><a href="#事件传递-amp-视图响应" class="headerlink" title="事件传递&amp;视图响应"></a>事件传递&amp;视图响应</h2><h3 id="CALayer-与-UIView-关系"><a href="#CALayer-与-UIView-关系" class="headerlink" title="CALayer 与 UIView  关系"></a>CALayer 与 UIView  关系</h3><p>UIView 为其提供内容，以及负责吃力触摸等时间，参与响应链<br>CALayer 负责显示内容 contents</p>
+<h3 id="事件传递机制"><a href="#事件传递机制" class="headerlink" title="事件传递机制"></a>事件传递机制</h3><p>基本上是一个必考点，事件传递与俩个方法有关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event</div><div class="line">//返回最终响应的事件</div><div class="line">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event</div><div class="line">//判断点击位置是否在当前范围内</div></pre></td></tr></table></figure></p>
+<p>在看事件传递机制之前，先看一下 hitTest 的内部方法实现，看下图<br><img src="https://upload-images.jianshu.io/upload_images/904629-0a1f0742409426a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ol>
+<li><p>首先判断当前视图 !hidden &amp;$ userInteractionEnable &amp;&amp; alpha &gt; 0.01 条件通过的时候，到下一步.   否则返回nil，找不到当前视图</p>
+</li>
+<li><p>通过 pointInside 判断点击的点是否在当前范围内，为YES直接下一步.  不在则直接返回nil。</p>
+<ol>
+<li>倒序遍历所有子视图，同时调用 hitTest 方法，如果某一个子视图返回了对应的响应视图，这个子视图会直接作为最终的响应视图给响应方，如果为 nil 则继续遍历下一个子视图。如果全部遍历结束都返回nil，那会返回当前点击位置在当前的视图范围内的视图作为最终响应视图…….</li>
+</ol>
+</li>
+</ol>
+<p>当我们点击屏幕时候的事件传递<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIApplication -&gt; UIWindow -&gt; hitTest:withEvent:</div></pre></td></tr></table></figure></p>
+<p>深入了解，做一个Demo，一个方形按钮,控制只在点击圆内的时候才响应点击事件,源码看这里(<a href="https://github.com/L-vinCent/PPInterviewDemos" target="_blank" rel="external">PPEventDemo</a>)</p>
+<h3 id="视图响应链"><a href="#视图响应链" class="headerlink" title="视图响应链"></a>视图响应链</h3><p>看一下官方的一张图，一目了然<img src="https://upload-images.jianshu.io/upload_images/904629-a08dab22a59a5415.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>UIResponder 主要有三个方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-(void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div><div class="line">-(void)touchesMoved:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div><div class="line">-(void)touchesEnded:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div></pre></td></tr></table></figure></p>
+<p>提问,下图中点击空白圆点，视图响应顺序是什么？如果最后传递到UIApplicationDelegate 依然没有响应，会发生什么?</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-3c42dc48b7a51850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>正确顺序是 C2 -&gt; B2 -&gt; A<br>到 UIApplicationDelegate 依然没有任何视图处理该事件的时候，直接忽略此事件， 并不会崩溃。</p>
+
       
     </div>
 
@@ -552,7 +574,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -607,7 +629,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UITableView相关"><span class="nav-number">1.</span> <span class="nav-text">UITableView相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重用机制"><span class="nav-number">1.1.</span> <span class="nav-text">重用机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据源同步"><span class="nav-number">1.2.</span> <span class="nav-text">数据源同步</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#并发访问-amp-数据拷贝"><span class="nav-number">1.2.1.</span> <span class="nav-text">并发访问  &  数据拷贝</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#串行队列"><span class="nav-number">1.2.2.</span> <span class="nav-text">串行队列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件传递-amp-视图响应"><span class="nav-number">2.</span> <span class="nav-text">事件传递&视图响应</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#UITableView相关"><span class="nav-number">1.</span> <span class="nav-text">UITableView相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重用机制"><span class="nav-number">1.1.</span> <span class="nav-text">重用机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据源同步"><span class="nav-number">1.2.</span> <span class="nav-text">数据源同步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#并发访问-amp-数据拷贝"><span class="nav-number">1.2.1.</span> <span class="nav-text">并发访问  &  数据拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#串行队列"><span class="nav-number">1.2.2.</span> <span class="nav-text">串行队列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件传递-amp-视图响应"><span class="nav-number">2.</span> <span class="nav-text">事件传递&视图响应</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CALayer-与-UIView-关系"><span class="nav-number">2.1.</span> <span class="nav-text">CALayer 与 UIView  关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件传递机制"><span class="nav-number">2.2.</span> <span class="nav-text">事件传递机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图响应链"><span class="nav-number">2.3.</span> <span class="nav-text">视图响应链</span></a></li></ol></li></ol></div>
             
 
           </div>
