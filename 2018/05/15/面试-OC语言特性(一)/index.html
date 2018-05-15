@@ -1,0 +1,914 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta name="google-site-verification" content="m3UI4lcUPqpZrsd0hAa_xv7QZH4x70BTPJzUp-HHnyo" />
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OC语言特性篇," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="通过这篇文章要了解的面试问题  请简述分类实现原理 KVO的实现原理是怎样的 能否为分类添加成员变量">
+<meta name="keywords" content="OC语言特性篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS OC语言特性篇">
+<meta property="og:url" content="https://l-vincent.github.io/2018/05/15/面试-OC语言特性(一)/index.html">
+<meta property="og:site_name" content="L-vinCent&#39;s Blog">
+<meta property="og:description" content="通过这篇文章要了解的面试问题  请简述分类实现原理 KVO的实现原理是怎样的 能否为分类添加成员变量">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-b03dd82d7806740f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-25abf5f32d8987d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-254d873ac084140a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-13fdfd0e733ebbaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-d6c822ff28c62bfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-5569a78594da0f9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-55c203c34876cb6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-15T06:42:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS OC语言特性篇">
+<meta name="twitter:description" content="通过这篇文章要了解的面试问题  请简述分类实现原理 KVO的实现原理是怎样的 能否为分类添加成员变量">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-b03dd82d7806740f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://l-vincent.github.io/2018/05/15/面试-OC语言特性(一)/"/>
+
+
+
+
+
+  <title>iOS OC语言特性篇 | L-vinCent's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">L-vinCent's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">“努力的学习”意味着，要常常去处理那些刚好在你能力极限上的问题</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/05/15/面试-OC语言特性(一)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS OC语言特性篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T00:00:00+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Objective-C/" itemprop="url" rel="index">
+                    <span itemprop="name">Objective-C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/15/面试-OC语言特性(一)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/15/面试-OC语言特性(一)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>通过这篇文章要了解的面试问题</p>
+<ol>
+<li>请简述分类实现原理</li>
+<li>KVO的实现原理是怎样的</li>
+<li>能否为分类添加成员变量</li>
+</ol>
+<hr>
+<a id="more"></a>
+<p>目录</p>
+<ul>
+<li>分类 &amp; 关联对象 &amp; 扩展 &amp;  代理 </li>
+<li>通知</li>
+<li>KVO</li>
+<li>KVC</li>
+<li>属性关键字</li>
+</ul>
+<hr>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h4 id="你用分类都做了哪些事"><a href="#你用分类都做了哪些事" class="headerlink" title="你用分类都做了哪些事 ?"></a>你用分类都做了哪些事 ?</h4><ul>
+<li>声明私有方法<ul>
+<li>分解体积庞大的类文件</li>
+<li>把 Framework 的私有方法公开</li>
+</ul>
+</li>
+</ul>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>讲特点是为了能更好的和扩展区分开来</p>
+<ul>
+<li>运行时决议 — 比如一个数组类，在编好分类文件之后，并没有把分类当中对应添加的内容附加到相应的数组类，而是在运行时通过 runtime 真实的添加到数组类中</li>
+<li>可以为系统类添加分类</li>
+</ul>
+<h4 id="分类中都可以添加哪些内容"><a href="#分类中都可以添加哪些内容" class="headerlink" title="分类中都可以添加哪些内容"></a>分类中都可以添加哪些内容</h4><ul>
+<li>实例方法</li>
+<li>类方法</li>
+<li>协议</li>
+<li>属性(不是添加实例变量，实例变量需要通过关联对象添加)<br>看一下分类的成员结构</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">typedef struct category_t &#123;</div><div class="line">    const char *name;</div><div class="line">    classref_t cls;</div><div class="line">    struct method_list_t *instanceMethods; //实例方法列表</div><div class="line">    struct method_list_t *classMethods;</div><div class="line">    struct protocol_list_t *protocols;</div><div class="line">    struct property_list_t *instanceProperties;</div><div class="line">&#125; category_t;</div></pre></td></tr></table></figure>
+<h4 id="分类的实现机制"><a href="#分类的实现机制" class="headerlink" title="分类的实现机制"></a>分类的实现机制</h4><p>同一个类有多个分类，每个分类有一个同名方法，哪一个方法会生效?<br>最后编译的分类当中的方法会最终生效</p>
+<p>具体可以理解下<a href="https://github.com/L-vinCent/PPInterviewDemos/blob/master/objc-runtime-new.mm" target="_blank" rel="external">objc-runtime-new.mm</a>,做了些注释拆解.   </p>
+<ul>
+<li>分类添加的方法可以覆盖原类方法</li>
+<li>同名分类方法谁能生效取决于编译顺序</li>
+<li>名字相同的分类会引起编译报错</li>
+</ul>
+<hr>
+<h2 id="关联对象"><a href="#关联对象" class="headerlink" title="关联对象"></a>关联对象</h2><p>先看一下常用的俩个方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">id objc_getAssociatedObject(id object , const void *key)</div><div class="line"></div><div class="line">void objc_setAssociatedObject(id object,const void *key,id value, objc_AssociationPolicy policy)</div><div class="line"></div><div class="line">void objc_removeAssociatedObject(id object)</div></pre></td></tr></table></figure></p>
+<p>关联对象所添加的成员变量被添加到了哪里？</p>
+<ul>
+<li>关联对象由 AssociationsManager 管理并在 AssociationsHashMap存储。</li>
+<li>所有的对象的关联内容都在同一个全局容器中</li>
+</ul>
+<hr>
+<h2 id="扩展相关问题"><a href="#扩展相关问题" class="headerlink" title="扩展相关问题"></a>扩展相关问题</h2><p>一般用扩展做什么</p>
+<ul>
+<li>声明私有属性</li>
+<li>声明私有方法</li>
+<li>声明私有成员变量</li>
+</ul>
+<p>扩展的特点 (和分类的区别)</p>
+<ul>
+<li>编译时决议</li>
+<li>只以声明的形式存在，多数情况下寄生于宿主类的.m中</li>
+<li>不能为系统类添加扩展</li>
+<li>不能为系统类添加扩展</li>
+</ul>
+<hr>
+<h2 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h2><ul>
+<li>准确的说是一种软件设计模式</li>
+<li>iOS当中以@protocol形式提现</li>
+<li>传递方式一对一</li>
+</ul>
+<p>代理的实现流程<br><img src="https://upload-images.jianshu.io/upload_images/904629-b03dd82d7806740f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="一般声明为weak以规避循环引用"><a href="#一般声明为weak以规避循环引用" class="headerlink" title="* 一般声明为weak以规避循环引用"></a>* 一般声明为weak以规避循环引用</h2><h2 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h2><ul>
+<li>是使用观察者模式来实现用于跨层传递消息的机制</li>
+<li>传递方式为一对多</li>
+</ul>
+<hr>
+<h2 id="KVO"><a href="#KVO" class="headerlink" title="KVO"></a>KVO</h2><p>使用 isa-swizzling 来实现KVO<br>看下图，KVO的实现机制<img src="https://upload-images.jianshu.io/upload_images/904629-25abf5f32d8987d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>当调用了 addObserver:forkeypath 方法之后，系统会动态创建 NSKVONorifying_A 类，同时将A的isa指针指向 NSKVONorifying_A。</p>
+<p>代码验证一下 <a href="https://github.com/L-vinCent/PPInterviewDemos/tree/master/KVO_Test" target="_blank" rel="external">KVO_Test</a><br><img src="https://upload-images.jianshu.io/upload_images/904629-254d873ac084140a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>对应断点处可以看到类的变化</p>
+<hr>
+<h2 id="KVC"><a href="#KVC" class="headerlink" title="KVC"></a>KVC</h2><p>主要有这俩个方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-(id)valueForKey:(NSString *)key</div><div class="line">-(void)setValue:(id)value forked:(NSString *)key;</div></pre></td></tr></table></figure></p>
+<p>通过一副流程图看一下 valueForKey 的实现逻辑<br><img src="https://upload-images.jianshu.io/upload_images/904629-13fdfd0e733ebbaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>首先系统会判断访问的key是否有对应的getter方法，存在就直接进行调用，不存在就判断实例变量是否存在，通过 accessInstanceVariablesDirectly 来判断 ，默认是YES。 如果不存在，会调用 UndefinedKey ，抛出异常.</p>
+<hr>
+<h2 id="属性关键字"><a href="#属性关键字" class="headerlink" title="属性关键字"></a>属性关键字</h2><p> 读写权限</p>
+<ul>
+<li>readonly</li>
+<li>readwrite</li>
+</ul>
+<p>原子性</p>
+<ul>
+<li>atomic</li>
+<li>nonatomic</li>
+</ul>
+<p>引用计数</p>
+<ul>
+<li>retail/strong</li>
+<li>assign<br>修饰基本数据类型，如 int ,BOOL 等<br>修饰对象类型时，不改变其引用计数</li>
+<li>weak<br>不改变被修饰对象的引用计数<br>所指对象在被释放之后会自动置为nil<br>那么问题来了，weak对象修饰的对象为什么在被释放之后会置为nil？</li>
+<li>copy<br>浅拷贝和深拷贝的概念<br><img src="https://upload-images.jianshu.io/upload_images/904629-d6c822ff28c62bfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-5569a78594da0f9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>看一下他倆的区分<br><img src="https://upload-images.jianshu.io/upload_images/904629-55c203c34876cb6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>总结下来三点</p>
+<ul>
+<li>可变对象的 copy 和mutableCopy都是深拷贝</li>
+<li>不可变对象的copy是浅拷贝，mutableCopy是深拷贝</li>
+<li>copy方法返回的都是不可变对象</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">提问， 这样写有什么问题 ?</div><div class="line">@property(copy)NSMutableArray *array?</div></pre></td></tr></table></figure>
+<p>无论复制过来的是可变还是不可变对象，都是NSArray，当调用方调用 Array 的添加对象和移除对象等操作，对于不可变 Array 就会产生程序异常</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>1.分类的实现原理<br>由运行时来决议的，不同分类当中含有同名分类方法，谁最终生效取决于谁最终参与编译。<br>假如分类当中添加的方法恰好是数组当中的某一个方法的时候，分类方法会覆盖同名数组类方法</p>
+<p>2.KVO的实现原理<br>运用了isa混写技术来为某一个类动态生成了一个子类，然后重写子类的getter方法，用isa指针指向子类</p>
+<p>3.怎么为分类添加成员变量<br>关联对象</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OC语言特性篇/" rel="tag"># OC语言特性篇</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/10/面试-UI剖析(二)/" rel="next" title="iOS 面试全方位剖析 -- UI视图篇(二)">
+                <i class="fa fa-chevron-left"></i> iOS 面试全方位剖析 -- UI视图篇(二)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Pan'V" />
+          <p class="site-author-name" itemprop="name">Pan'V</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/L-vinCent" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/4a7b7da390e4" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#你用分类都做了哪些事"><span class="nav-number">1.0.1.</span> <span class="nav-text">你用分类都做了哪些事 ?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">1.0.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分类中都可以添加哪些内容"><span class="nav-number">1.0.3.</span> <span class="nav-text">分类中都可以添加哪些内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分类的实现机制"><span class="nav-number">1.0.4.</span> <span class="nav-text">分类的实现机制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关联对象"><span class="nav-number">2.</span> <span class="nav-text">关联对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展相关问题"><span class="nav-number">3.</span> <span class="nav-text">扩展相关问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理"><span class="nav-number">4.</span> <span class="nav-text">代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般声明为weak以规避循环引用"><span class="nav-number">5.</span> <span class="nav-text">* 一般声明为weak以规避循环引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通知"><span class="nav-number">6.</span> <span class="nav-text">通知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KVO"><span class="nav-number">7.</span> <span class="nav-text">KVO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KVC"><span class="nav-number">8.</span> <span class="nav-text">KVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性关键字"><span class="nav-number">9.</span> <span class="nav-text">属性关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pan'V</span>
+</div>
+
+
+<div class="powered-by">
+  努力工作,努力生活
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="busuanzi-count" >
+<span class="site-uv">
+<i class="fa fa-user"></i>
+<span id="busuanzi_container_site_pv">
+访问量: <span id="busuanzi_value_site_pv"></span> 次  
+</span>
+</span>
+
+<span class="site-pv">
+<i class="fa fa-quora"></i>
+<span id="busuanzi_container_site_uv">
+访客数: <span id="busuanzi_value_site_uv"></span> 人
+</span>
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://L-vinCent.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://l-vincent.github.io/2018/05/15/面试-OC语言特性(一)/';
+          this.page.identifier = '2018/05/15/面试-OC语言特性(一)/';
+          this.page.title = 'iOS OC语言特性篇';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://L-vinCent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
