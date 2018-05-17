@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Runloop," />
+  <meta name="keywords" content="Runtime," />
 
 
 
@@ -93,22 +93,18 @@
 
 
 
-<meta name="description" content="今天做一个图片展示列表，搭好界面，接好接口，渲染数据，run………crash.  报的是内存泄漏的锅，看了下Memory,发现每次一进这个界面内存直接增到几百兆，然后crash。">
-<meta name="keywords" content="Runloop">
+<meta name="keywords" content="Runtime">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记录 -- SDWebImageDownloader 内存溢出">
-<meta property="og:url" content="https://l-vincent.github.io/2018/05/03/sdImage内存溢出/index.html">
+<meta property="og:title" content="iOS OC语言特性篇">
+<meta property="og:url" content="https://l-vincent.github.io/2018/05/17/面试-Runtime/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:description" content="今天做一个图片展示列表，搭好界面，接好接口，渲染数据，run………crash.  报的是内存泄漏的锅，看了下Memory,发现每次一进这个界面内存直接增到几百兆，然后crash。">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-87f7f6fabe261831.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-b7748803e759cd24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-0943a1518f54ca52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-b323e42f9bdd349b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-07T08:43:49.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-3ab2a221da9dae6b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-82cd4639a024707a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-b0909bd8eaa595a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-17T08:03:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记录 -- SDWebImageDownloader 内存溢出">
-<meta name="twitter:description" content="今天做一个图片展示列表，搭好界面，接好接口，渲染数据，run………crash.  报的是内存泄漏的锅，看了下Memory,发现每次一进这个界面内存直接增到几百兆，然后crash。">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-87f7f6fabe261831.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="iOS OC语言特性篇">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-3ab2a221da9dae6b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -136,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://l-vincent.github.io/2018/05/03/sdImage内存溢出/"/>
+  <link rel="canonical" href="https://l-vincent.github.io/2018/05/17/面试-Runtime/"/>
 
 
 
 
 
-  <title>记录 -- SDWebImageDownloader 内存溢出 | L-vinCent's Blog</title>
+  <title>iOS OC语言特性篇 | L-vinCent's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +268,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/05/03/sdImage内存溢出/">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/05/17/面试-Runtime/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Pan'V">
@@ -289,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">记录 -- SDWebImageDownloader 内存溢出</h1>
+          <h1 class="post-title" itemprop="name headline">iOS OC语言特性篇</h1>
         
 
         <div class="post-meta">
@@ -301,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-03T00:00:00+08:00">
-                2018-05-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-17T00:00:00+08:00">
+                2018-05-17
               </time>
             
 
@@ -324,8 +320,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/每日一篇/" itemprop="url" rel="index">
-                    <span itemprop="name">每日一篇</span>
+                  <a href="/categories/Objective-C/" itemprop="url" rel="index">
+                    <span itemprop="name">Objective-C</span>
                   </a>
                 </span>
 
@@ -342,9 +338,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/05/03/sdImage内存溢出/#comments" itemprop="discussionUrl">
+                <a href="/2018/05/17/面试-Runtime/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/05/03/sdImage内存溢出/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/05/17/面试-Runtime/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -369,33 +365,30 @@
       
 
       
-        <hr>
-<p>今天做一个图片展示列表，搭好界面，接好接口，渲染数据，run………crash.</p>
+        <h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><h2 id="类对象与元类对象的区别"><a href="#类对象与元类对象的区别" class="headerlink" title="类对象与元类对象的区别?"></a>类对象与元类对象的区别?</h2><p><img src="https://upload-images.jianshu.io/upload_images/904629-3ab2a221da9dae6b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>Runtime内容汇总</p>
 <hr>
-<p>报的是内存泄漏的锅，看了下Memory,发现每次一进这个界面内存直接增到几百兆，然后crash。<br><a id="more"></a><br><img src="https://upload-images.jianshu.io/upload_images/904629-87f7f6fabe261831.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>这简直不能忍，用instrument跑一跑，看到如图<br><img src="https://upload-images.jianshu.io/upload_images/904629-b7748803e759cd24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>大部分内存都消耗在给图片分配了，明显是因为调用了 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[SDWebImageDownloader sharedDownloader]downloadImageWithURL</div></pre></td></tr></table></figure>
+<p>这节的讲解内容</p>
+<ul>
+<li>Runtime 数据结构</li>
+<li>类对象与元类对象 &amp; 消息传递</li>
+</ul>
 <hr>
-<p>SDWebImageDownloader点进去看到有这个属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Decompressing images that are downloaded and cached can improve performance but can consume lot of memory.</div><div class="line"> * Defaults to YES. Set this to NO if you are experiencing a crash due to excessive memory consumption.</div><div class="line"> */</div><div class="line">@property (assign, nonatomic) BOOL shouldDecompressImages;</div></pre></td></tr></table></figure>
-<p>这个方法意思差不多就是 用于对图片进行解压缩并且缓存起来，以保证tableviews/collectionviews 交互更加流畅，默认的是YES，如果因为过量的内存导致crash，可以将这个属性设置为NO</p>
-<p>仿佛看到了救星，设置完，run…….crash!!<br>WTF？貌似没用，内存一点不减。 貌似在6S，9.3系统以下禁止解压缩没有效果。</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p><img src="https://upload-images.jianshu.io/upload_images/904629-82cd4639a024707a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>上图可以看出 Runtime 整体的数据结构 </p>
+<ul>
+<li><p>superClass 指向当前类的父类</p>
+</li>
+<li><p>cache_t 提供消息传递过程当中的缓存方法查找 ， 实质上是装满了 bucket_t 的一个 hash 表</p>
+</li>
+<li><p>class_data_bits_t 类的基础信息，包含了类的方法列表，协议列表等。</p>
+</li>
+</ul>
 <hr>
-<p>是不是缓存的原因，试试每次加载图片清空memcache。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[SDImageCache sharedImageCache] setValue:nil forKey:@&quot;memCache&quot;];</div></pre></td></tr></table></figure>
-<p>依然没什么效果</p>
-<hr>
-<p>那就在控制器dealloc的时候，执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 清空缓存（内存）</div><div class="line">    [[SDImageCache sharedImageCache] clearMemory];</div><div class="line">    // 清空已过期图片</div><div class="line">    [[SDImageCache sharedImageCache] cleanDisk];</div><div class="line">    // 清空磁盘图片</div><div class="line">    [[SDImageCache sharedImageCache] clearDisk];</div></pre></td></tr></table></figure>
-<p>还是没用</p>
-<hr>
-<p>试着改一下  SDWebImageDownloaderOptions ，   一开始用的          SDWebImageDownloaderProgressiveDownload   ，改为   SDWebImageDownloaderIgnoreCachedResponse。  </p>
-<p>跑起来 <img src="https://upload-images.jianshu.io/upload_images/904629-0943a1518f54ca52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>稳定在18M左右<br><img src="https://upload-images.jianshu.io/upload_images/904629-b323e42f9bdd349b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>这个就有点费解了，看一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">typedef NS_OPTIONS(NSUInteger, SDWebImageDownloaderOptions) &#123;</div><div class="line">    //默认模式</div><div class="line">    SDWebImageDownloaderLowPriority = 1 &lt;&lt; 0,</div><div class="line">    //本模式在返回进度Block的同时，同事返回completedBlock，里面的UIImage就是当前下载时的图片，可以实现将图片一点点显示出来的功能</div><div class="line">    SDWebImageDownloaderProgressiveDownload = 1 &lt;&lt; 1,</div><div class="line">    //默认情况下，http请求阻止使用NSURLCache对象。如果设置了这个标记，则NSURLCache会被http请求使用。</div><div class="line">    SDWebImageDownloaderUseNSURLCache = 1 &lt;&lt; 2,</div><div class="line">    //如果image/imageData是从NSURLCache返回的，则completion这个回调会返回nil</div><div class="line">    SDWebImageDownloaderIgnoreCachedResponse = 1 &lt;&lt; 3,</div><div class="line">    //如果app进入后台模式，是否继续下载，这个是通过在后台申请时间来完成这个操作。如果指定的时间范围内没有完成，则直接取消下载。</div><div class="line">    SDWebImageDownloaderContinueInBackground = 1 &lt;&lt; 4,</div><div class="line">    //处理缓存在`NSHTTPCookieStore`对象里面的cookie，通过设置`NSMutableURLRequest.HTTPShouldHandleCookies = YES`来实现的。</div><div class="line">    SDWebImageDownloaderHandleCookies = 1 &lt;&lt; 5,</div><div class="line">    //允许非信任的SSL证书请求。在测试的时候很有用，但是正式环境要小心使用。</div><div class="line">    SDWebImageDownloaderAllowInvalidSSLCertificates = 1 &lt;&lt; 6,</div><div class="line">    //默认情况下，图片加载的顺序是根据加入队列的顺序加载的。但是这个标记会把任务加入队列的最前面。</div><div class="line">    SDWebImageDownloaderHighPriority = 1 &lt;&lt; 7,</div><div class="line">    //默认情况下，图片会按照它的原始大小来解码显示。这个属性会根据设备的内存限制调整图片的尺寸到合适的大小。如果`SDWebImageProgressiveDownload`标记被设置了，则这个flag不起作用。</div><div class="line">    SDWebImageDownloaderScaleDownLargeImages = 1 &lt;&lt; 8,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>就一个 Cache的区别，差别有点大,待我深入了解一下</p>
+<h2 id="类对象与元类对象-amp-消息传递"><a href="#类对象与元类对象-amp-消息传递" class="headerlink" title="类对象与元类对象 &amp; 消息传递"></a>类对象与元类对象 &amp; 消息传递</h2><ul>
+<li>类对象存储实例方法列表等信息</li>
+<li>元类对象存储类方法列表等信息</li>
+</ul>
+<p>看一个官方很经典的图<br><img src="https://upload-images.jianshu.io/upload_images/904629-b0909bd8eaa595a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
     </div>
@@ -425,7 +418,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Runloop/" rel="tag"># Runloop</a>
+            <a href="/tags/Runtime/" rel="tag"># Runtime</a>
           
         </div>
       
@@ -438,8 +431,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/20/线程Autorelease/" rel="next" title="各个线程 Autorelease 对象的内存管理">
-                <i class="fa fa-chevron-left"></i> 各个线程 Autorelease 对象的内存管理
+              <a href="/2018/05/15/面试-OC语言特性/" rel="next" title="iOS OC语言特性篇">
+                <i class="fa fa-chevron-left"></i> iOS OC语言特性篇
               </a>
             
           </div>
@@ -447,10 +440,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/08/面试-UI剖析/" rel="prev" title="iOS 面试全方位剖析 -- UI视图篇">
-                iOS 面试全方位剖析 -- UI视图篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -504,8 +493,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -587,6 +585,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类对象与元类对象的区别"><span class="nav-number">2.</span> <span class="nav-text">类对象与元类对象的区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-number">3.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类对象与元类对象-amp-消息传递"><span class="nav-number">4.</span> <span class="nav-text">类对象与元类对象 & 消息传递</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -745,9 +759,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://l-vincent.github.io/2018/05/03/sdImage内存溢出/';
-          this.page.identifier = '2018/05/03/sdImage内存溢出/';
-          this.page.title = '记录 -- SDWebImageDownloader 内存溢出';
+          this.page.url = 'https://l-vincent.github.io/2018/05/17/面试-Runtime/';
+          this.page.identifier = '2018/05/17/面试-Runtime/';
+          this.page.title = 'iOS OC语言特性篇';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://L-vinCent.disqus.com/embed.js';
