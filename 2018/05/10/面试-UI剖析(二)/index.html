@@ -109,7 +109,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-d1f702959ef86f2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-1b201093b6bd076c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-e88a13256bc9c759.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-10T08:22:21.000Z">
+<meta property="og:updated_time" content="2018-05-21T07:21:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 面试全方位剖析 -- UI视图篇(二)">
 <meta name="twitter:description" content="UITableView相关 事件传递&amp;amp;视图响应 图像显示原理 卡顿&amp;amp;掉帧 绘制原理&amp;amp;一步绘制 离屏渲染">
@@ -387,19 +387,19 @@
 <hr>
 <h2 id="图像显示原理"><a href="#图像显示原理" class="headerlink" title="图像显示原理"></a>图像显示原理</h2><p><img src="https://upload-images.jianshu.io/upload_images/904629-43b92665ba5210e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>具体的看一下CPU和GPU做了哪些事,看下图<br><img src="https://upload-images.jianshu.io/upload_images/904629-b31c3b430f61acdf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h4 id="CPU工作"><a href="#CPU工作" class="headerlink" title="CPU工作"></a>CPU工作</h4><ul>
+<h3 id="CPU工作"><a href="#CPU工作" class="headerlink" title="CPU工作"></a>CPU工作</h3><ul>
 <li>UI布局</li>
 <li>文本计算</li>
 <li>绘制，比如 drawRect 方法</li>
 <li>图片编解码</li>
 <li>提交位图</li>
 </ul>
-<h4 id="GPU-渲染管线"><a href="#GPU-渲染管线" class="headerlink" title="GPU 渲染管线"></a>GPU 渲染管线</h4><ul>
+<h3 id="GPU-渲染管线"><a href="#GPU-渲染管线" class="headerlink" title="GPU 渲染管线"></a>GPU 渲染管线</h3><ul>
 <li>纹理渲染</li>
 <li>视图混合</li>
 </ul>
 <hr>
-<h2 id="卡顿-amp-掉帧"><a href="#卡顿-amp-掉帧" class="headerlink" title="卡顿&amp;掉帧"></a>卡顿&amp;掉帧</h2><h4 id="UI卡顿，掉帧的原因"><a href="#UI卡顿，掉帧的原因" class="headerlink" title="UI卡顿，掉帧的原因"></a>UI卡顿，掉帧的原因</h4><p><img src="https://upload-images.jianshu.io/upload_images/904629-b199ad34aed68b88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>一般页面滑动的流畅性是60fps，每秒会有60帧的画面更新，也就是每16.7ms需要产生一帧画面，这过程需要GPU，CPU协同产生一帧数据。</p>
+<h2 id="卡顿-amp-掉帧"><a href="#卡顿-amp-掉帧" class="headerlink" title="卡顿&amp;掉帧"></a>卡顿&amp;掉帧</h2><h3 id="UI卡顿，掉帧的原因"><a href="#UI卡顿，掉帧的原因" class="headerlink" title="UI卡顿，掉帧的原因"></a>UI卡顿，掉帧的原因</h3><p><img src="https://upload-images.jianshu.io/upload_images/904629-b199ad34aed68b88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>一般页面滑动的流畅性是60fps，每秒会有60帧的画面更新，也就是每16.7ms需要产生一帧画面，这过程需要GPU，CPU协同产生一帧数据。</p>
 <p>如下，比如 CPU 花费时间绘图解码之后将位图交给 GPU 合成渲染，准备下一个VSync信号的到来。<br>第二段，当 CPU 解码，计算时间过长的时候，留给GPU渲染的时间就很少，所以 GPU 需要合成渲染全部准备完毕需要的时间可能就要超过 16.7ms，在下一帧VSync信号到来的时候没有准备这一帧画面，所以就会产生掉帧.<br><img src="https://upload-images.jianshu.io/upload_images/904629-b688c0c8d9d16e35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h4 id="UITableView-的滑动优化方案"><a href="#UITableView-的滑动优化方案" class="headerlink" title="UITableView 的滑动优化方案"></a>UITableView 的滑动优化方案</h4><p>了解以上内容之后，问题来了，对于  UITableView 有哪些优化方案？<br>我们就可以基于 GPU 和 CPU 这俩方面来进行解答</p>
 <h5 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h5><ul>
@@ -415,7 +415,7 @@
 </ul>
 <p>进一步，了解一下UI的绘制原理</p>
 <hr>
-<h2 id="绘制原理-amp-异步绘制"><a href="#绘制原理-amp-异步绘制" class="headerlink" title="绘制原理&amp;异步绘制"></a>绘制原理&amp;异步绘制</h2><p>####绘制原理<br>通过一幅图看一下UIView的视图绘制原理</p>
+<h2 id="绘制原理-amp-异步绘制"><a href="#绘制原理-amp-异步绘制" class="headerlink" title="绘制原理&amp;异步绘制"></a>绘制原理&amp;异步绘制</h2><p>###绘制原理<br>通过一幅图看一下UIView的视图绘制原理</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/904629-5235355555296421.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>在调用UIView setNeesDisplay 并不会立刻发生对应视图的对应工作，实际上是到当前 Runloop 快要结束的时候([CALayer display])才会开始介入到UI视图的绘制当中, 如果不响应 displayLayer 代理方法的时候就会走系统绘制流程，如果响应这个方法，就会走异步绘制的入口,这样就给我们异步绘制留有了一个余地.</p>
 <p>我们看一下系统绘制的流程图<br><img src="https://upload-images.jianshu.io/upload_images/904629-a3cc0a17bfa265b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>在 drawRect之前会调用 drawLayer, 举个例子，可以更方便看到系统的调用过程</p>
@@ -423,13 +423,13 @@
 <p>此时的堆栈<br><img src="https://upload-images.jianshu.io/upload_images/904629-d1f702959ef86f2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>一目了然了吧</p>
 <p>那么怎么实现异步绘制呢？</p>
-<h4 id="异步绘制"><a href="#异步绘制" class="headerlink" title="异步绘制"></a>异步绘制</h4><p>看图说话<br><img src="https://upload-images.jianshu.io/upload_images/904629-1b201093b6bd076c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="异步绘制"><a href="#异步绘制" class="headerlink" title="异步绘制"></a>异步绘制</h3><p>看图说话<br><img src="https://upload-images.jianshu.io/upload_images/904629-1b201093b6bd076c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>这里看看在全局队列子线程里做的工作, 首先通过CGBitmapContextCreate()创建一个位图的上下文，然后通过CoreGraphic API 做一些UI控件的绘制工作，之后再通过CGBitmapContextCreateImage()生成CGImage图片，再回到主队列<br>提交位图。到这里就完成了一个UI控件的异步绘制。</p>
 <p>到这里，应该能够了解了UI视图绘制的机制和原理,具体的示例和使用还需要自己查找和多了解下第三方的内部实现.</p>
 <hr>
 <h2 id="离屏渲染"><a href="#离屏渲染" class="headerlink" title="离屏渲染"></a>离屏渲染</h2><p>什么是离屏渲染？你有什么理解? 何时会触发?</p>
 <p>有离屏，自然也有在屏渲染,看一下概念<br><img src="https://upload-images.jianshu.io/upload_images/904629-e88a13256bc9c759.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h4 id="何时会触发"><a href="#何时会触发" class="headerlink" title="何时会触发?"></a>何时会触发?</h4><ul>
+<h3 id="何时会触发"><a href="#何时会触发" class="headerlink" title="何时会触发?"></a>何时会触发?</h3><ul>
 <li>圆角(和 maskToBounds一起使用)</li>
 <li>图层蒙版</li>
 <li>阴影</li>
@@ -657,7 +657,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图像显示原理"><span class="nav-number">1.</span> <span class="nav-text">图像显示原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CPU工作"><span class="nav-number">1.0.1.</span> <span class="nav-text">CPU工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GPU-渲染管线"><span class="nav-number">1.0.2.</span> <span class="nav-text">GPU 渲染管线</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卡顿-amp-掉帧"><span class="nav-number">2.</span> <span class="nav-text">卡顿&掉帧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UI卡顿，掉帧的原因"><span class="nav-number">2.0.1.</span> <span class="nav-text">UI卡顿，掉帧的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UITableView-的滑动优化方案"><span class="nav-number">2.0.2.</span> <span class="nav-text">UITableView 的滑动优化方案</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GPU"><span class="nav-number">2.0.2.2.</span> <span class="nav-text">GPU</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制原理-amp-异步绘制"><span class="nav-number">3.</span> <span class="nav-text">绘制原理&异步绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#异步绘制"><span class="nav-number">3.0.1.</span> <span class="nav-text">异步绘制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染"><span class="nav-number">4.</span> <span class="nav-text">离屏渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#何时会触发"><span class="nav-number">4.0.1.</span> <span class="nav-text">何时会触发?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面试问题总结"><span class="nav-number">5.</span> <span class="nav-text">面试问题总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图像显示原理"><span class="nav-number">1.</span> <span class="nav-text">图像显示原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU工作"><span class="nav-number">1.1.</span> <span class="nav-text">CPU工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPU-渲染管线"><span class="nav-number">1.2.</span> <span class="nav-text">GPU 渲染管线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卡顿-amp-掉帧"><span class="nav-number">2.</span> <span class="nav-text">卡顿&掉帧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UI卡顿，掉帧的原因"><span class="nav-number">2.1.</span> <span class="nav-text">UI卡顿，掉帧的原因</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UITableView-的滑动优化方案"><span class="nav-number">2.1.1.</span> <span class="nav-text">UITableView 的滑动优化方案</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GPU"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">GPU</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制原理-amp-异步绘制"><span class="nav-number">3.</span> <span class="nav-text">绘制原理&异步绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#异步绘制"><span class="nav-number">3.1.</span> <span class="nav-text">异步绘制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染"><span class="nav-number">4.</span> <span class="nav-text">离屏渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#何时会触发"><span class="nav-number">4.1.</span> <span class="nav-text">何时会触发?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面试问题总结"><span class="nav-number">5.</span> <span class="nav-text">面试问题总结</span></a></li></ol></div>
             
 
           </div>

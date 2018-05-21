@@ -106,7 +106,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-40e52989b6b43445.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-05f1dff5c55559df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-43edc5597d2c72ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-18T08:53:59.000Z">
+<meta property="og:updated_time" content="2018-05-21T07:20:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS OC语言特性篇">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-3ab2a221da9dae6b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -396,7 +396,7 @@
 </li>
 </ul>
 <hr>
-<h2 id="类对象与元类对象-amp-消息传递"><a href="#类对象与元类对象-amp-消息传递" class="headerlink" title="类对象与元类对象 &amp; 消息传递"></a>类对象与元类对象 &amp; 消息传递</h2><h5 id="类对象与元类对象"><a href="#类对象与元类对象" class="headerlink" title="类对象与元类对象"></a>类对象与元类对象</h5><ul>
+<h2 id="类对象与元类对象-amp-消息传递"><a href="#类对象与元类对象-amp-消息传递" class="headerlink" title="类对象与元类对象 &amp; 消息传递"></a>类对象与元类对象 &amp; 消息传递</h2><h3 id="类对象与元类对象"><a href="#类对象与元类对象" class="headerlink" title="类对象与元类对象"></a>类对象与元类对象</h3><ul>
 <li>类对象存储实例方法列表等信息</li>
 <li>元类对象存储类方法列表等信息</li>
 </ul>
@@ -404,7 +404,7 @@
 <p>objc_class 继承于 objc_object，也就是说一个 ObjC 类本身同时也是一个对象，为了处理类和对象的关系，runtime 库创建了一种叫做元类 (Meta Class) 的东西，类对象所属类型就叫做元类，它用来表述类对象本身所具备的元数据。类方法就定义于此处，因为这些方法可以理解成类对象的实例方法。每个类仅有一个类对象，而每个类对象仅有一个与之相关的元类。当你发出一个类似 [NSObject alloc] 的消息时，你事实上是把这个消息发给了一个类对象 (Class Object) ，这个类对象必须是一个元类的实例，而这个元类同时也是一个根元类 (root meta class) 的实例。所有的元类最终都指向根元类为其超类。所有的元类的方法列表都有能够响应消息的类方法。所以当 [NSObject alloc] 这条消息发给类对象的时候，objc_msgSend() 会去它的元类里面去查找能够响应消息的方法，如果找到了，然后对这个类对象执行方法调用。</p>
 <p>上图实线是 superclass 指针，虚线是isa指针。 有趣的是根元类的超类是 NSObject，而 isa 指向了自己，而 NSObject 的超类为 nil，也就是它没有超类。</p>
 <p><a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/" target="_blank" rel="external">这里讲的非常详细了</a></p>
-<h5 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h5><p><img src="https://upload-images.jianshu.io/upload_images/904629-6914043db2c075c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="消息传递"><a href="#消息传递" class="headerlink" title="消息传递"></a>消息传递</h3><p><img src="https://upload-images.jianshu.io/upload_images/904629-6914043db2c075c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>这就是消息传递的一个流程，首先查缓存，无缓存，查方法列表，依然没命中，再顺次查找各个父类方法列表，如果都没有名字，就转到消息转发流程</p>
 <p>如果问具体在缓存和方法列表查找过程中的内部情况，可以简单的这样答一下</p>
 <ul>
@@ -412,7 +412,7 @@
 <li>当前类方法查找 ， 如果是已排序的列表，就采用二分查找,没排序的采用一般遍历</li>
 <li>逐级父类方法查找 ，是根据 superClass 指针逐级遍历每一个父类</li>
 </ul>
-<h5 id="看一个经典的面试题"><a href="#看一个经典的面试题" class="headerlink" title="看一个经典的面试题"></a>看一个经典的面试题</h5><p><img src="https://upload-images.jianshu.io/upload_images/904629-0f9525b131902843.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="看一个经典的面试题"><a href="#看一个经典的面试题" class="headerlink" title="看一个经典的面试题"></a>看一个经典的面试题</h3><p><img src="https://upload-images.jianshu.io/upload_images/904629-0f9525b131902843.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>结果是都打印出来 phone</p>
 <p>为什么呢？先看一下 [self class] [super class] 的消息传递<br><img src="https://upload-images.jianshu.io/upload_images/904629-40e52989b6b43445.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/904629-05f1dff5c55559df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -634,7 +634,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-number">2.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类对象与元类对象-amp-消息传递"><span class="nav-number">3.</span> <span class="nav-text">类对象与元类对象 & 消息传递</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#类对象与元类对象"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">类对象与元类对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#消息传递"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">消息传递</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#看一个经典的面试题"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">看一个经典的面试题</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息转发"><span class="nav-number">4.</span> <span class="nav-text">消息转发</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-number">2.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类对象与元类对象-amp-消息传递"><span class="nav-number">3.</span> <span class="nav-text">类对象与元类对象 & 消息传递</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类对象与元类对象"><span class="nav-number">3.1.</span> <span class="nav-text">类对象与元类对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息传递"><span class="nav-number">3.2.</span> <span class="nav-text">消息传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#看一个经典的面试题"><span class="nav-number">3.3.</span> <span class="nav-text">看一个经典的面试题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息转发"><span class="nav-number">4.</span> <span class="nav-text">消息转发</span></a></li></ol></div>
             
 
           </div>
