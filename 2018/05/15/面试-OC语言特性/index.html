@@ -107,7 +107,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-d6c822ff28c62bfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-5569a78594da0f9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-55c203c34876cb6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-15T06:42:41.000Z">
+<meta property="og:updated_time" content="2018-05-21T07:11:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS OC语言特性篇">
 <meta name="twitter:description" content="通过这篇文章要了解的面试问题  请简述分类实现原理 KVO的实现原理是怎样的 能否为分类添加成员变量">
@@ -389,26 +389,26 @@
 <li>属性关键字</li>
 </ul>
 <hr>
-<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h4 id="你用分类都做了哪些事"><a href="#你用分类都做了哪些事" class="headerlink" title="你用分类都做了哪些事 ?"></a>你用分类都做了哪些事 ?</h4><ul>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="你用分类都做了哪些事"><a href="#你用分类都做了哪些事" class="headerlink" title="你用分类都做了哪些事 ?"></a>你用分类都做了哪些事 ?</h3><ul>
 <li>声明私有方法<ul>
 <li>分解体积庞大的类文件</li>
 <li>把 Framework 的私有方法公开</li>
 </ul>
 </li>
 </ul>
-<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>讲特点是为了能更好的和扩展区分开来</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>讲特点是为了能更好的和扩展区分开来</p>
 <ul>
 <li>运行时决议 — 比如一个数组类，在编好分类文件之后，并没有把分类当中对应添加的内容附加到相应的数组类，而是在运行时通过 runtime 真实的添加到数组类中</li>
 <li>可以为系统类添加分类</li>
 </ul>
-<h4 id="分类中都可以添加哪些内容"><a href="#分类中都可以添加哪些内容" class="headerlink" title="分类中都可以添加哪些内容"></a>分类中都可以添加哪些内容</h4><ul>
+<h3 id="分类中都可以添加哪些内容"><a href="#分类中都可以添加哪些内容" class="headerlink" title="分类中都可以添加哪些内容"></a>分类中都可以添加哪些内容</h3><ul>
 <li>实例方法</li>
 <li>类方法</li>
 <li>协议</li>
 <li>属性(不是添加实例变量，实例变量需要通过关联对象添加)<br>看一下分类的成员结构</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">typedef struct category_t &#123;</div><div class="line">    const char *name;</div><div class="line">    classref_t cls;</div><div class="line">    struct method_list_t *instanceMethods; //实例方法列表</div><div class="line">    struct method_list_t *classMethods;</div><div class="line">    struct protocol_list_t *protocols;</div><div class="line">    struct property_list_t *instanceProperties;</div><div class="line">&#125; category_t;</div></pre></td></tr></table></figure>
-<h4 id="分类的实现机制"><a href="#分类的实现机制" class="headerlink" title="分类的实现机制"></a>分类的实现机制</h4><p>同一个类有多个分类，每个分类有一个同名方法，哪一个方法会生效?<br>最后编译的分类当中的方法会最终生效</p>
+<h3 id="分类的实现机制"><a href="#分类的实现机制" class="headerlink" title="分类的实现机制"></a>分类的实现机制</h3><p>同一个类有多个分类，每个分类有一个同名方法，哪一个方法会生效?<br>最后编译的分类当中的方法会最终生效</p>
 <p>具体可以理解下<a href="https://github.com/L-vinCent/PPInterviewDemos/blob/master/objc-runtime-new.mm" target="_blank" rel="external">objc-runtime-new.mm</a>,做了些注释拆解.   </p>
 <ul>
 <li>分类添加的方法可以覆盖原类方法</li>
@@ -416,7 +416,8 @@
 <li>名字相同的分类会引起编译报错</li>
 </ul>
 <hr>
-<h2 id="关联对象"><a href="#关联对象" class="headerlink" title="关联对象"></a>关联对象</h2><p>先看一下常用的俩个方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">id objc_getAssociatedObject(id object , const void *key)</div><div class="line"></div><div class="line">void objc_setAssociatedObject(id object,const void *key,id value, objc_AssociationPolicy policy)</div><div class="line"></div><div class="line">void objc_removeAssociatedObject(id object)</div></pre></td></tr></table></figure></p>
+<h2 id="关联对象"><a href="#关联对象" class="headerlink" title="关联对象"></a>关联对象</h2><p>先看一下常用的俩个方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">id objc_getAssociatedObject(id object , const void *key)</div><div class="line"></div><div class="line">void objc_setAssociatedObject(id object,const void *key,id value, objc_AssociationPolicy policy)</div><div class="line"></div><div class="line">void objc_removeAssociatedObject(id object)</div></pre></td></tr></table></figure>
 <p>关联对象所添加的成员变量被添加到了哪里？</p>
 <ul>
 <li>关联对象由 AssociationsManager 管理并在 AssociationsHashMap存储。</li>
@@ -695,7 +696,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#你用分类都做了哪些事"><span class="nav-number">1.0.1.</span> <span class="nav-text">你用分类都做了哪些事 ?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">1.0.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分类中都可以添加哪些内容"><span class="nav-number">1.0.3.</span> <span class="nav-text">分类中都可以添加哪些内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分类的实现机制"><span class="nav-number">1.0.4.</span> <span class="nav-text">分类的实现机制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关联对象"><span class="nav-number">2.</span> <span class="nav-text">关联对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展相关问题"><span class="nav-number">3.</span> <span class="nav-text">扩展相关问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理"><span class="nav-number">4.</span> <span class="nav-text">代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般声明为weak以规避循环引用"><span class="nav-number">5.</span> <span class="nav-text">* 一般声明为weak以规避循环引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通知"><span class="nav-number">6.</span> <span class="nav-text">通知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KVO"><span class="nav-number">7.</span> <span class="nav-text">KVO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KVC"><span class="nav-number">8.</span> <span class="nav-text">KVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性关键字"><span class="nav-number">9.</span> <span class="nav-text">属性关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#你用分类都做了哪些事"><span class="nav-number">1.1.</span> <span class="nav-text">你用分类都做了哪些事 ?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">1.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类中都可以添加哪些内容"><span class="nav-number">1.3.</span> <span class="nav-text">分类中都可以添加哪些内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类的实现机制"><span class="nav-number">1.4.</span> <span class="nav-text">分类的实现机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关联对象"><span class="nav-number">2.</span> <span class="nav-text">关联对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展相关问题"><span class="nav-number">3.</span> <span class="nav-text">扩展相关问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理"><span class="nav-number">4.</span> <span class="nav-text">代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般声明为weak以规避循环引用"><span class="nav-number">5.</span> <span class="nav-text">* 一般声明为weak以规避循环引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通知"><span class="nav-number">6.</span> <span class="nav-text">通知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KVO"><span class="nav-number">7.</span> <span class="nav-text">KVO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KVC"><span class="nav-number">8.</span> <span class="nav-text">KVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性关键字"><span class="nav-number">9.</span> <span class="nav-text">属性关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
