@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="什么是Block？ Block是将函数及其上下文封装起来的对象从源码来分析一下，通过clang命令行工具中的-rewrite-objc参数，我们可以把OC代码转化为C++的实现  1234567int main()  &amp;#123;      void (^block)(void) = ^(void)      &amp;#123;printf(&quot;pp\n&quot;);&amp;#125;;      block();">
+<meta name="description" content="什么是Block？ Block是将函数及其上下文封装起来的对象从源码来分析一下，通过clang命令行工具中的-rewrite-objc参数，我们可以把OC代码转化为C++的实现">
 <meta name="keywords" content="Block">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Block的实质">
 <meta property="og:url" content="https://l-vincent.github.io/2017/08/21/Block的实质/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:description" content="什么是Block？ Block是将函数及其上下文封装起来的对象从源码来分析一下，通过clang命令行工具中的-rewrite-objc参数，我们可以把OC代码转化为C++的实现  1234567int main()  &amp;#123;      void (^block)(void) = ^(void)      &amp;#123;printf(&quot;pp\n&quot;);&amp;#125;;      block();">
-<meta property="og:updated_time" content="2018-05-22T08:11:36.000Z">
+<meta property="og:description" content="什么是Block？ Block是将函数及其上下文封装起来的对象从源码来分析一下，通过clang命令行工具中的-rewrite-objc参数，我们可以把OC代码转化为C++的实现">
+<meta property="og:updated_time" content="2018-05-22T08:15:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Block的实质">
-<meta name="twitter:description" content="什么是Block？ Block是将函数及其上下文封装起来的对象从源码来分析一下，通过clang命令行工具中的-rewrite-objc参数，我们可以把OC代码转化为C++的实现  1234567int main()  &amp;#123;      void (^block)(void) = ^(void)      &amp;#123;printf(&quot;pp\n&quot;);&amp;#125;;      block();">
+<meta name="twitter:description" content="什么是Block？ Block是将函数及其上下文封装起来的对象从源码来分析一下，通过clang命令行工具中的-rewrite-objc参数，我们可以把OC代码转化为C++的实现">
 
 
 
@@ -364,9 +364,9 @@
       
 
       
-        <a id="more"></a>
-<h2 id="什么是Block？"><a href="#什么是Block？" class="headerlink" title="什么是Block？"></a>什么是Block？</h2><ul>
-<li>Block是将函数及其上下文封装起来的对象<br>从源码来分析一下，通过clang命令行工具中的-rewrite-objc参数，我们可以把OC代码转化为C++的实现</li>
+        <h2 id="什么是Block？"><a href="#什么是Block？" class="headerlink" title="什么是Block？"></a>什么是Block？</h2><ul>
+<li>Block是将函数及其上下文封装起来的对象<br>从源码来分析一下，通过clang命令行工具中的-rewrite-objc参数，我们可以把OC代码转化为C++的实现<a id="more"></a>
+</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">int <span class="function"><span class="title">main</span></span>()  </div><div class="line">&#123;  </div><div class="line">    void (^block)(void) = ^(void)  </div><div class="line">    &#123;<span class="built_in">printf</span>(<span class="string">"pp\n"</span>);&#125;;  </div><div class="line">    block();  </div><div class="line">    <span class="built_in">return</span> 0;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p> MCBlock类中有这么一段代码，通过指令 </p>
@@ -543,7 +543,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
