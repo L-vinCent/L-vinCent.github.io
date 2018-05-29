@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Swift," />
+  <meta name="keywords" content="HTTP," />
 
 
 
@@ -93,17 +93,14 @@
 
 
 
-<meta name="description" content="属性观察 (Property Observers) 是 Swift 中一个很特殊的特性，利用属性观察我们可以在当前类型内监视对于属性的设定，并作出一些响应。Swift 中为我们提供了两个属性观察的方法，它们分别是 willSet 和 didSet。">
-<meta name="keywords" content="Swift">
+<meta name="keywords" content="HTTP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift开发者必备Tips -- 属性观察 willSet 和 didSet">
-<meta property="og:url" content="https://l-vincent.github.io/2018/02/21/willSet和didSet/index.html">
+<meta property="og:title" content="iOS 面试全方位剖析 -- 网络篇">
+<meta property="og:url" content="https://l-vincent.github.io/2018/05/30/面试-网络篇/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:description" content="属性观察 (Property Observers) 是 Swift 中一个很特殊的特性，利用属性观察我们可以在当前类型内监视对于属性的设定，并作出一些响应。Swift 中为我们提供了两个属性观察的方法，它们分别是 willSet 和 didSet。">
-<meta property="og:updated_time" content="2018-04-10T01:53:56.000Z">
+<meta property="og:updated_time" content="2018-05-29T09:07:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift开发者必备Tips -- 属性观察 willSet 和 didSet">
-<meta name="twitter:description" content="属性观察 (Property Observers) 是 Swift 中一个很特殊的特性，利用属性观察我们可以在当前类型内监视对于属性的设定，并作出一些响应。Swift 中为我们提供了两个属性观察的方法，它们分别是 willSet 和 didSet。">
+<meta name="twitter:title" content="iOS 面试全方位剖析 -- 网络篇">
 
 
 
@@ -131,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="https://l-vincent.github.io/2018/02/21/willSet和didSet/"/>
+  <link rel="canonical" href="https://l-vincent.github.io/2018/05/30/面试-网络篇/"/>
 
 
 
 
 
-  <title>Swift开发者必备Tips -- 属性观察 willSet 和 didSet | L-vinCent's Blog</title>
+  <title>iOS 面试全方位剖析 -- 网络篇 | L-vinCent's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +264,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/02/21/willSet和didSet/">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/05/30/面试-网络篇/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Pan'V">
@@ -284,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Swift开发者必备Tips -- 属性观察 willSet 和 didSet</h1>
+          <h1 class="post-title" itemprop="name headline">iOS 面试全方位剖析 -- 网络篇</h1>
         
 
         <div class="post-meta">
@@ -296,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T17:37:45+08:00">
-                2018-02-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-30T00:00:00+08:00">
+                2018-05-30
               </time>
             
 
@@ -319,8 +316,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/" itemprop="url" rel="index">
-                    <span itemprop="name">Swift</span>
+                  <a href="/categories/Objective-C/" itemprop="url" rel="index">
+                    <span itemprop="name">Objective-C</span>
                   </a>
                 </span>
 
@@ -337,9 +334,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/21/willSet和didSet/#comments" itemprop="discussionUrl">
+                <a href="/2018/05/30/面试-网络篇/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/02/21/willSet和didSet/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/05/30/面试-网络篇/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -364,20 +361,9 @@
       
 
       
-        <p>属性观察 (Property Observers) 是 Swift 中一个很特殊的特性，利用属性观察我们可以在当前类型内监视对于属性的设定，并作出一些响应。Swift 中为我们提供了两个属性观察的方法，它们分别是 willSet 和 didSet。<br><a id="more"></a></p>
-<p>使用这两个方法十分简单，我们只要在属性声明的时候添加相应的代码块，就可以对将要设定的值和已经设置的值进行监听了：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class MyClass &#123;</div><div class="line">    var date: NSDate &#123;</div><div class="line">        willSet &#123;</div><div class="line">            <span class="built_in">let</span> d = date</div><div class="line">            <span class="built_in">print</span>(<span class="string">"即将将日期从 \(d) 设定至 \(newValue)"</span>)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        didSet &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"已经将日期从 \(oldValue) 设定至 \(date)"</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="title">init</span></span>() &#123;</div><div class="line">        date = NSDate()</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">let</span> foo = MyClass()</div><div class="line">foo.date = foo.date.addingTimeInterval(10086)</div><div class="line"></div><div class="line">// 输出</div><div class="line">// 即将将日期从 2014-08-23 12:47:36 +0000 设定至 2014-08-23 15:35:42 +0000</div><div class="line">// 已经将日期从 2014-08-23 12:47:36 +0000 设定至 2014-08-23 15:35:42 +0000</div></pre></td></tr></table></figure></p>
-<p>在 willSet 和 didSet 中我们分别可以使用 newValue 和 oldValue 来获取将要设定的和已经设定的值。属性观察的一个重要用处是作为设置值的验证，比如上面的例子中我们不希望 date 超过当前时间的一年以上的话，我们可以将 didSet 修改一下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">class MyClass &#123;</div><div class="line">    <span class="built_in">let</span> oneYearInSecond: TimeInterval = 365 * 24 * 60 * 60</div><div class="line">    var date: NSDate &#123;</div><div class="line"></div><div class="line">        //...</div><div class="line"></div><div class="line">        didSet &#123;</div><div class="line">            <span class="keyword">if</span> (date.timeIntervalSinceNow &gt; oneYearInSecond) &#123;</div><div class="line">                <span class="built_in">print</span>(<span class="string">"设定的时间太晚了！"</span>)</div><div class="line">                date = NSDate().addingTimeInterval(oneYearInSecond)</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"已经将日期从 \(oldValue) 设定至 \(date)"</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>更改一下调用，我们就能看到效果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 365 * 24 * 60 * 60 = 31_536_000</div><div class="line">foo.date = foo.date.addingTimeInterval(100_000_000)</div><div class="line"></div><div class="line">// 输出</div><div class="line">// 即将将日期从 2014-08-23 13:24:14 +0000 设定至 2017-10-23 23:10:54 +0000</div><div class="line">// 设定的时间太晚了！</div><div class="line">// 已经将日期从 2014-08-23 13:24:14 +0000 设定至 2015-08-23 13:24:14 +0000</div></pre></td></tr></table></figure>
-<blockquote>
-<p>初始化方法对属性的设定，以及在 willSet 和 didSet 中对属性的再次设定都不会再次触发属性观察的调用，一般来说这会是你所需要的行为，可以放心使用能够。</p>
-</blockquote>
-<p>我们知道，在 Swift 中所声明的属性包括存储属性和计算属性两种。其中存储属性将会在内存中实际分配地址对属性进行存储，而计算属性则不包括背后的存储，只是提供 set 和 get 两种方法。在同一个类型中，属性观察和计算属性是不能同时共存的。也就是说，想在一个属性定义中同时出现 set 和 willSet 或 didSet 是一件办不到的事情。计算属性中我们可以通过改写 set 中的内容来达到和 willSet 及 didSet 同样的属性观察的目的。如果我们无法改动这个类，又想要通过属性观察做一些事情的话，可能就需要子类化这个类，并且重写它的属性了。重写的属性并不知道父类属性的具体实现情况，而只从父类属性中继承名字和类型，因此在子类的重载属性中我们是可以对父类的属性任意地添加属性观察的，而不用在意父类中到底是存储属性还是计算属性：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">class A &#123;</div><div class="line">    var number :Int &#123;</div><div class="line">        get &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"get"</span>)</div><div class="line">            <span class="built_in">return</span> 1</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">set</span> &#123;<span class="built_in">print</span>(<span class="string">"set"</span>)&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B: A &#123;</div><div class="line">    override var number: Int &#123;</div><div class="line">        willSet &#123;<span class="built_in">print</span>(<span class="string">"willSet"</span>)&#125;</div><div class="line">        didSet &#123;<span class="built_in">print</span>(<span class="string">"didSet"</span>)&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>调用 number 的 set 方法可以看到工作的顺序</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">let</span> b = B()</div><div class="line">b.number = 0</div><div class="line"></div><div class="line">// 输出</div><div class="line">// get</div><div class="line">// willSet</div><div class="line">// <span class="built_in">set</span></div><div class="line">// didSet</div></pre></td></tr></table></figure>
-<p>set 和对应的属性观察的调用都在我们的预想之中。这里要注意的是 get 首先被调用了一次。这是因为我们实现了 didSet，didSet 中会用到 oldValue，而这个值需要在整个 set 动作之前进行获取并存储待用，否则将无法确保正确性。如果我们不实现 didSet 的话，这次 get 操作也将不存在。</p>
+        <hr>
+<a id="more"></a>
+<p>转载请标明出处</p>
 
       
     </div>
@@ -407,7 +393,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Swift/" rel="tag"># Swift</a>
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
           
         </div>
       
@@ -420,8 +406,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/02/Swift内存管理/" rel="next" title="Swift开发者必备Tips--内存管理">
-                <i class="fa fa-chevron-left"></i> Swift开发者必备Tips--内存管理
+              <a href="/2018/05/28/面试-Block篇/" rel="next" title="iOS 面试全方位剖析 -- Block篇">
+                <i class="fa fa-chevron-left"></i> iOS 面试全方位剖析 -- Block篇
               </a>
             
           </div>
@@ -429,10 +415,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/02/机器学习/" rel="prev" title="机器学习实战 -- k近邻算法">
-                机器学习实战 -- k近邻算法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -727,9 +709,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://l-vincent.github.io/2018/02/21/willSet和didSet/';
-          this.page.identifier = '2018/02/21/willSet和didSet/';
-          this.page.title = 'Swift开发者必备Tips -- 属性观察 willSet 和 didSet';
+          this.page.url = 'https://l-vincent.github.io/2018/05/30/面试-网络篇/';
+          this.page.identifier = '2018/05/30/面试-网络篇/';
+          this.page.title = 'iOS 面试全方位剖析 -- 网络篇';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://L-vinCent.disqus.com/embed.js';
