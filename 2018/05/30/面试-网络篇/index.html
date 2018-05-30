@@ -93,14 +93,38 @@
 
 
 
+<meta name="description" content="这节涉及到的内容  HTTP 协议 Session / Cookie HTTPS 与网络安全 TCP / UDP DNS 解析">
 <meta name="keywords" content="HTTP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 面试全方位剖析 -- 网络篇">
 <meta property="og:url" content="https://l-vincent.github.io/2018/05/30/面试-网络篇/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
-<meta property="og:updated_time" content="2018-05-29T09:07:24.000Z">
+<meta property="og:description" content="这节涉及到的内容  HTTP 协议 Session / Cookie HTTPS 与网络安全 TCP / UDP DNS 解析">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-b91107cc7a6ae7e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-e29fe5c722005850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-498c88371fc309d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-23826a0566a04108.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-7c61df3113e9d73a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-73575218b5a8ee58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-09fa0ca354c7316e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-da66c6f26281be9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-dccde86ff5655799.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-719bdbdc01b82c94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-e7718ee9f3708071.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-3872cc053566aeea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-c831b1d5d71dbeb7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-38074a0e2d0752ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-31813d387234b514.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-09ea6c991b7b38ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-512120b4ef8fdd21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-c6ed55555148cb17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-11e4fa801fef14d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-16b792f9ba2bee66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-30T05:45:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 面试全方位剖析 -- 网络篇">
+<meta name="twitter:description" content="这节涉及到的内容  HTTP 协议 Session / Cookie HTTPS 与网络安全 TCP / UDP DNS 解析">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-b91107cc7a6ae7e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -362,7 +386,172 @@
 
       
         <hr>
-<a id="more"></a>
+<p>这节涉及到的内容</p>
+<ul>
+<li>HTTP 协议</li>
+<li>Session / Cookie</li>
+<li>HTTPS 与网络安全</li>
+<li>TCP / UDP</li>
+<li>DNS 解析<a id="more"></a>
+</li>
+</ul>
+<hr>
+<h2 id="HTTP-协议"><a href="#HTTP-协议" class="headerlink" title="HTTP 协议"></a>HTTP 协议</h2><p>对 HTTP 的理解?<br>超文本传输协议,要讲的内容</p>
+<ul>
+<li>请求/响应报文</li>
+<li>连接建立流程</li>
+<li>HTTP的特点</li>
+</ul>
+<h3 id="请求-响应报文"><a href="#请求-响应报文" class="headerlink" title="请求/响应报文"></a>请求/响应报文</h3><p>一般在回答面试官什么是 HTTP 的时候，第一点要回答的就是 请求/响应报文的组成结构</p>
+<ul>
+<li>请求报文的格式</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-b91107cc7a6ae7e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p> 三个部分 ， 请求行<br> 请求头，都是以 key-value形式组成<br> 实体主体 ， GET 请求一般不带有实体主体</p>
+<ul>
+<li>响应报文的格式<br><img src="https://upload-images.jianshu.io/upload_images/904629-e29fe5c722005850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p>三个部分 ， 响应行<br>请求头，都是以 key-value形式组成<br>实体主体 </p>
+<h3 id="GET-和-POST-方式的区别"><a href="#GET-和-POST-方式的区别" class="headerlink" title="GET 和 POST 方式的区别"></a>GET 和 POST 方式的区别</h3><p>比较初级的回答方式是下面这样</p>
+<ul>
+<li>GET 请求参数以 ? 分割拼接到 URL 后面 ，POST请求参数在 Body里面</li>
+<li>GET 参数长度限制 2048 个字符 ， POST一般没有该限制</li>
+<li>GET 请求不安全 ， POST请求比较安全</li>
+</ul>
+<p>比较高逼格的回答是这样的<br>从语义的角度来回答<br>GET 获取资源 ,安全的 , 幂等的 , 可缓存的<br>POST 处理资源 ，非安全的 ,非幂等的 , 非可缓存的</p>
+<ul>
+<li>安全性 : 不应该引起 Server 端的任何状态变化</li>
+<li>幂等行 : 同一个请求方法执行多次和执行一次的效果完全相同</li>
+<li>请求是否可以被缓存</li>
+</ul>
+<h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><p>都有哪些状态码，他们的含义是什么?<br>2xx : 比如 200 ，响应成功<br>3xx : 比如301，302 一些网络的重定向<br>4xx : 比如 401， 404 客户端的请求本身存在某些问题<br>5xx :  比如501 ，502  Server 端本身存在异常</p>
+<h3 id="连接建立流程"><a href="#连接建立流程" class="headerlink" title="连接建立流程"></a>连接建立流程</h3><p>比较经典的三次握手,四次挥手<img src="https://upload-images.jianshu.io/upload_images/904629-498c88371fc309d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="HTTP-的特点"><a href="#HTTP-的特点" class="headerlink" title="HTTP 的特点"></a>HTTP 的特点</h3><h4 id="无连接-每次请求有一个建立连接和释放连接的过程"><a href="#无连接-每次请求有一个建立连接和释放连接的过程" class="headerlink" title="无连接, 每次请求有一个建立连接和释放连接的过程"></a>无连接, 每次请求有一个建立连接和释放连接的过程</h4><p>  我们可以通过 HTTP的持久连接方案来进行 HTTP 无连接的一个补偿<br><img src="https://upload-images.jianshu.io/upload_images/904629-23826a0566a04108.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li><p>非持久连接，在 Client 和 Server 的交互中，打开一个 TCP 连接，进行网络数据的传输，然后关闭这条 TCP 连接.   之后发送第二个请求的时候可能需要重新打开一个 TCP 的连接 。 也就是说每次请求接口都需要重新建立一个 TCP 连接，经历 三次握手 四次挥手.</p>
+</li>
+<li><p>持久连接 , 打开一条 TCP 通道，之后可能在一定时间内, 多个 HTTP 请求可能会在同一条链路上进行请求和响应的传递</p>
+</li>
+</ul>
+<blockquote>
+<p>持久连接涉及到 HTTP 的哪些头部字段呢?</p>
+<ul>
+<li>Connection : keep-alive    客户端期许采用持久连接</li>
+<li>time : 20      多长时间有效</li>
+<li>max : 10        最多可以发生多少个 HTTP 请求和响应对</li>
+</ul>
+<p>怎样判断一个请求是否结束?</p>
+</blockquote>
+<p>在同一条 TCP上产生了多次 HTTP 请求，怎样判断前一个请求的结束</p>
+<ul>
+<li>Content-length : 1024 ,  发送一个请求的时候,Server 端会携带响应数据的大小,通过 Content-length 来标识，客户端可以根据所接受数据的字节数是否到达 Content-length 的值，到达了就说明全部接受完毕，既 HTTP 请求结束</li>
+<li>还有一种情况, 当使用 POST 端进行请求的时候 , 往往 Server 端需要多次响应来返回给客户端数据, 我们可以通过 HTTP 响应报文当中的头部字段叫 chunked 来判断请求是否结束，当有多个块通过 HTTP 的 TCP连接传输给客户端的时候，每一个报文都会带有chunked 这个字段， 最后一个块会带有一个空 chunked，这样就可以判断前一个网络请求是否结束了.</li>
+</ul>
+<h4 id="无状态"><a href="#无状态" class="headerlink" title="无状态"></a>无状态</h4><p>对 HTTP 协议无状态特点的补偿.  Cookie / Session</p>
+<h5 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h5><p>主要用来记录用户状态，区分用户, 状态保存在客户端。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-7c61df3113e9d73a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>客户端发送的 Cookie 在 http 请求报文的 Coolie首部字段中<br>服务器端设置 http 响应报文的 Set-Cookie 首部字段</p>
+<p>如何保证 Cookie的安全</p>
+<ul>
+<li>对 Cookie 进行加密处理</li>
+<li>只在https 上携带 Cookie</li>
+<li>设置 Cookie 为httpOnly，防止跨站脚本攻击</li>
+</ul>
+<h5 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h5><p>主要用来记录用户状态，区分用户, 状态保存在服务器端。<br>Session 需要依赖于Cookie 机制</p>
+<p>看一下 Session 的工作流程图<br><img src="https://upload-images.jianshu.io/upload_images/904629-73575218b5a8ee58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<hr>
+<h2 id="HTTPS-与网络安全"><a href="#HTTPS-与网络安全" class="headerlink" title="HTTPS 与网络安全"></a>HTTPS 与网络安全</h2><p>HTTPS = HTTP + SSL/TLS</p>
+<blockquote>
+<p>HTTPS 连接的建立流程是怎样的?</p>
+</blockquote>
+<p>我们看一幅时序图<br><img src="https://upload-images.jianshu.io/upload_images/904629-09fa0ca354c7316e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>会话秘钥 = random S + random C + 预主秘钥</p>
+<blockquote>
+<p>HTTPS都使用了哪些加密手段?为什么?</p>
+<ul>
+<li>连接建立过程中使用非对称加密，很耗时</li>
+<li>后续通信过程中使用对称加密</li>
+</ul>
+</blockquote>
+<p>非对称加密</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-da66c6f26281be9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>对称加密</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-dccde86ff5655799.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<hr>
+<h2 id="TCP-UDP"><a href="#TCP-UDP" class="headerlink" title="TCP/UDP"></a>TCP/UDP</h2><p>传输层协议</p>
+<ul>
+<li>TCP, 传输控制协议      </li>
+<li>UDP,用户数据报协议    无连接，尽最大努力交付 </li>
+</ul>
+<h3 id="TCP特点"><a href="#TCP特点" class="headerlink" title="TCP特点"></a>TCP特点</h3><p> 面向连接，可靠传输，面向字节流，流量控制，拥塞控制</p>
+<h4 id="面向连接"><a href="#面向连接" class="headerlink" title="面向连接"></a>面向连接</h4><p> 数据传输开始之前，需要建立连接(三次握手)。 数据传输结束之后，需要释放连接(四次挥手)</p>
+<h4 id="可靠传输"><a href="#可靠传输" class="headerlink" title="可靠传输"></a>可靠传输</h4><p> TCP如何保证可靠传输呢?</p>
+<ul>
+<li>无差错</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-719bdbdc01b82c94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li>不丢失</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-e7718ee9f3708071.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li>不重复</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-3872cc053566aeea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="面向字节流"><a href="#面向字节流" class="headerlink" title="面向字节流"></a>面向字节流</h3><p><img src="https://upload-images.jianshu.io/upload_images/904629-c831b1d5d71dbeb7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>不管发送方一次性提交给 TCP 的缓冲是多大的数据，对于TCP本身来说它会根据实际的情况来进行划分，比如发送方发送10字节，TCP 并不是一次性传递10字节数据，它可能是拆分成3个字节和7个字节分俩次发送给接收方</p>
+<h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><p>基于滑动窗口协议实现.<br>什么是滑动窗口协议? (新浪微博三面面试真题)<br><img src="https://upload-images.jianshu.io/upload_images/904629-38074a0e2d0752ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>对照上图，现在假如发送窗口是客户端，接收窗口是服务端。当我们现在要继续发送数据的时候，可能由于接收方的接收窗口没有那么大，而发送方的发送窗口非常大，就会以更快的速率往后发，需要由接收窗口通过向TCP的报文首部字段中去更改窗口值去调整发送方的发送窗口大小。</p>
+<h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><ul>
+<li>慢开始，拥塞避免</li>
+<li>快恢复，快重传</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-31813d387234b514.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>横轴代表 APP 交互或者轮循次数，纵轴代表窗口值的大小</p>
+<p>上图中，一开始我们可以先发送一个报文，如果没有发生网络拥塞，就继续发送 2 个报文，依然没有发生网络拥塞，就继续翻倍，直到 16 个报文，这就是慢开始算法</p>
+<p>当到达 16 报文数的时候，会采用拥塞避免的策略来进行发送报文的一个数量的线性增长。</p>
+<p>当报文数到 24 的时候，就会发生网络拥塞，采用拥塞避免的乘法减小到值发送 1 一个报文，来减少对网络层面带来的压力，然后再重新开始 慢开始算法增长，同时限定一个新的门限值.</p>
+<hr>
+<h2 id="DNS-解析"><a href="#DNS-解析" class="headerlink" title="DNS 解析"></a>DNS 解析</h2><p>DNS 解析是怎么的一个过程? (大厂常问的一个问题)<br>域名到IP地址的映射,DNS解析请求采用UDP数据报，且明文</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-09ea6c991b7b38ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>客户端通过 DNS 协议向 DNS 服务器去请求相应域名的解析，然后 DNS 服务器把解析结果的IP 地址返回给客户端，再由客户端向 IPServer进行相应的网络请求</p>
+<h3 id="DNS-解析查询方式"><a href="#DNS-解析查询方式" class="headerlink" title="DNS 解析查询方式"></a>DNS 解析查询方式</h3><ul>
+<li>递归查询</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-512120b4ef8fdd21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li>迭代查询</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-c6ed55555148cb17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="DNS-解析存在哪些常见的问题-重点"><a href="#DNS-解析存在哪些常见的问题-重点" class="headerlink" title="DNS 解析存在哪些常见的问题 (重点)"></a>DNS 解析存在哪些常见的问题 (重点)</h3><ul>
+<li>DNS 劫持问题</li>
+<li>DNS 解析转发问题</li>
+</ul>
+<h4 id="DNS-劫持"><a href="#DNS-劫持" class="headerlink" title="DNS 劫持"></a>DNS 劫持</h4><p><img src="https://upload-images.jianshu.io/upload_images/904629-11e4fa801fef14d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>由于 DNS 解析过程采用 UDP 数据报明文传输，就会涉及到一个窃听的问题。 假如现在有一个钓鱼 DNS 服务器，就会劫持到对应的一个 DNS 解析的请求， 然后钓鱼服务器返回给我们一个错误的IP地址，此时拿这个错误的IP地址去访问的时候就是一个错误的网站</p>
+<blockquote>
+<p>DNS 劫持与 HTTP的关系是怎样的?</p>
+</blockquote>
+<p>这里给出明确的回答， 俩者是没有关系的 ，完全是俩回事</p>
+<p> DNS 解析发生在 HTTP 建立连接之前<br>DNS 解析请求使用 UDP 数据报，端口号 53</p>
+<blockquote>
+<p>怎样解决 DNS 劫持</p>
+</blockquote>
+<ul>
+<li><p><a href="http://www.linkedkeeper.com/detail/blog.action?bid=171" target="_blank" rel="external">httpDNS</a></p>
+</li>
+<li><p>长连接</p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-16b792f9ba2bee66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<hr>
+<h2 id="网络篇面试总结"><a href="#网络篇面试总结" class="headerlink" title="网络篇面试总结"></a>网络篇面试总结</h2><ul>
+<li>HTTP 中的GET和POST方式有什么区别 ?</li>
+<li>HTTPS 连接建立流程是怎样的 ?</li>
+<li>TCP 和 UDP 有什么区别 ?</li>
+<li>简述 TCP 的慢开始过程 ? </li>
+<li>客户端怎样避免 DNS 劫持 ? </li>
+</ul>
+<hr>
 <p>转载请标明出处</p>
 
       
@@ -468,8 +657,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -551,6 +749,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-协议"><span class="nav-number">1.</span> <span class="nav-text">HTTP 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求-响应报文"><span class="nav-number">1.1.</span> <span class="nav-text">请求/响应报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET-和-POST-方式的区别"><span class="nav-number">1.2.</span> <span class="nav-text">GET 和 POST 方式的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态码"><span class="nav-number">1.3.</span> <span class="nav-text">状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接建立流程"><span class="nav-number">1.4.</span> <span class="nav-text">连接建立流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-的特点"><span class="nav-number">1.5.</span> <span class="nav-text">HTTP 的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无连接-每次请求有一个建立连接和释放连接的过程"><span class="nav-number">1.5.1.</span> <span class="nav-text">无连接, 每次请求有一个建立连接和释放连接的过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无状态"><span class="nav-number">1.5.2.</span> <span class="nav-text">无状态</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cookie"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">cookie</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Session"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">Session</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-与网络安全"><span class="nav-number">2.</span> <span class="nav-text">HTTPS 与网络安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-UDP"><span class="nav-number">3.</span> <span class="nav-text">TCP/UDP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP特点"><span class="nav-number">3.1.</span> <span class="nav-text">TCP特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#面向连接"><span class="nav-number">3.1.1.</span> <span class="nav-text">面向连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可靠传输"><span class="nav-number">3.1.2.</span> <span class="nav-text">可靠传输</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向字节流"><span class="nav-number">3.2.</span> <span class="nav-text">面向字节流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流量控制"><span class="nav-number">3.3.</span> <span class="nav-text">流量控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拥塞控制"><span class="nav-number">3.4.</span> <span class="nav-text">拥塞控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS-解析"><span class="nav-number">4.</span> <span class="nav-text">DNS 解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS-解析查询方式"><span class="nav-number">4.1.</span> <span class="nav-text">DNS 解析查询方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS-解析存在哪些常见的问题-重点"><span class="nav-number">4.2.</span> <span class="nav-text">DNS 解析存在哪些常见的问题 (重点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS-劫持"><span class="nav-number">4.2.1.</span> <span class="nav-text">DNS 劫持</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络篇面试总结"><span class="nav-number">5.</span> <span class="nav-text">网络篇面试总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
