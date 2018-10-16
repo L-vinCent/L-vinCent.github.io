@@ -1,0 +1,869 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta name="google-site-verification" content="m3UI4lcUPqpZrsd0hAa_xv7QZH4x70BTPJzUp-HHnyo" />
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="工具," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="iOS 系统类小技巧  先看一下 iOS12新出的效率神器「捷径」  看个简单的用例,有时候晚上要睡觉了，是不是要开勿扰，关无线，设闹钟一系列的动作,是不是很麻烦，有了「捷径」，在睡前只需对 iPhone 说一声「Hey Siri，我要睡了」，手机就会自动执行：  关闭 Wi-Fi 关闭蜂窝移动数据 打开勿扰模式 打开低电量模式 自动设置起床闹钟">
+<meta name="keywords" content="工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 系统的小技巧和 Mac工具整理">
+<meta property="og:url" content="https://l-vincent.github.io/2018/09/21/iOS 系统的小技巧和 Mac  工具整理/index.html">
+<meta property="og:site_name" content="L-vinCent&#39;s Blog">
+<meta property="og:description" content="iOS 系统类小技巧  先看一下 iOS12新出的效率神器「捷径」  看个简单的用例,有时候晚上要睡觉了，是不是要开勿扰，关无线，设闹钟一系列的动作,是不是很麻烦，有了「捷径」，在睡前只需对 iPhone 说一声「Hey Siri，我要睡了」，手机就会自动执行：  关闭 Wi-Fi 关闭蜂窝移动数据 打开勿扰模式 打开低电量模式 自动设置起床闹钟">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-67a0e59c6704e393.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-ef0823a36033f1aa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/200">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-7d9ac03cebf46d34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-99a04cddfa7fc135.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-f16477c14d7cb0c9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/150">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-a84c94a2b5e6bc0e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-ab448254f8864ca6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-716506131b9f855a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-233d2efe334a7f27.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-49e2272b9b851399.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-71083c5aa9870651.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-16T08:25:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 系统的小技巧和 Mac工具整理">
+<meta name="twitter:description" content="iOS 系统类小技巧  先看一下 iOS12新出的效率神器「捷径」  看个简单的用例,有时候晚上要睡觉了，是不是要开勿扰，关无线，设闹钟一系列的动作,是不是很麻烦，有了「捷径」，在睡前只需对 iPhone 说一声「Hey Siri，我要睡了」，手机就会自动执行：  关闭 Wi-Fi 关闭蜂窝移动数据 打开勿扰模式 打开低电量模式 自动设置起床闹钟">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-67a0e59c6704e393.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://l-vincent.github.io/2018/09/21/iOS 系统的小技巧和 Mac  工具整理/"/>
+
+
+
+
+
+  <title>iOS 系统的小技巧和 Mac工具整理 | L-vinCent's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">L-vinCent's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">“努力的学习”意味着，要常常去处理那些刚好在你能力极限上的问题</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/09/21/iOS 系统的小技巧和 Mac  工具整理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 系统的小技巧和 Mac工具整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-21T00:00:00+08:00">
+                2018-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/21/iOS 系统的小技巧和 Mac  工具整理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/21/iOS 系统的小技巧和 Mac  工具整理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="iOS-系统类小技巧"><a href="#iOS-系统类小技巧" class="headerlink" title="iOS 系统类小技巧"></a>iOS 系统类小技巧</h3><hr>
+<blockquote>
+<p>先看一下 iOS12新出的效率神器「捷径」</p>
+</blockquote>
+<p>看个简单的用例,有时候晚上要睡觉了，是不是要开勿扰，关无线，设闹钟一系列的动作,是不是很麻烦，有了「捷径」，在睡前只需对 iPhone 说一声「Hey Siri，我要睡了」，手机就会自动执行：</p>
+<ul>
+<li>关闭 Wi-Fi</li>
+<li>关闭蜂窝移动数据</li>
+<li>打开勿扰模式</li>
+<li>打开低电量模式</li>
+<li>自动设置起床闹钟<a id="more"></a>
+是不是很美妙，同样的包括这些,具体使用看<a href="https://www.ifanr.com/app/1103193" target="_blank" rel="external">这里</a>，就不重复说了，凡是琐碎化的操作都能自动执行,赶紧用起来吧<br><img src="https://upload-images.jianshu.io/upload_images/904629-67a0e59c6704e393.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<blockquote>
+<p>iOS 11添加了屏幕录制的的功能，默认是关闭的，需要在设置的控制中心打开</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-ef0823a36033f1aa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/200" alt=""><br>按下屏幕按钮，3秒后正式开始录制，状态栏会变成红色<br>结束录制有三种方法：<br>1.按下红色状态栏<br>2.打开控制中心，按下录制按钮<br>3.直接Power建锁屏</p>
+<blockquote>
+<p>共享WiFi密码</p>
+</blockquote>
+<p>首先就是你的iPhone/ipad要安装iOS11,然后你要先连上wifi密码!手机不要上锁<br>另外一个设备尝试连接同个wifi，然后靠近你已经连接wifi密码的设备，越近越好哦！这时你的设备上就会弹出一个卡片式通知，就可以发送密码了</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-7d9ac03cebf46d34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<blockquote>
+<p>iOS 11 之后备忘录新增了扫描文档的功能，支持简单的调色和裁剪功能</p>
+<p>想听着歌睡觉，但是1小时后我想停止它播放怎么办</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-99a04cddfa7fc135.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt=""></p>
+<p>在计时结束时启用那设定  <code>停止播放</code>，任何在播放的声音都能终止噢</p>
+<blockquote>
+<p>计算器输错数了没有删除键?</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-f16477c14d7cb0c9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/150" alt=""></p>
+<p>在红框区向右滑动就行</p>
+<p>打开横屏，计算器是这样的,满足你复杂的计算需求</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-a84c94a2b5e6bc0e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt=""></p>
+<h3 id="Mac-快捷键类"><a href="#Mac-快捷键类" class="headerlink" title="Mac 快捷键类"></a>Mac 快捷键类</h3><ul>
+<li>当光标处于输入状态（闪动）时，按control+command+空格键，你要的emoji表情&amp;符号就会出来</li>
+<li>在任意输入框中按option+shift+K组合键,能打出 </li>
+</ul>
+<ul>
+<li>文本编辑时按 Fn + Delete 键可向后删除内容</li>
+<li>浏览器中将网页加入个人收藏：command+D</li>
+<li>按住Option再点击顶栏上的Wifi图标可以看到这样的<br><img src="https://upload-images.jianshu.io/upload_images/904629-ab448254f8864ca6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>触发角，很实用</li>
+<li>command + Shift + . 显示/隐藏 所有隐藏文件</li>
+<li><p>鼠标2秒长按绿色最大化按钮,应用窗口纵向排列</p>
+</li>
+<li><p>按住 ⌥ 键，并拖拽文件，可快速复制原文件</p>
+</li>
+<li><p>选中文件，按住 ⌥ 键，并点击鼠标右键（或双指点按触控板），可以快速显示「始终以此方式打开」</p>
+</li>
+<li><p>按住 ⌘ 键，可对在后的窗口进行任意移动，而不会对在前的窗口产生任何影响</p>
+</li>
+</ul>
+<h3 id="Mac-软件类"><a href="#Mac-软件类" class="headerlink" title="Mac 软件类"></a>Mac 软件类</h3><hr>
+<p><a href="http://macdown.uranusjr.com/" target="_blank" rel="external">macdown</a>: Markdown免费编辑器</p>
+<p><a href="https://www.alfredapp.com/" target="_blank" rel="external">Alferd</a>: 这个神器就不多说了,看<a href="https://sspai.com/post/44624" target="_blank" rel="external">介绍</a></p>
+<p><a href="https://pan.baidu.com/s/1Qe0SlekoCgeqABWEJp5CAA" target="_blank" rel="external">CheatSheet</a>：快捷键提示<br>如果你还在搜索「XXX 的快捷键是什么？」，那一定是没有遇到过 CheatSheet 。这款软件在使用前需要在「系统偏好设置 - 安全性与隐私 - 隐私 - 辅助功能」中勾选 CheatSheet 一项，即可在大多数 App 界面中长按 Command-⌘ 直接呼出该软件的全部快捷键，可以说是非常的方便了<br><img src="https://upload-images.jianshu.io/upload_images/904629-716506131b9f855a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><a href="https://pan.baidu.com/s/15hQoI9MD1x9RSe-SCNbnBw" target="_blank" rel="external">Jietu</a>：截图工具<br>除了窗口截图、定时截图、全屏截图的基本功能以外，还可以对截图进行标注打码等二次操作。同时，Jietu 还可以进行窗口的录制，还支持对视频进行剪裁，选择清晰度以及导出 GIF 等</p>
+<p><a href="https://monodraw.helftone.com/" target="_blank" rel="external">Monodraw</a><br>用来制作ASCII 艺术字和 ASCII 的图表，有二十多种字体，想必程序员定熟悉，插入到代码中, 给代码注释加点艺术<br><img src="https://upload-images.jianshu.io/upload_images/904629-233d2efe334a7f27.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><a href="https://pan.baidu.com/s/1UvPMQ7urYb_FTwemPxVhug" target="_blank" rel="external">Dr.Cleaner Pro for Mac</a>：优化内存，磁盘清理和扫描大文件<br><img src="https://upload-images.jianshu.io/upload_images/904629-49e2272b9b851399.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><a href="https://pan.baidu.com/s/1rSHfiaDToI1QL1FZjim1qA" target="_blank" rel="external">MindNode</a>: 超好用的思维导图<br><img src="https://upload-images.jianshu.io/upload_images/904629-71083c5aa9870651.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<hr>
+<p>续更………..</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/工具/" rel="tag"># 工具</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/20/iOS触摸事件/" rel="next" title="详解iOS触摸事件">
+                <i class="fa fa-chevron-left"></i> 详解iOS触摸事件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Pan'V" />
+          <p class="site-author-name" itemprop="name">Pan'V</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/L-vinCent" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/4a7b7da390e4" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS-系统类小技巧"><span class="nav-number">1.</span> <span class="nav-text">iOS 系统类小技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-快捷键类"><span class="nav-number">2.</span> <span class="nav-text">Mac 快捷键类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-软件类"><span class="nav-number">3.</span> <span class="nav-text">Mac 软件类</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pan'V</span>
+</div>
+
+
+<div class="powered-by">
+  努力工作,努力生活
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="busuanzi-count" >
+<span class="site-uv">
+<i class="fa fa-user"></i>
+<span id="busuanzi_container_site_pv">
+访问量: <span id="busuanzi_value_site_pv"></span> 次  
+</span>
+</span>
+
+<span class="site-pv">
+<i class="fa fa-quora"></i>
+<span id="busuanzi_container_site_uv">
+访客数: <span id="busuanzi_value_site_uv"></span> 人
+</span>
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://L-vinCent.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://l-vincent.github.io/2018/09/21/iOS 系统的小技巧和 Mac  工具整理/';
+          this.page.identifier = '2018/09/21/iOS 系统的小技巧和 Mac  工具整理/';
+          this.page.title = 'iOS 系统的小技巧和 Mac工具整理';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://L-vinCent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

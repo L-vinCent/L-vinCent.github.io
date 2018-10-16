@@ -1,0 +1,868 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta name="google-site-verification" content="m3UI4lcUPqpZrsd0hAa_xv7QZH4x70BTPJzUp-HHnyo" />
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FMDB," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="PPDataBase 将 FMDB  一些基本数据操作做了封装，基于线程安全。适用于不是特别复杂的数据库处理功能接口  数据的增删改查，表删除 批量数据插入，删除，开启事务 数据条件查询，支持自定义 SQL 语句，也可以使用字典 数据查询排序处理，数据条数限制">
+<meta name="keywords" content="FMDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于 ORM 的 FMDB 封装使用">
+<meta property="og:url" content="https://l-vincent.github.io/2018/07/03/FMDB封装使用/index.html">
+<meta property="og:site_name" content="L-vinCent&#39;s Blog">
+<meta property="og:description" content="PPDataBase 将 FMDB  一些基本数据操作做了封装，基于线程安全。适用于不是特别复杂的数据库处理功能接口  数据的增删改查，表删除 批量数据插入，删除，开启事务 数据条件查询，支持自定义 SQL 语句，也可以使用字典 数据查询排序处理，数据条数限制">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-401c4d9d9cacf7b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-16T08:23:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于 ORM 的 FMDB 封装使用">
+<meta name="twitter:description" content="PPDataBase 将 FMDB  一些基本数据操作做了封装，基于线程安全。适用于不是特别复杂的数据库处理功能接口  数据的增删改查，表删除 批量数据插入，删除，开启事务 数据条件查询，支持自定义 SQL 语句，也可以使用字典 数据查询排序处理，数据条数限制">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-401c4d9d9cacf7b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://l-vincent.github.io/2018/07/03/FMDB封装使用/"/>
+
+
+
+
+
+  <title>基于 ORM 的 FMDB 封装使用 | L-vinCent's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">L-vinCent's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">“努力的学习”意味着，要常常去处理那些刚好在你能力极限上的问题</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/07/03/FMDB封装使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于 ORM 的 FMDB 封装使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-03T00:00:00+08:00">
+                2018-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Objective-C/" itemprop="url" rel="index">
+                    <span itemprop="name">Objective-C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/03/FMDB封装使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/07/03/FMDB封装使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="PPDataBase"><a href="#PPDataBase" class="headerlink" title="PPDataBase"></a>PPDataBase</h3><hr>
+<p>将 FMDB  一些基本数据操作做了封装，基于线程安全。<br>适用于不是特别复杂的数据库处理<br>功能接口</p>
+<ul>
+<li>数据的增删改查，表删除</li>
+<li>批量数据插入，删除，开启事务</li>
+<li>数据条件查询，支持自定义 SQL 语句，也可以使用字典</li>
+<li><p>数据查询排序处理，数据条数限制</p>
+<a id="more"></a>
+</li>
+</ul>
+<p>//todo</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><hr>
+<p>将 PPDataBase 文件夹拖入到工程文件，添加 libsqlite.tbd </p>
+<p>初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#import &quot;PPDataBase.h&quot;</div><div class="line"></div><div class="line">@property (nonatomic, strong) PPDataBase * database;</div><div class="line"></div><div class="line"></div><div class="line"> NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];</div><div class="line">    path = [path stringByAppendingPathComponent:@&quot;xx.db&quot;];</div><div class="line">    self.database = [PPDataBase databaseWithPath:path];</div></pre></td></tr></table></figure>
+<p>要查看数据是否插入成功，可以打开同步推或者ituns，找到自己的应用, 找到 xx.db文件 如果不显示，需要在info.plist里添加 Application supports iTunes file sharing 设置为 YES，重新启动就行.<br><img src="https://upload-images.jianshu.io/upload_images/904629-401c4d9d9cacf7b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>数据库工具推荐 <a href="http://sqlitebrowser.org" target="_blank" rel="external">db browser for sqlite</a></p>
+<h2 id="FMDB官方文档"><a href="#FMDB官方文档" class="headerlink" title="FMDB官方文档"></a><a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">FMDB官方文档</a></h2><p>具体的各个方法使用请看 <a href="https://github.com/L-vinCent/PP_ORM_FMDB" target="_blank" rel="external">Demo</a></p>
+<hr>
+<h2 id="版本记录"><a href="#版本记录" class="headerlink" title="版本记录"></a>版本记录</h2><h3 id="2018-07-03"><a href="#2018-07-03" class="headerlink" title="2018-07-03"></a>2018-07-03</h3><hr>
+<blockquote>
+<p>ORM(object relation mapping) 对象关系映射关系 ,面向对象的对象模型和关系型数据之间的相互转换</p>
+</blockquote>
+<p>说通俗点就是，我 C 端建立一个模型，可以根据模型的成员属性建表赋值，更新等。不用每次写 SQL 语句，像下面这种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE XXTable (ID text primary key, student text,score integer,sumScore real,name text,age real,templateID text,timestamp real,type real,list text)</div></pre></td></tr></table></figure>
+<p>这还算中规中矩的那种，有些2，30个属性的就很难受了，更新表的时候很容易就出错，所以，需求就来了，可不可以直接操作模型来映射到数据库表呢，那当然是阔以的。从最简单的一个需求开始</p>
+<p>在 C 端，我只需要建立一个模型，要存到数据库的时候，直接调用一个方法就能建立起对应的表，表内字段对应到模型各属性，当然，一定是线程安全的。</p>
+<p>基于这么合理的要求，我们先看下 SQL 的建表语句和插入语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE XXTable (dataID text primary key,fields text,dataGroup integer,dataIndex real,name text,show real,templateID text,timestamp real,type real,list text)</div><div class="line"></div><div class="line">insert or replace into XXTable (dataID,fields,dataGroup,dataIndex,name,show,templateID,timestamp,type,list) values  (&apos;WOSHI_dataID&apos;,&apos;1234567&apos;,12,12,&apos;?,&apos;,0,&apos;?,&apos;,0,0,&apos;?,&apos;)</div></pre></td></tr></table></figure>
+<p>需求简下来就是，给你一个模型，你给我拼成这么一段字符串，我直接执行 SQL 语句就行了。</p>
+<p>这么一看其实就是字符串的拼接，不难，前提是要知道 数据库的保留字段，还有 iOS 的基本数据类型对应到数据库的类型</p>
+<p> 流程思路大致是这样<br>先建数据库，然后查看数据库有没有对应的表，没有表就建表，根据模型的属性来建立字段。有表，拼接对应的 SQL 语句，就上面那种，然后 调 <code>executeUpdate</code> 执行.</p>
+<p>基于目前只有插入单条数据的基本功能，功能类给出倆个接口，初始化。给个字符串参数，用于数据库命名。然后另外一个函数就是，插入一条数据到数据库了，参数接受是一个遵循统一<code>协议</code>的模型。</p>
+<p>至于为什么要单独独立出来一个协议，em~~~,下面的解释应该能接受</p>
+<blockquote>
+<p><code>Objective-c</code> 面向对象的C, 继承概念体现在单类继承,用协议实现C++中的<code>多类继承</code>，避免一个子类继承多个父类时的复杂性，使类层次结构扁平。<br>比如车作父类，下面有两个子类燃油车和电动车，若需要混合动力车，按多父类继承，混合动力车需要继承两个父类，类层次为三层；但若是用协议方式，混合动力车实现燃油和电动协议，类层次只需要两层。</p>
+<p>回到 iOS 里， 比如说 <code>NSArray</code> 实现了 <code>NSFastEnumeration</code> 协议， <code>NSDictionary</code>，<code>NSSet</code> 也都实现了 <code>NSFastEnumeration</code> 协议，虽然它们的实现方式是不一样的，但是它们都可以 fast enumeration，就跟飞机和鸟都会飞是一样的，当你需要一个可以 fast enumeration 的对象时，你就不用管它具体是 <code>NSArray</code> 还是 <code>NSDictionary</code>， 只要是一个服从 <code>NSFastEnumeration</code> 协议的对象即可</p>
+</blockquote>
+<p>具体的业务逻辑还是看代码，先贴出来 <a href="https://github.com/L-vinCent/PP_ORM_FMDB" target="_blank" rel="external">Demo-单条数据插入</a>，目前只做了单条数据插入</p>
+<h3 id="2018-07-04"><a href="#2018-07-04" class="headerlink" title="2018-07-04"></a>2018-07-04</h3><hr>
+<p>新增</p>
+<ul>
+<li>独立出一个扩展文件，存放数据库操作的所有函数方法接口 </li>
+<li>批量数据插入，开启事务.  </li>
+<li>全部数据查询 ， 以 model 形式给出</li>
+</ul>
+<h3 id="2018-07-05"><a href="#2018-07-05" class="headerlink" title="2018-07-05"></a>2018-07-05</h3><hr>
+<p>新增</p>
+<ul>
+<li>数据库单条数据删除，一组数据删除</li>
+<li>建表可选主键是否自增</li>
+</ul>
+<h3 id="2018-07-07"><a href="#2018-07-07" class="headerlink" title="2018-07-07"></a>2018-07-07</h3><hr>
+<p>新增</p>
+<ul>
+<li>数据库保留字段处理，类似 DELETE，INSERT，避免模型属性出现这些保留字段无法操作</li>
+<li>黑名单组，筛选掉模型对应属性，不保存到数据库</li>
+<li>数据库更新对应符合条件的数据</li>
+<li>数据库条件语句查询</li>
+</ul>
+<h3 id="2018-07-09"><a href="#2018-07-09" class="headerlink" title="2018-07-09"></a>2018-07-09</h3><hr>
+<p>新增</p>
+<ul>
+<li>自定义 SQL 条件语句查询</li>
+<li>数据库条件语句查询,可做升序降序处理，可限制查询到的数据条数</li>
+<li>获取表中符合数据的条数</li>
+<li>删除表</li>
+<li>部分单元测试用例</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FMDB/" rel="tag"># FMDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/20/一键打包/" rel="next" title="iOS 一键打包发布测试和App Store">
+                <i class="fa fa-chevron-left"></i> iOS 一键打包发布测试和App Store
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/01/React Native 问题记录/" rel="prev" title="React Native 问题记录">
+                React Native 问题记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Pan'V" />
+          <p class="site-author-name" itemprop="name">Pan'V</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/L-vinCent" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/4a7b7da390e4" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#PPDataBase"><span class="nav-number">1.</span> <span class="nav-text">PPDataBase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FMDB官方文档"><span class="nav-number"></span> <span class="nav-text">FMDB官方文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本记录"><span class="nav-number"></span> <span class="nav-text">版本记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-07-03"><span class="nav-number">1.</span> <span class="nav-text">2018-07-03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-07-04"><span class="nav-number">2.</span> <span class="nav-text">2018-07-04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-07-05"><span class="nav-number">3.</span> <span class="nav-text">2018-07-05</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-07-07"><span class="nav-number">4.</span> <span class="nav-text">2018-07-07</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-07-09"><span class="nav-number">5.</span> <span class="nav-text">2018-07-09</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pan'V</span>
+</div>
+
+
+<div class="powered-by">
+  努力工作,努力生活
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="busuanzi-count" >
+<span class="site-uv">
+<i class="fa fa-user"></i>
+<span id="busuanzi_container_site_pv">
+访问量: <span id="busuanzi_value_site_pv"></span> 次  
+</span>
+</span>
+
+<span class="site-pv">
+<i class="fa fa-quora"></i>
+<span id="busuanzi_container_site_uv">
+访客数: <span id="busuanzi_value_site_uv"></span> 人
+</span>
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://L-vinCent.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://l-vincent.github.io/2018/07/03/FMDB封装使用/';
+          this.page.identifier = '2018/07/03/FMDB封装使用/';
+          this.page.title = '基于 ORM 的 FMDB 封装使用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://L-vinCent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

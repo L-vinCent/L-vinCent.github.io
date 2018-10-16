@@ -1,0 +1,828 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta name="google-site-verification" content="m3UI4lcUPqpZrsd0hAa_xv7QZH4x70BTPJzUp-HHnyo" />
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="React Native," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="如果没接触过 React Native的可以先去看这篇文章，把基本环境搭建好，本篇说一下 RN 与 原生的相互交互与传参( 这里只讲iOS这一块)">
+<meta name="keywords" content="React Native">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native  -- 与原生交互(iOS)">
+<meta property="og:url" content="https://l-vincent.github.io/2018/08/12/React Native  -- 与原生交互(iOS)/index.html">
+<meta property="og:site_name" content="L-vinCent&#39;s Blog">
+<meta property="og:description" content="如果没接触过 React Native的可以先去看这篇文章，把基本环境搭建好，本篇说一下 RN 与 原生的相互交互与传参( 这里只讲iOS这一块)">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-ff6671a1bb9bb435.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-16T08:19:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native  -- 与原生交互(iOS)">
+<meta name="twitter:description" content="如果没接触过 React Native的可以先去看这篇文章，把基本环境搭建好，本篇说一下 RN 与 原生的相互交互与传参( 这里只讲iOS这一块)">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-ff6671a1bb9bb435.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://l-vincent.github.io/2018/08/12/React Native  -- 与原生交互(iOS)/"/>
+
+
+
+
+
+  <title>React Native  -- 与原生交互(iOS) | L-vinCent's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">L-vinCent's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">“努力的学习”意味着，要常常去处理那些刚好在你能力极限上的问题</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/08/12/React Native  -- 与原生交互(iOS)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React Native  -- 与原生交互(iOS)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-12T00:00:00+08:00">
+                2018-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/12/React Native  -- 与原生交互(iOS)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/08/12/React Native  -- 与原生交互(iOS)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如果没接触过 React Native的可以先去看这篇<a href="https://www.jianshu.com/p/4df387092326" target="_blank" rel="external">文章</a>，把基本环境搭建好，本篇说一下 RN 与 原生的相互交互与传参( 这里只讲iOS这一块)</p>
+ <a id="more"></a>
+<hr>
+<h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><ul>
+<li><p>RN 点击按钮触发 原生 方法，RN 带参传递给原生</p>
+</li>
+<li><p>原生 调用 RN 方法，原生 带参 传递给 RN 端</p>
+</li>
+</ul>
+<hr>
+<h4 id="Native-端"><a href="#Native-端" class="headerlink" title="Native 端"></a>Native 端</h4><p>1.首先需要调用的原生方法需要继承类<code>RCTEventEmitter</code>,然后实现 <code>RCTBridgeModule</code> 协议</p>
+<p>2.类实现中需要添加 <code>RCT_EXPORT_MODULE()</code>的宏</p>
+<p>3.通过 <code>RCT_EXPORT_METHOD()</code>宏 来实现需要导出 <code>javascript</code> 的方法</p>
+<p>看一下 Native 端的类文件</p>
+<h4 id="RNMethodTool-h"><a href="#RNMethodTool-h" class="headerlink" title="RNMethodTool.h"></a>RNMethodTool.h</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#import &lt;React/RCTEventEmitter.h&gt;</div><div class="line">#import &lt;React/RCTBridge.h&gt;</div><div class="line">@interface RNMethodTool : RCTEventEmitter&lt;RCTBridgeModule&gt;</div><div class="line"></div><div class="line">+(void)emitMethod;</div><div class="line">//  RN那边做了监听，这个就是调用 RN 方法，弹出 RN 系统提示框</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这里引入 <code>RCTBridge.h</code>之类的文件可能会报错<code>file not found</code> ，编译一下就 OK 了，不用管。</p>
+<h4 id="RNMethodTool-m"><a href="#RNMethodTool-m" class="headerlink" title="RNMethodTool.m"></a>RNMethodTool.m</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">#import &quot;RNMethodTool.h&quot;</div><div class="line">#import &quot;AppDelegate.h&quot;</div><div class="line">@implementation RNMethodTool</div><div class="line"></div><div class="line">//这个宏必写的，不谢的话 RN 那边会找不到该类</div><div class="line">RCT_EXPORT_MODULE()</div><div class="line"></div><div class="line">//这个方法也是必须实现的</div><div class="line">-(NSArray&lt;NSString *&gt;*)supportedEvents</div><div class="line">&#123;</div><div class="line">  return @[@&quot;EventReminder&quot;];</div><div class="line">//EventReminder 是监听的标识，类似 iOS 发通知 需要一个标识去识别，通过这个标识发送通知调用 RN方法</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">// RCT_EXPORT_METHOD( xxx) 暴露给 RN 调用的方法写这里面， xxx 是调用方法</div><div class="line">RCT_EXPORT_METHOD(pp_startObserving)</div><div class="line">&#123;</div><div class="line">//里面就是做一些原生操作了，比如跳转，打开相册，相机之类</div><div class="line">//这里是加个通知，其他原生类里通过发送通知来调用 alertRNInfo 方法,就是实现发通知给 RN 的功能方法</div><div class="line">  [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(alertRNInfo:) name:@&quot;pp123&quot; object:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">RCT_EXPORT_METHOD(doSomething:(NSString *)string)</div><div class="line">&#123;</div><div class="line">  //这也是暴露给 RN 的方法，弹出系统框，string 是 RN给过来的参数</div><div class="line">  dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">    </div><div class="line">    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@&quot;我是iOS系统框  RN 调用 原生方法&quot; message:string preferredStyle:UIAlertControllerStyleAlert];</div><div class="line">    </div><div class="line"> </div><div class="line">    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@&quot;取消&quot; style:UIAlertActionStyleCancel handler:nil];</div><div class="line">    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@&quot;好的&quot; style:UIAlertActionStyleDefault handler:nil];</div><div class="line">    </div><div class="line">    [alertController addAction:cancelAction];</div><div class="line">    [alertController addAction:okAction];</div><div class="line">    </div><div class="line">    AppDelegate *delegate = (AppDelegate *)([UIApplication sharedApplication].delegate);</div><div class="line">    </div><div class="line">    [delegate.window.rootViewController presentViewController:alertController animated:YES completion:nil];</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">-(void)alertRNInfo:(NSNotification *)noti</div><div class="line">&#123;</div><div class="line">  dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">    </div><div class="line">//这是核心方法, EventReminder 是标识，在上面的数组 supportedEvents 方法里也要加入， body 是 传给 RN 的参数</div><div class="line">    [self sendEventWithName:@&quot;EventReminder&quot; body:@&#123;@&quot;name&quot;:@&quot;pp&quot;&#125;];</div><div class="line"></div><div class="line">  &#125;);</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">//这个就是暴露给其他原生类的方法了</div><div class="line">+(void)emitMethod</div><div class="line">&#123;</div><div class="line">  [[NSNotificationCenter defaultCenter]postNotificationName:@&quot;pp123&quot; object:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//我这里在 `AppDelegate.m`类调用来测试是否可以成功调用 </div><div class="line">/*dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">    </div><div class="line">    [RNMethodTool emitMethod];</div><div class="line">    </div><div class="line">  &#125;);</div><div class="line">*/</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>要注意的点</p>
+<ul>
+<li><p>如果没有 <code>RCT_EXPORT_MODULE</code> 这个宏的话，会报错,也就是 RN 找不到这个 module ， 因为没有用这个宏导出暴露给 RN<br><img src="https://upload-images.jianshu.io/upload_images/904629-ff6671a1bb9bb435.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p><code>supportedEvents</code> 如果没有实现这个方法，你会发现每次 run-ios 模拟器一打开就会闪退，而且没有错误提示</p>
+</li>
+<li><p><code>supportedEvents</code> 这个数组方法里如果不加入标识，点击是没反应的,这里是  EventReminder ，可以自己命名</p>
+</li>
+</ul>
+<h3 id="JS端："><a href="#JS端：" class="headerlink" title="JS端："></a>JS端：</h3><hr>
+<p>1.需要引用 <code>NativeModules</code> 模块<br>2.通过 <code>NativeModules.xxx</code> 获取 Native 的类，xxx 为 Native 的类名<br>3.上一步获取到的 Native 类，调用  Native 中导出的方法</p>
+<h4 id="示例代码说明"><a href="#示例代码说明" class="headerlink" title="示例代码说明"></a>示例代码说明</h4><p>####<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">//先导入这俩个组件</div><div class="line">import &#123;NativeEventEmitter,NativeModules&#125; from &apos;react-native&apos;;</div><div class="line"></div><div class="line">//初始化, RNMethodTool 就是原生类的名字</div><div class="line">var NativeBridge = NativeModules.RNMethodTool;</div><div class="line">const NativeModule = new  NativeEventEmitter(NativeModules.RNMethodTool)</div><div class="line"></div><div class="line">//在页面加载完成之后，这里类似于 iOS 的 viewDidLoad</div><div class="line">componentDidMount() &#123;</div><div class="line">        NativeBridge.pp_startObserving(); //添加监听，作用参考原生里面的方法</div><div class="line"></div><div class="line">//核心方法，通过 EventReminder 这个标识监听 原生发过来的通知，收到之后就调用里面的方法，data 是传过来的参数</div><div class="line">        NativeModule.addListener(&apos;EventReminder&apos;,(data)=&gt;&#123;</div><div class="line"></div><div class="line">            var dic = JSON.stringify(data);</div><div class="line"></div><div class="line">            alert(&apos;我是 RN 弹框，原生 调用 RN方法&apos; + &apos;   &apos; + &apos;原生带过来的参数&apos;+ dic);</div><div class="line"></div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">//点击 RN 按钮调用原生方法，比如</div><div class="line">    render() &#123;</div><div class="line">        return (</div><div class="line">            &lt;TouchableHighlight onPress=&#123; ()=&gt;NativeBridge.doSomething(&apos;RN传递的参数&apos;)&#125;&gt;</div><div class="line">                &lt;Text style=&#123;styles.text&#125;&gt;</div><div class="line">                    点击</div><div class="line">                &lt;/Text&gt;</div><div class="line">            &lt;/TouchableHighlight&gt;</div><div class="line">        );</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React-Native/" rel="tag"># React Native</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/05/React Native  -- 导航组件/" rel="next" title="React Native  -- 导航组件">
+                <i class="fa fa-chevron-left"></i> React Native  -- 导航组件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/18/React Native--打包iOS应用/" rel="prev" title="React Native--打包iOS应用">
+                React Native--打包iOS应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Pan'V" />
+          <p class="site-author-name" itemprop="name">Pan'V</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/L-vinCent" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/4a7b7da390e4" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#功能"><span class="nav-number">1.</span> <span class="nav-text">功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Native-端"><span class="nav-number">1.1.</span> <span class="nav-text">Native 端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RNMethodTool-h"><span class="nav-number">1.2.</span> <span class="nav-text">RNMethodTool.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RNMethodTool-m"><span class="nav-number">1.3.</span> <span class="nav-text">RNMethodTool.m</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS端："><span class="nav-number">2.</span> <span class="nav-text">JS端：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#示例代码说明"><span class="nav-number">2.1.</span> <span class="nav-text">示例代码说明</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pan'V</span>
+</div>
+
+
+<div class="powered-by">
+  努力工作,努力生活
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="busuanzi-count" >
+<span class="site-uv">
+<i class="fa fa-user"></i>
+<span id="busuanzi_container_site_pv">
+访问量: <span id="busuanzi_value_site_pv"></span> 次  
+</span>
+</span>
+
+<span class="site-pv">
+<i class="fa fa-quora"></i>
+<span id="busuanzi_container_site_uv">
+访客数: <span id="busuanzi_value_site_uv"></span> 人
+</span>
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://L-vinCent.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://l-vincent.github.io/2018/08/12/React Native  -- 与原生交互(iOS)/';
+          this.page.identifier = '2018/08/12/React Native  -- 与原生交互(iOS)/';
+          this.page.title = 'React Native  -- 与原生交互(iOS)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://L-vinCent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

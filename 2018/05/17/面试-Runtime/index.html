@@ -96,7 +96,7 @@
 <meta name="description" content="面试问题，思考一下  类对象与元类对象的区别? [obj foo] 和 objc_msgSend 函数有什么关系? runtime 如何通过 Selector 找到对应的IMP地址的? (消息传递过程)">
 <meta name="keywords" content="Runtime">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS Runtime篇">
+<meta property="og:title" content="iOS 面试全方位剖析 -- Runtime篇">
 <meta property="og:url" content="https://l-vincent.github.io/2018/05/17/面试-Runtime/index.html">
 <meta property="og:site_name" content="L-vinCent&#39;s Blog">
 <meta property="og:description" content="面试问题，思考一下  类对象与元类对象的区别? [obj foo] 和 objc_msgSend 函数有什么关系? runtime 如何通过 Selector 找到对应的IMP地址的? (消息传递过程)">
@@ -108,9 +108,9 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-40e52989b6b43445.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-05f1dff5c55559df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-43edc5597d2c72ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-22T08:14:58.000Z">
+<meta property="og:updated_time" content="2018-10-16T07:41:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS Runtime篇">
+<meta name="twitter:title" content="iOS 面试全方位剖析 -- Runtime篇">
 <meta name="twitter:description" content="面试问题，思考一下  类对象与元类对象的区别? [obj foo] 和 objc_msgSend 函数有什么关系? runtime 如何通过 Selector 找到对应的IMP地址的? (消息传递过程)">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-3ab2a221da9dae6b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
@@ -146,7 +146,7 @@
 
 
 
-  <title>iOS Runtime篇 | L-vinCent's Blog</title>
+  <title>iOS 面试全方位剖析 -- Runtime篇 | L-vinCent's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -293,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">iOS Runtime篇</h1>
+          <h1 class="post-title" itemprop="name headline">iOS 面试全方位剖析 -- Runtime篇</h1>
         
 
         <div class="post-meta">
@@ -481,8 +481,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/28/面试-Block篇/" rel="prev" title="iOS 面试全方位剖析 -- Block篇">
-                iOS 面试全方位剖析 -- Block篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/20/runloopSum/" rel="prev" title="iOS 面试全方位剖析 -- RunLoop篇">
+                iOS 面试全方位剖析 -- RunLoop篇 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -562,7 +562,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -573,7 +573,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -584,7 +584,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -805,7 +805,7 @@
         var disqus_config = function () {
           this.page.url = 'https://l-vincent.github.io/2018/05/17/面试-Runtime/';
           this.page.identifier = '2018/05/17/面试-Runtime/';
-          this.page.title = 'iOS Runtime篇';
+          this.page.title = 'iOS 面试全方位剖析 -- Runtime篇';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://L-vinCent.disqus.com/embed.js';

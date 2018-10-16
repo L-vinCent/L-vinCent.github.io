@@ -1,0 +1,961 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta name="google-site-verification" content="m3UI4lcUPqpZrsd0hAa_xv7QZH4x70BTPJzUp-HHnyo" />
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ReactiveCocoa," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="ReactiveCocoa 简单介绍 观察值   你别动，你一动我就知道。  12345@weakify(self);[RACObserve(self, value) subscribeNext:^(NSString* x) &amp;#123;    @strongify(self);    NSLog(@&amp;quot;你动了&amp;quot;);&amp;#125;];">
+<meta name="keywords" content="ReactiveCocoa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactiveCocoa 和 MVVM 入门">
+<meta property="og:url" content="https://l-vincent.github.io/2018/05/28/mvvm/index.html">
+<meta property="og:site_name" content="L-vinCent&#39;s Blog">
+<meta property="og:description" content="ReactiveCocoa 简单介绍 观察值   你别动，你一动我就知道。  12345@weakify(self);[RACObserve(self, value) subscribeNext:^(NSString* x) &amp;#123;    @strongify(self);    NSLog(@&amp;quot;你动了&amp;quot;);&amp;#125;];">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-ce75bed1e5e99ae9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-0b43d2e3c3e67e4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-4d0fea7ab8693ea5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-16T07:49:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactiveCocoa 和 MVVM 入门">
+<meta name="twitter:description" content="ReactiveCocoa 简单介绍 观察值   你别动，你一动我就知道。  12345@weakify(self);[RACObserve(self, value) subscribeNext:^(NSString* x) &amp;#123;    @strongify(self);    NSLog(@&amp;quot;你动了&amp;quot;);&amp;#125;];">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/904629-ce75bed1e5e99ae9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://l-vincent.github.io/2018/05/28/mvvm/"/>
+
+
+
+
+
+  <title>ReactiveCocoa 和 MVVM 入门 | L-vinCent's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">L-vinCent's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">“努力的学习”意味着，要常常去处理那些刚好在你能力极限上的问题</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://l-vincent.github.io/2018/05/28/mvvm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pan'V">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="L-vinCent's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ReactiveCocoa 和 MVVM 入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-28T00:00:00+08:00">
+                2018-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Objective-C/" itemprop="url" rel="index">
+                    <span itemprop="name">Objective-C</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/28/mvvm/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/28/mvvm/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="ReactiveCocoa-简单介绍"><a href="#ReactiveCocoa-简单介绍" class="headerlink" title="ReactiveCocoa 简单介绍"></a>ReactiveCocoa 简单介绍</h2><ul>
+<li>观察值</li>
+</ul>
+<blockquote>
+<p>你别动，你一动我就知道。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@weakify(self);</div><div class="line">[RACObserve(self, value) subscribeNext:^(NSString* x) &#123;</div><div class="line">    @strongify(self);</div><div class="line">    NSLog(@&quot;你动了&quot;);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+ <a id="more"></a>
+<ul>
+<li>单边<blockquote>
+<p>你唱歌，我就跳舞</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">RACSignal *signalA = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        [subscriber sendNext:@&quot;唱歌&quot;];</div><div class="line">        [subscriber sendCompleted];</div><div class="line">        return nil;</div><div class="line">    &#125;];</div><div class="line">    RAC(self, value) = [signalA map:^id(NSString* value) &#123;</div><div class="line">        if ([value isEqualToString:@&quot;唱歌&quot;]) &#123;</div><div class="line">            return @&quot;跳舞&quot;;</div><div class="line">        &#125;</div><div class="line">        return @&quot;&quot;;</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>双边<blockquote>
+<p>你向西，他就向东，他向左，你就向右。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">RACChannelTerminal *channelA = RACChannelTo(self, valueA);</div><div class="line">    RACChannelTerminal *channelB = RACChannelTo(self, valueB);</div><div class="line">    [[channelA map:^id(NSString *value) &#123;</div><div class="line">        if ([value isEqualToString:@&quot;西&quot;]) &#123;</div><div class="line">            return @&quot;东&quot;;</div><div class="line">        &#125;</div><div class="line">        return value;</div><div class="line">    &#125;] subscribe:channelB];</div><div class="line">    [[channelB map:^id(NSString *value) &#123;</div><div class="line">        if ([value isEqualToString:@&quot;左&quot;]) &#123;</div><div class="line">            return @&quot;右&quot;;</div><div class="line">        &#125;</div><div class="line">        return value;</div><div class="line">    &#125;] subscribe:channelA];</div><div class="line">    [[RACObserve(self, valueA) filter:^BOOL(id value) &#123;</div><div class="line">        return value ? YES : NO;</div><div class="line">    &#125;] subscribeNext:^(NSString* x) &#123;</div><div class="line">        NSLog(@&quot;你向%@&quot;, x);</div><div class="line">    &#125;];</div><div class="line">    [[RACObserve(self, valueB) filter:^BOOL(id value) &#123;</div><div class="line">        return value ? YES : NO;</div><div class="line">    &#125;] subscribeNext:^(NSString* x) &#123;</div><div class="line">        NSLog(@&quot;他向%@&quot;, x);</div><div class="line">    &#125;];</div><div class="line">    self.valueA = @&quot;西&quot;;</div><div class="line">    self.valueB = @&quot;左&quot;;</div></pre></td></tr></table></figure>
+<ul>
+<li>代理<blockquote>
+<p>你是程序员，你帮我写个app吧</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@protocol Programmer &lt;NSObject&gt;</div><div class="line">- (void)makeAnApp;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">RACSignal *ProgrammerSignal =  </div><div class="line">[self rac_signalForSelector:@selector(makeAnApp)</div><div class="line">               fromProtocol:@protocol(Programmer)];</div><div class="line">[ProgrammerSignal subscribeNext:^(RACTuple* x) &#123;</div><div class="line">    NSLog(@&quot;花了一个月，app写好了&quot;);</div><div class="line">&#125;];</div><div class="line">[self makeAnApp];</div><div class="line"></div><div class="line">RACSignal *ProgrammerSignal =  </div><div class="line">[self rac_signalForSelector:@selector(makeAnApp)</div><div class="line">               fromProtocol:@protocol(Programmer)];</div><div class="line">[ProgrammerSignal subscribeNext:^(RACTuple* x) &#123;</div><div class="line">    NSLog(@&quot;花了一个月，app写好了&quot;);</div><div class="line">&#125;];</div><div class="line">[self makeAnApp];</div></pre></td></tr></table></figure>
+<ul>
+<li>广播<blockquote>
+<p>知道你的频道，我就能听到你了。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[[NSNotificationCenter defaultCenter] rac_addObserverForName:@&quot;代码之道频道&quot; object:nil] subscribeNext:^(NSNotification* x) &#123;</div><div class="line">        NSLog(@&quot;技巧：%@&quot;, x.userInfo[@&quot;技巧&quot;]);</div><div class="line">    &#125;];</div><div class="line">    [[NSNotificationCenter defaultCenter] postNotificationName:@&quot;代码之道频道&quot; object:nil userInfo:@&#123;@&quot;技巧&quot;:@&quot;用心写&quot;&#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>节流<blockquote>
+<p>不好意思，这里一秒钟只能通过一个人</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">[[[RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        [subscriber sendNext:@&quot;旅客A&quot;];</div><div class="line">        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">            [subscriber sendNext:@&quot;旅客B&quot;];</div><div class="line">        &#125;);</div><div class="line">        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">            [subscriber sendNext:@&quot;旅客C&quot;];</div><div class="line">            [subscriber sendNext:@&quot;旅客D&quot;];</div><div class="line">            [subscriber sendNext:@&quot;旅客E&quot;];</div><div class="line">        &#125;);</div><div class="line">        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">            [subscriber sendNext:@&quot;旅客F&quot;];</div><div class="line">        &#125;);</div><div class="line">        return nil;</div><div class="line">    &#125;] throttle:1] subscribeNext:^(id x) &#123;</div><div class="line">        NSLog(@&quot;%@通过了&quot;,x);</div><div class="line">    &#125;];</div><div class="line"></div><div class="line">// Test[2618:83764] 旅客A  </div><div class="line">//Test[2618:83764] 旅客B  </div><div class="line">// Test[2618:83764] 旅客E  </div><div class="line">// Test[2618:83764] 旅客F</div></pre></td></tr></table></figure>
+<ul>
+<li>连接<blockquote>
+<p>生活是一个故事接一个故事</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">RACSignal *signalA = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        [subscriber sendNext:@&quot;我恋爱啦&quot;];</div><div class="line">        [subscriber sendCompleted];</div><div class="line">        return nil;</div><div class="line">    &#125;];</div><div class="line">    RACSignal *signalB = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        [subscriber sendNext:@&quot;我结婚啦&quot;];</div><div class="line">        [subscriber sendCompleted];</div><div class="line">        return nil;</div><div class="line">    &#125;];</div><div class="line">    [[signalA concat:signalB] subscribeNext:^(id x) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;,x);</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>合并<blockquote>
+<p>污水都应该流入污水处理厂被处理</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">RACSignal *signalA = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        [subscriber sendNext:@&quot;纸厂污水&quot;];</div><div class="line">        return nil;</div><div class="line">    &#125;];</div><div class="line">    RACSignal *signalB = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        [subscriber sendNext:@&quot;电镀厂污水&quot;];</div><div class="line">        return nil;</div><div class="line">    &#125;];</div><div class="line">    [[RACSignal merge:@[signalA, signalB]] subscribeNext:^(id x) &#123;</div><div class="line">        NSLog(@&quot;处理%@&quot;,x);</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>映射<blockquote>
+<p>我可以点石成金。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">RACSignal *signal = [[RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        [subscriber sendNext:@&quot;石&quot;];</div><div class="line">        return nil;</div><div class="line">    &#125;] map:^id(NSString* value) &#123;</div><div class="line">        if ([value isEqualToString:@&quot;石&quot;]) &#123;</div><div class="line">            return @&quot;金&quot;;</div><div class="line">        &#125;</div><div class="line">        return value;</div><div class="line">    &#125;];</div><div class="line">    [signal subscribeNext:^(id x) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;, x);</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>过滤<blockquote>
+<p>未满十八岁，禁止进入。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[[[RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        [subscriber sendNext:@(15)];</div><div class="line">        [subscriber sendNext:@(17)];</div><div class="line">        [subscriber sendNext:@(21)];</div><div class="line">        [subscriber sendNext:@(14)];</div><div class="line">        [subscriber sendNext:@(30)];</div><div class="line">        return nil;</div><div class="line">    &#125;] filter:^BOOL(NSNumber* value) &#123;</div><div class="line">        return value.integerValue &gt;= 18;</div><div class="line">    &#125;] subscribeNext:^(id x) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;, x);</div><div class="line">    &#125;];</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>扁平<blockquote>
+<p>打蛋液，煎鸡蛋，上盘。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">[[[[RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        NSLog(@&quot;打蛋液&quot;);</div><div class="line">        [subscriber sendNext:@&quot;蛋液&quot;];</div><div class="line">        [subscriber sendCompleted];</div><div class="line">        return nil;</div><div class="line">    &#125;] flattenMap:^RACStream *(NSString* value) &#123;</div><div class="line">        return [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">            NSLog(@&quot;把%@倒进锅里面煎&quot;,value);</div><div class="line">            [subscriber sendNext:@&quot;煎蛋&quot;];</div><div class="line">            [subscriber sendCompleted];</div><div class="line">            return nil;</div><div class="line">        &#125;];</div><div class="line">    &#125;] flattenMap:^RACStream *(NSString* value) &#123;</div><div class="line">        return [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">            NSLog(@&quot;把%@装到盘里&quot;, value);</div><div class="line">            [subscriber sendNext:@&quot;上菜&quot;];</div><div class="line">            [subscriber sendCompleted];</div><div class="line">            return nil;</div><div class="line">        &#125;];</div><div class="line">    &#125;] subscribeNext:^(id x) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;, x);</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>重放<blockquote>
+<p>一次制作，多次观看。</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">RACSignal *replaySignal = [[RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        NSLog(@&quot;大导演拍了一部电影《我的男票是程序员》&quot;);</div><div class="line">        [subscriber sendNext:@&quot;《我的男票是程序员》&quot;];</div><div class="line">        return nil;</div><div class="line">    &#125;] replay];</div><div class="line">    [replaySignal subscribeNext:^(id x) &#123;</div><div class="line">        NSLog(@&quot;小明看了%@&quot;, x);</div><div class="line">    &#125;];</div><div class="line">    [replaySignal subscribeNext:^(id x) &#123;</div><div class="line">        NSLog(@&quot;小红也看了%@&quot;, x);</div><div class="line">    &#125;];</div><div class="line"></div><div class="line"></div><div class="line">//Test[1854:54712] 大导演拍了一部电影《我的男票是程序员》  </div><div class="line">//Test[1854:54712] 小明看了《我的男票是程序员》  </div><div class="line">//Test[1854:54712] 小红也看了《我的男票是程序员》</div></pre></td></tr></table></figure>
+<ul>
+<li>重试<blockquote>
+<p>成功之前可能需要数百次失败</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">__block int failedCount = 0;</div><div class="line">    [[[RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</div><div class="line">        if (failedCount &lt; 100) &#123;</div><div class="line">            failedCount++;</div><div class="line">            NSLog(@&quot;我失败了&quot;);</div><div class="line">            [subscriber sendError:nil];</div><div class="line">        &#125;else&#123;</div><div class="line">            NSLog(@&quot;经历了数百次失败后&quot;);</div><div class="line">            [subscriber sendNext:nil];</div><div class="line">        &#125;</div><div class="line">        return nil;</div><div class="line">    &#125;] retry] subscribeNext:^(id x) &#123;</div><div class="line">        NSLog(@&quot;终于成功了&quot;);</div><div class="line">    &#125;];</div><div class="line"></div><div class="line">//Test[2411:77080] 我失败了  </div><div class="line">// Test[2411:77080] 我失败了  </div><div class="line">//.....</div><div class="line">// Test[2411:77080] 经历了数百次失败后  </div><div class="line">// Test[2411:77080] 终于成功了</div></pre></td></tr></table></figure>
+<p><a href="http://ios.jobbole.com/82356/" target="_blank" rel="external">以上</a></p>
+<hr>
+<p>下面是 MVVM 与 ReactiveCocoa 项目实例演示<br>摘录翻译自<a href="http://www.sprynthesis.com/2014/12/06/reactivecocoa-mvvm-introduction" target="_blank" rel="external">ReactiveCocoa and MVVM, an Introduction</a> </p>
+<hr>
+<h2 id="定义MVVM"><a href="#定义MVVM" class="headerlink" title="定义MVVM"></a>定义MVVM</h2><hr>
+<ul>
+<li><p>Model - model 在 MVVM 中没有真正的变化. 取决于你的偏好, 你的 model 可能会或可能不会封装一些额外的业务逻辑工作. 我更倾向于把它当做一个容纳表现数据-模型对象信息的结构体, 并在一个单独的管理类中维护的创建/管理模型的统一逻辑.</p>
+</li>
+<li><p>View - view 包含实际 UI 本身(不论是 UIView 代码, storyboard 和 xib), 任何视图特定的逻辑, 和对用户输入的反馈. 在 iOS 中这不仅需要 UIView 代码和那些文件, 还包括很多需UIViewController 处理的工作.</p>
+</li>
+<li><p>View-Model - 这个术语本身会带来困惑, 因为它混搭了两个我们已知的术语, 但却是完全不同的东东. 它不是传统数据-模型结构中模型的意思(又来了, 只是我喜欢这个例子). 它的职责之一就是作为一个表现视图显示自身所需数据的静态模型;但它也有收集, 解释和转换那些数据的责任. 这留给了 view (controller) 一个更加清晰明确的任务: 呈现由 view-model 提供的数据.</p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-ce75bed1e5e99ae9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="View-Model-和-View-Controller-在一起，但独立"><a href="#View-Model-和-View-Controller-在一起，但独立" class="headerlink" title="View-Model 和 View Controller, 在一起，但独立"></a>View-Model 和 View Controller, 在一起，但独立</h2><hr>
+<ul>
+<li>有一个让用户输入他们姓名的 <code>UITextField</code> , 和一个写着 “Go” 的 <code>UIButton</code></li>
+<li>有显示被查看的当前用户头像和姓名的 <code>UIImageView</code> 和 <code>UILabel</code> 各一个</li>
+<li>下面放着一个显示最新回复推文的<code>UITableView</code></li>
+<li>允许无限滚动</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-0b43d2e3c3e67e4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="View-Model-实例"><a href="#View-Model-实例" class="headerlink" title="View-Model 实例"></a>View-Model 实例</h3><p>我们的 view-model 头文件应该长这样:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//MYTwitterLookupViewModel.h</div><div class="line">@interface MYTwitterLookupViewModel: NSObject</div><div class="line"> </div><div class="line">@property (nonatomic, assign, <span class="built_in">readonly</span>, getter=isUsernameValid) BOOL usernameValid;</div><div class="line">@property (nonatomic, strong, <span class="built_in">readonly</span>) NSString *userFullName;</div><div class="line">@property (nonatomic, strong, <span class="built_in">readonly</span>) UIImage *userAvatarImage;</div><div class="line">@property (nonatomic, strong, <span class="built_in">readonly</span>) NSArray *tweets;</div><div class="line">@property (nonatomic, assign, <span class="built_in">readonly</span>) BOOL allTweetsLoaded;</div><div class="line"> </div><div class="line">@property (nonatomic, strong, readwrite) NSString *username;</div><div class="line"> </div><div class="line">- (void) getTweetsForCurrentUsername;</div><div class="line">- (void) loadMoreTweets;</div></pre></td></tr></table></figure>
+<p>相当直截了当的填充. 注意到这些壮丽的 <code>readonly</code> 属性了么?这个 view-model 暴漏了视图控制器所必需的最小量信息, 视图控制器实际上并不在乎 view-model 是如何获得这些信息的. 现在我们两者都不在乎. 仅仅假定你习惯于标准的网络服务请求, 校验, 数据操作和存储.</p>
+<h4 id="视图控制器从-view-model-获取的数据将用来"><a href="#视图控制器从-view-model-获取的数据将用来" class="headerlink" title="视图控制器从 view-model 获取的数据将用来:"></a>视图控制器从 view-model 获取的数据将用来:</h4><ul>
+<li>当 <code>usernameValid</code> 的值发生变化时触发 “Go” 按钮的 <code>enabled</code> 属性</li>
+<li>当 <code>usernameValid</code> 等于 <code>NO</code> 时调整按钮的 <code>alpha</code> 值为0. 5(等于 <code>YES</code> 时设为1. 0)</li>
+<li>更新 <code>UILable</code> 的 <code>text</code> 属性为字符串 <code>userFullName</code> 的值</li>
+<li>更新 <code>UIImageView</code> 的 <code>image</code> 属性为 <code>userAvatarImage</code> 的值</li>
+<li>用 <code>tweets</code> 数组中的对象设置表格视图中的 cell (后面会提到)</li>
+<li>当滑到表格视图底部时如果 <code>allTweetsLoaded</code> 为 <code>NO</code>, 提供一个 显示 “loading” 的 cell</li>
+</ul>
+<h4 id="视图控制器将对-view-model-起如下作用"><a href="#视图控制器将对-view-model-起如下作用" class="headerlink" title="视图控制器将对 view-model 起如下作用:"></a>视图控制器将对 view-model 起如下作用:</h4><ul>
+<li>每当 <code>UITextField</code> 中的文本发生变化, 更新 view-model 上仅有的 <code>readwrite</code> 属性 <code>username</code></li>
+<li>当 “Go” 按钮被按下时调用 view-mode的 <code>getTweetsForCurrentUsername</code> 方法</li>
+<li>当到达表格中的 “loading” cell 时调用 view-model 上的 <code>loadMoreTweets</code> 方法</li>
+</ul>
+<h4 id="视图控制器不做的事儿"><a href="#视图控制器不做的事儿" class="headerlink" title="视图控制器不做的事儿:"></a><a href="http://yulingtianxia.com/blog/2015/05/21/ReactiveCocoa-and-MVVM-an-Introduction/#%E8%A7%86%E5%9B%BE%E6%8E%A7%E5%88%B6%E5%99%A8%E4%B8%8D%E5%81%9A%E7%9A%84%E4%BA%8B%E5%84%BF" title="视图控制器不做的事儿:" target="_blank" rel="external"></a>视图控制器不做的事儿:</h4><ul>
+<li>发起网络服务调用</li>
+<li>管理 <code>tweets</code> 数组</li>
+<li>判定 <code>username</code> 内容是否有效</li>
+<li>将用户的姓和名格式化为全名</li>
+<li>下载用户头像并转成 <code>UIImage</code>(如果你习惯在 <code>UIImageView</code> 上使用类别从网络加载图片, 你可以暴漏 URL 而不是图片. 这样就给 view-model 与 UIKit 之间一个更清晰的划分, 但我视 <code>UIImage</code> 为数据而非数据的确切显示. 这些东西不是固定死的. )</li>
+</ul>
+<h2 id="进入-ReactiveCocoa"><a href="#进入-ReactiveCocoa" class="headerlink" title="进入 ReactiveCocoa"></a>进入 ReactiveCocoa</h2><hr>
+<p><img src="https://upload-images.jianshu.io/upload_images/904629-4d0fea7ab8693ea5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>这看起来可能像是为我们应用流程文档中的一张老旧的计算机科学图解. 通过陈述式的编程, 我们使用了更高层次的抽象, 来让我们实际编程更靠近我们在脑海中设计流程的方式. 我们让电脑为我们做更多工作. 实际的代码更加像这幅图了. </p>
+<h3 id="RACSignal"><a href="#RACSignal" class="headerlink" title="RACSignal"></a>RACSignal</h3><p><code>RACSignal</code> (信号)就 RAC 来说是构造单元. 它代表我们最终将要收到的信息. 当你能将未来某时刻收到的消息具体表示出来时, <strong>你可以开始预先(陈述性)运用逻辑并构建你的信息流,</strong>而不是必须等到事件发生(命令式). </p>
+<p><strong>信号会为了控制通过应用的信息流而获得所有这些异步方法(委托, 回调 block, 通知, KVO, target/action 事件观察, 等)并将它们统一到一个接口下.</strong>这只是直观理解. 不仅是这些, 因为信息会流过你的应用, 它还提供给你轻松转换/分解/合并/过滤信息的能力.</p>
+<h2 id="用-ReactiveCocoa-将-view-model-与视图控制器连接起来"><a href="#用-ReactiveCocoa-将-view-model-与视图控制器连接起来" class="headerlink" title="用 ReactiveCocoa 将 view-model 与视图控制器连接起来."></a>用 ReactiveCocoa 将 view-model 与视图控制器连接起来.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line">// View Controller</div><div class="line"></div><div class="line">- (void) viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line"> </div><div class="line">    RAC(self.viewModel,  username) = [myTextfield rac_textSignal];</div><div class="line"> </div><div class="line">    RACSignal *usernameIsValidSignal = RACObserve(self.viewModel,  usernameValid);</div><div class="line"> </div><div class="line">    RAC(self.goButton,  alpha) = [usernameIsValidSignal</div><div class="line">        map:  ^(NSNumber *valid) &#123;</div><div class="line">            return valid. boolValue ? @1 :  @0. 5;</div><div class="line">        &#125;];</div><div class="line"> </div><div class="line">    RAC(self.goButton,  enabled) = usernameIsValidSignal;</div><div class="line"> </div><div class="line">    RAC(self.avatarImageView,  image) = RACObserve(self.viewModel,  userAvatarImage);</div><div class="line">    </div><div class="line">    RAC(self.userNameLabel,  text) = RACObserve(self.viewModel,  userFullName);</div><div class="line"> </div><div class="line">    @weakify(self);</div><div class="line">    [[[RACSignal merge: @[RACObserve(self.viewModel,  tweets), </div><div class="line">                        RACObserve(self.viewModel,  allTweetsLoaded)]]</div><div class="line">        bufferWithTime: 0 onScheduler: [RACScheduler mainThreadScheduler]]</div><div class="line">        subscribeNext: ^(id value) &#123;</div><div class="line">            @strongify(self);</div><div class="line">            [self.tableView reloadData];</div><div class="line">        &#125;];</div><div class="line">    </div><div class="line">    [[self.goButton rac_signalForControlEvents: UIControlEventTouchUpInside]</div><div class="line">        subscribeNext:  ^(id value) &#123;</div><div class="line">            @strongify(self);</div><div class="line">            [self.viewModel getTweetsForCurrentUsername];</div><div class="line">        &#125;];</div><div class="line">&#125;</div><div class="line"> </div><div class="line">-(UITableViewCell*)tableView: (UITableView *)tableView cellForRowAtIndexPath: (NSIndexPath *)indexPath &#123;</div><div class="line">    // if table section is the tweets section</div><div class="line">    if (indexPath. section == 0) &#123;</div><div class="line">        MYTwitterUserCell *cell =</div><div class="line">        [self.tableView dequeueReusableCellWithIdentifier: @&quot;MYTwitterUserCell&quot; forIndexPath: indexPath];</div><div class="line">        </div><div class="line">        // grab the cell view model from the vc view model and assign it</div><div class="line">        cell.viewModel = self.viewModel. tweets[indexPath. row];</div><div class="line">        return cell;</div><div class="line">    &#125; else &#123;</div><div class="line">        // else if the section is our loading cell</div><div class="line">        MYLoadingCell *cell =</div><div class="line">        [self.tableView dequeueReusableCellWithIdentifier: @&quot;MYLoadingCell&quot; forIndexPath: indexPath];</div><div class="line">        [self.viewModel loadMoreTweets];</div><div class="line">        return cell;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"> </div><div class="line">//</div><div class="line">// MYTwitterUserCell</div><div class="line">//</div><div class="line"> </div><div class="line">// this could also be in cell init</div><div class="line">- (void) awakeFromNib &#123;</div><div class="line">    [super awakeFromNib];</div><div class="line">    </div><div class="line">    RAC(self.avatarImageView,  image) = RACObserve(self,  viewModel. tweetAuthorAvatarImage);</div><div class="line">    RAC(self.userNameLabel,  text) = RACObserve(self,  viewModel. tweetAuthorFullName);</div><div class="line">    RAC(self.tweetTextLabel,  text) = RACObserve(self,  viewModel. tweetContent);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">RAC(self.viewModel,  username) = [myTextfield rac_textSignal];</div></pre></td></tr></table></figure>
+<p>在这我们用 RAC 库中的方法从 <code>UITextField</code> 拉取一个信号. 这行代码将 view-model 上的可读写属性 username 绑定到文本框上的用户输入的任何更新.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">RACSignal *usernameIsValidSignal = RACObserve(self.viewModel,  usernameValid);</div><div class="line"></div><div class="line">RAC(self.goButton,  alpha) = [usernameIsValidSignal</div><div class="line">    map:  ^(NSNumber *valid) &#123;</div><div class="line">        return valid. boolValue ? @1 :  @0. 5;</div><div class="line">    &#125;];</div><div class="line"></div><div class="line">RAC(self.goButton,  enabled) = usernameIsValidSignal;</div></pre></td></tr></table></figure>
+<p>在这我们用 RACObserve 方法在 view-model 的 <code>usernameValid</code> 属性上创建了一个信号 <code>usernameIsValidSignal</code>. 无论何时属性发生变化, 它将会沿着管道发送一个新的 @YES 或 @NO. 我们拿到那个值并将其绑定到 <code>goButton</code> 的两个属性上. 首先我们将 <code>alpha</code> 分别对应 YES 或 NO 更新到1或0. 5(记着在这必须返回 <code>NSNumber</code>). 然后我们直接将信号绑定到<code>enabled</code> 属性, 因为 YES 和 NO 在这无需转换就能完美地运作.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">RAC(self.avatarImageView,  image) = RACObserve(self.viewModel,  userAvatarImage);</div><div class="line">RAC(self.userNameLabel,  text) = RACObserve(self.viewModel,  userFullName);</div></pre></td></tr></table></figure>
+<p>下面我们为表头的图像视图和用户标签创建绑定, 再次在 view-model 上对应的属性上用 RACObserve 宏创建信号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@weakify(self);</div><div class="line">[[[RACSignal merge: @[RACObserve(self.viewModel,  tweets), </div><div class="line">                     RACObserve(self.viewModel,  allTweetsLoaded)]]</div><div class="line">    bufferWithTime: 0 onScheduler: [RACScheduler mainThreadScheduler]]</div><div class="line">    subscribeNext: ^(id value) &#123;</div><div class="line">        @strongify(self);</div><div class="line">        [self.tableView reloadData];</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<p>这货看上去有点诡异, 所以我们在这上多花点时间. 我们想在 view-model 上 <code>tweets</code> 数组或 <code>allTweetsLoaded</code> 属性发生变化时更新表格视图. (在这个例子中, 我们要用一个简单的方法来重新加载整张表. )所以我们将这两个属性被观察后创建的两个信号合并成一个更大的信号, 当两个属性中有一个发生变化, 这个信号就会发送值. (你一贯认为信号的值是同类型的, 不会像这个信号有一样混杂的值. 这很可能在 Swift 版本的 RAC 中强制要求, 但在这我们不关心发出的真实值, 我们只是用它来触发表格式图的重新加载. )</p>
+<p>那么这儿看起来最吓人的部分可能是信号链中的<code>bufferWithTime: onScheduler:</code> 方法. 需要它来围绕 UIKit 中的一个问题进行变通. <code>tweets</code> 和 <code>allTweetsLoaded</code> 这两个属性我们都需要追踪, 万一 <code>tweets</code> 变化和 <code>allTweetsLoaded</code> 为否(不管怎样我们都得重新加载表格). 有时两个属性都将在同一准确的时间发生变化, 意味着合并后的大信号中的两个信号都会发送一个值, 那么 <code>reloadData</code> 方法将会在同一个运行循环中被调用两次. UIKit 不喜欢这样. <code>bufferWithTime:</code> 在给明的时间内抓取所有下一个到来的值, 当给定的时间过后将所有值合在一起发给订阅者. 通过传入0作为时间, <code>bufferWithTime:</code> 将会抓取那个合并信号在特定的运行循环中发出的全部值, 并将他们一起发送出去. (<code>NSTimer</code> 以同样的方式工作, 这不是巧合, 因为 <code>bufferWithTime:</code> 是用 <code>NSTimer</code> 构建的. )暂时不用担心 scheduler, 试把它想做指明这些值必须在主线程上被发送. 现在我们确保 <code>reloadData</code> 每次运行循环只被调用一次.</p>
+<p>注意我在这用 <code>@weakify/@strongify</code>宏切换 strong 和 weak. 这在创建所有这些 block 时非常重要. 在 RAC 的 block 中使用 <code>self</code> 时<code>self</code> 将会被捕获为强引用并得到保留环, 除非你尤其意识到要破除保留环</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[[self.goButton rac_signalForControlEvents: UIControlEventTouchUpInside]</div><div class="line">    subscribeNext:  ^(id value) &#123;</div><div class="line">        @strongify(self);</div><div class="line">        [self.viewModel getTweetsForCurrentUsername];</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<p>我们已经搞定了 cellForRowAtIndexPath 的第一部分, 那么我在这将只说下 loading cell:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MYLoadingCell *cell =</div><div class="line">    [self.tableView dequeueReusableCellWithIdentifier: @&quot;MYLoadingCell&quot; forIndexPath: indexPath];</div><div class="line">[self.viewModel loadMoreTweets];</div><div class="line">return cell;</div></pre></td></tr></table></figure>
+<p>这是另一块我们以后将利用到 RACCommand 的地方, 但目前我们只是调用 view-model 的 loadMoreTweets 方法. 我们将只是信任如果 cell 显示或隐藏多次的话 view-model 会避免多次内部调用.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void) awakeFromNib &#123;</div><div class="line">    [super awakeFromNib];</div><div class="line"></div><div class="line">    RAC(self.avatarImageView,  image) = RACObserve(self,  viewModel. tweetAuthorAvatarImage);</div><div class="line">    RAC(self.userNameLabel,  text) = RACObserve(self,  viewModel. tweetAuthorFullName);</div><div class="line">    RAC(self.tweetTextLabel,  text) = RACObserve(self,  viewModel. tweetContent);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这段现在应该非常直接了, 除此之外我想指出一点. 我们正在将图片和文字绑定到 UI 上对应的属性, 但注意 <code>viewModel</code> 出现在 <code>RACObserve</code> 宏中逗号右边. 这些 cell 终将被重用, 新的 view-models 将会被赋值. 如果我们不将 <code>viewModel</code> 放在逗号右边, 那就会监听 viewModel 属性的变化然后每次都要重新设置绑定;如果放在逗号右边, <code>RACObserve</code> 将会为我们负责这些事儿. 因此我们只需要设定一次绑定并让 Reactive Cocoa 做剩余的部分. 这是在绑定表格 cell 时为了性能需要记住的好东西. 我在实践中即使是有很多表格 cell 依然没有出过问题.</p>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ReactiveCocoa/" rel="tag"># ReactiveCocoa</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/20/算法篇/" rel="next" title="iOS 面试全方位剖析 -- 算法篇">
+                <i class="fa fa-chevron-left"></i> iOS 面试全方位剖析 -- 算法篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/28/面试-Block篇/" rel="prev" title="iOS 面试全方位剖析 -- Block篇">
+                iOS 面试全方位剖析 -- Block篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Pan'V" />
+          <p class="site-author-name" itemprop="name">Pan'V</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/L-vinCent" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/4a7b7da390e4" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ReactiveCocoa-简单介绍"><span class="nav-number">1.</span> <span class="nav-text">ReactiveCocoa 简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义MVVM"><span class="nav-number">2.</span> <span class="nav-text">定义MVVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View-Model-和-View-Controller-在一起，但独立"><span class="nav-number">3.</span> <span class="nav-text">View-Model 和 View Controller, 在一起，但独立</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#View-Model-实例"><span class="nav-number">3.1.</span> <span class="nav-text">View-Model 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#视图控制器从-view-model-获取的数据将用来"><span class="nav-number">3.1.1.</span> <span class="nav-text">视图控制器从 view-model 获取的数据将用来:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#视图控制器将对-view-model-起如下作用"><span class="nav-number">3.1.2.</span> <span class="nav-text">视图控制器将对 view-model 起如下作用:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#视图控制器不做的事儿"><span class="nav-number">3.1.3.</span> <span class="nav-text">视图控制器不做的事儿:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入-ReactiveCocoa"><span class="nav-number">4.</span> <span class="nav-text">进入 ReactiveCocoa</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RACSignal"><span class="nav-number">4.1.</span> <span class="nav-text">RACSignal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-ReactiveCocoa-将-view-model-与视图控制器连接起来"><span class="nav-number">5.</span> <span class="nav-text">用 ReactiveCocoa 将 view-model 与视图控制器连接起来.</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pan'V</span>
+</div>
+
+
+<div class="powered-by">
+  努力工作,努力生活
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="busuanzi-count" >
+<span class="site-uv">
+<i class="fa fa-user"></i>
+<span id="busuanzi_container_site_pv">
+访问量: <span id="busuanzi_value_site_pv"></span> 次  
+</span>
+</span>
+
+<span class="site-pv">
+<i class="fa fa-quora"></i>
+<span id="busuanzi_container_site_uv">
+访客数: <span id="busuanzi_value_site_uv"></span> 人
+</span>
+</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://L-vinCent.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://l-vincent.github.io/2018/05/28/mvvm/';
+          this.page.identifier = '2018/05/28/mvvm/';
+          this.page.title = 'ReactiveCocoa 和 MVVM 入门';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://L-vinCent.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
