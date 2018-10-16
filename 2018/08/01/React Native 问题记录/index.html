@@ -111,7 +111,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-618f83a0450bf279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-a1473bb5a8b4cf2f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/904629-b65695408f8a61ac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-10-16T08:14:29.000Z">
+<meta property="og:updated_time" content="2018-10-16T08:40:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native 问题记录">
 <meta name="twitter:description" content="期间出现的一些报错问题  _reactNavigation. NavigationActions.navigate is not a function  这是错误代码，老版本更新到2.55版本之后出现的问题 12345678910static resetToHomePage(params) &amp;#123;       const &amp;#123;navigation&amp;#125; = params;">
@@ -376,13 +376,13 @@
       
 
       
-         <a id="more"></a>
-<h2 id="期间出现的一些报错问题"><a href="#期间出现的一些报错问题" class="headerlink" title="期间出现的一些报错问题"></a>期间出现的一些报错问题</h2><hr>
+        <h2 id="期间出现的一些报错问题"><a href="#期间出现的一些报错问题" class="headerlink" title="期间出现的一些报错问题"></a>期间出现的一些报错问题</h2><hr>
 <blockquote>
 <p>_reactNavigation. NavigationActions.navigate is not a function</p>
 </blockquote>
 <p>这是错误代码，老版本更新到2.55版本之后出现的问题</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">static resetToHomePage(params) &#123;</div><div class="line">       const &#123;navigation&#125; = params;</div><div class="line">       const resetAction = NavigationActions.navigate(&#123;</div><div class="line">           index: 0,</div><div class="line">           action: [</div><div class="line">               NavigationActions.navigate(&#123;</div><div class="line">                   routeName: &quot;HomePage&quot;,</div><div class="line">               &#125;)</div><div class="line">           ]</div><div class="line">       &#125;);</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>会报如下错误</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/904629-402a53410b67e013.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>在 <a href="https://github.com/react-navigation/react-navigation/issues/4613" target="_blank" rel="external">react-navigation</a> 的 issue 上也有人碰到这么个问题，而且也得到了解决，意思就是用 <code>StackActions.reset</code> 代替 <code>NavigationActions.navigate</code>，替代之后又出了个新问题<br><img src="https://upload-images.jianshu.io/upload_images/904629-9a4cb69897099f50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
